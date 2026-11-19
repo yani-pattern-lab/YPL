@@ -255,7 +255,7 @@
         </p>
       </div>
 
-      <!-- Інтерактивне прев'ю (До / Після) -->
+      <!-- Інтерактивне прев'ю (До / Після) з реальними картинками before.jpg та after.jpg -->
       <div class="brutal-card p-4 sm:p-5 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-borderdim pb-2.5">
           <span class="font-mono text-xs font-bold uppercase tracking-tight text-offwhite">
@@ -270,68 +270,31 @@
           </button>
         </div>
 
-        <!-- Полотно SVG на темному #181818 фоні -->
-        <div class="relative border-2 border-offwhite bg-deep aspect-[16/10] sm:aspect-[2/1] w-full overflow-hidden">
-          <!-- Шар 1: Блідий контур (rgba(245,244,240,0.22)) -->
-          <svg viewBox="0 0 360 180" class="w-full h-full block" aria-label="Блідий контур для трасування">
-            <defs>
-              <pattern id="darkGuideGrid" width="18" height="18" patternUnits="userSpaceOnUse">
-                <path d="M 18 0 L 0 0 0 18" fill="none" stroke="rgba(245,244,240,0.06)" stroke-width="1" />
-              </pattern>
-            </defs>
-            <rect width="360" height="180" fill="url(#darkGuideGrid)" />
-            <g stroke="rgba(245,244,240,0.22)" stroke-width="1.6" fill="none" stroke-dasharray="4 3">
-              <rect x="16" y="14" width="328" height="152" />
-              <circle cx="90" cy="90" r="62" />
-              <circle cx="90" cy="90" r="40" />
-              <circle cx="90" cy="90" r="18" />
-              <polygon points="90,22 158,90 90,158 22,90" />
-              <path d="M90 28 C118 46, 128 74, 90 90 C52 74, 62 46, 90 28 Z" />
-              <path d="M90 152 C118 134, 128 106, 90 90 C52 106, 62 134, 90 152 Z" />
+        <!-- Полотно До / Після з реальними картинками -->
+        <div
+          class="relative border-2 border-offwhite bg-deep aspect-[4/3] w-full overflow-hidden select-none"
+          oncontextmenu="return false;"
+        >
+          <!-- Шар 1: Блідий контур (before.jpg) -->
+          <img
+            src="before.jpg"
+            alt="Блідий контур для трасування"
+            class="w-full h-full object-contain block pointer-events-none"
+            draggable="false"
+          />
 
-              <circle cx="270" cy="90" r="62" />
-              <circle cx="270" cy="90" r="40" />
-              <circle cx="270" cy="90" r="18" />
-              <polygon points="270,22 338,90 270,158 202,90" />
-              <path d="M208 90 C226 62, 254 52, 270 90 C254 128, 226 118, 208 90 Z" />
-              <path d="M332 90 C314 62, 286 52, 270 90 C286 128, 314 118, 332 90 Z" />
-
-              <line x1="152" y1="90" x2="208" y2="90" />
-              <rect x="166" y="76" width="28" height="28" />
-            </g>
-          </svg>
-
-          <!-- Шар 2: Проявлений арт (#F5F4F0 та #C6FF00) -->
+          <!-- Шар 2: Проявлений готовий арт (after.jpg) -->
           <div
             id="entry-ink-overlay"
             class="absolute inset-0 pointer-events-none"
             style="clip-path: inset(0 45% 0 0);"
           >
-            <svg viewBox="0 0 360 180" class="w-full h-full block bg-deep" aria-hidden="true">
-              <rect x="16" y="14" width="328" height="152" fill="none" stroke="#F5F4F0" stroke-width="2.5" />
-              <!-- Ліва мандала -->
-              <circle cx="90" cy="90" r="62" fill="none" stroke="#F5F4F0" stroke-width="2.2" />
-              <circle cx="90" cy="90" r="40" fill="none" stroke="#C6FF00" stroke-width="2" />
-              <polygon points="90,22 158,90 90,158 22,90" fill="none" stroke="#F5F4F0" stroke-width="2" />
-              <path d="M90 28 C118 46, 128 74, 90 90 C52 74, 62 46, 90 28 Z" fill="#F5F4F0" />
-              <path d="M90 152 C118 134, 128 106, 90 90 C52 106, 62 134, 90 152 Z" fill="#F5F4F0" />
-              <circle cx="90" cy="90" r="18" fill="#C6FF00" stroke="#111111" stroke-width="2.5" />
-              <circle cx="90" cy="90" r="6" fill="#111111" />
-
-              <!-- Центральний місток -->
-              <line x1="152" y1="90" x2="208" y2="90" stroke="#C6FF00" stroke-width="2.5" />
-              <rect x="166" y="76" width="28" height="28" fill="#C6FF00" stroke="#F5F4F0" stroke-width="2" />
-              <circle cx="180" cy="90" r="6" fill="#111111" />
-
-              <!-- Права мандала -->
-              <circle cx="270" cy="90" r="62" fill="none" stroke="#F5F4F0" stroke-width="2.2" />
-              <circle cx="270" cy="90" r="40" fill="none" stroke="#C6FF00" stroke-width="2" />
-              <polygon points="270,22 338,90 270,158 202,90" fill="none" stroke="#F5F4F0" stroke-width="2" />
-              <path d="M208 90 C226 62, 254 52, 270 90 C254 128, 226 118, 208 90 Z" fill="#F5F4F0" />
-              <path d="M332 90 C314 62, 286 52, 270 90 C286 128, 314 118, 332 90 Z" fill="#F5F4F0" />
-              <circle cx="270" cy="90" r="18" fill="#C6FF00" stroke="#111111" stroke-width="2.5" />
-              <circle cx="270" cy="90" r="6" fill="#111111" />
-            </svg>
+            <img
+              src="after.jpg"
+              alt="Готовий деталізований арт"
+              class="w-full h-full object-contain block bg-deep pointer-events-none"
+              draggable="false"
+            />
           </div>
 
           <!-- Вертикальна лінія розділення -->
@@ -659,7 +622,7 @@
           class="protected-preview relative max-w-[300px] w-full mx-auto border-2 border-offwhite bg-bgmain overflow-hidden"
           oncontextmenu="return false;"
         >
-          <!-- Слот для прев'ю патерна (кастомне зображення або процедурний SVG) -->
+          <!-- Слот для прев'ю патерна -->
           <div id="tester-pattern-visual" class="w-full aspect-[3/4] flex items-center justify-center bg-[#141414]">
             <!-- Генерується через JS -->
           </div>
@@ -735,7 +698,7 @@
   <script>
     /**
      * ==========================================================================
-     * КОНФІГУРАЦІЯ САЙТУ (ПІДКЛЮЧЕНО ДО ТВОЄЇ GOOGLE ФОРМИ)
+     * КОНФІГУРАЦІЯ САЙТУ
      * ==========================================================================
      */
     const CONFIG = {
@@ -748,13 +711,12 @@
         score: 'entry.967962361',
       },
 
-      // Опціонально: вставте шляхи до реальних зменшених прев'ю-картинок патернів (наприклад, 'previews/pattern-01.jpg')
-      // Якщо залишити порожнім '', автоматично відобразиться захищений процедурний SVG-патерн відповідної складності
+      // Назви зменшених прев'ю-картинок патернів у тій самій папці на GitHub:
       PREVIEW_IMAGES: {
-        1: '', // Патерн №01 (PDF 9 із Vol. 1)
-        2: '', // Патерн №06 (PDF 49 із Vol. 1)
-        3: '', // Патерн №11 (PDF 27 із Vol. 1)
-        4: '', // Патерн №20 (PDF 36 із Vol. 1)
+        1: 'pattern-01.jpg', // Патерн №01 (PDF 9 із Vol. 1)
+        2: 'pattern-06.jpg', // Патерн №06 (PDF 49 із Vol. 1)
+        3: 'pattern-11.jpg', // Патерн №11 (PDF 27 із Vol. 1)
+        4: 'pattern-20.jpg', // Патерн №20 (PDF 36 із Vol. 1)
       },
     };
 
@@ -891,13 +853,8 @@
           <svg viewBox="0 0 240 320" class="w-full h-full block">
             <rect x="16" y="16" width="208" height="260" fill="none" stroke="rgba(245,244,240,0.3)" stroke-width="1.5" stroke-dasharray="3 2" />
             <circle cx="120" cy="146" r="76" fill="none" stroke="rgba(245,244,240,0.45)" stroke-width="1.8" stroke-dasharray="3 2" />
-            <path d="M120 68 C166 95, 178 148, 120 224 C62 148, 74 95, 120 68 Z" fill="none" stroke="#F5F4F0" stroke-width="1.6" stroke-dasharray="4 2" />
-            <line x1="120" y1="68" x2="120" y2="224" stroke="#F5F4F0" stroke-width="1.5" />
-            <path d="M120 105 L155 88 M120 138 L160 124 M120 172 L148 162" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="3 2" />
-            <path d="M120 105 L85 88 M120 138 L80 124 M120 172 L92 162" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="3 2" />
             <circle cx="120" cy="146" r="14" fill="none" stroke="#C6FF00" stroke-width="1.8" />
-            <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
-            <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+            <text x="120" y="255" text-anchor="middle" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="10">№01 (PDF 9) · ЗАВАНТАЖ pattern-01.jpg</text>
           </svg>`,
       },
       2: {
@@ -930,18 +887,9 @@
         getPreviewSvg: () => `
           <svg viewBox="0 0 240 320" class="w-full h-full block">
             <rect x="16" y="16" width="208" height="260" fill="none" stroke="rgba(245,244,240,0.35)" stroke-width="1.5" />
-            <rect x="30" y="30" width="180" height="232" fill="none" stroke="rgba(245,244,240,0.25)" stroke-width="1.2" stroke-dasharray="3 2" />
             <polygon points="120,44 202,146 120,248 38,146" fill="none" stroke="#F5F4F0" stroke-width="1.5" stroke-dasharray="3 2" />
-            <circle cx="120" cy="146" r="64" fill="none" stroke="#F5F4F0" stroke-width="1.5" stroke-dasharray="2 2" />
-            <path d="M120 82 C154 106, 154 186, 120 210 C86 186, 86 106, 120 82 Z" fill="none" stroke="#F5F4F0" stroke-width="1.5" />
-            <path d="M56 146 C80 112, 160 112, 184 146 C160 180, 80 180, 56 146 Z" fill="none" stroke="#C6FF00" stroke-width="1.4" stroke-dasharray="3 2" />
             <circle cx="120" cy="146" r="18" fill="none" stroke="#C6FF00" stroke-width="1.8" />
-            <rect x="32" y="32" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
-            <rect x="190" y="32" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
-            <rect x="32" y="242" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
-            <rect x="190" y="242" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
-            <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
-            <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+            <text x="120" y="255" text-anchor="middle" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="10">№06 (PDF 49) · ЗАВАНТАЖ pattern-06.jpg</text>
           </svg>`,
       },
       3: {
@@ -975,21 +923,8 @@
           <svg viewBox="0 0 240 320" class="w-full h-full block">
             <rect x="16" y="16" width="208" height="260" fill="none" stroke="rgba(245,244,240,0.4)" stroke-width="1.5" />
             <circle cx="120" cy="146" r="86" fill="none" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="2 2" />
-            <circle cx="120" cy="146" r="66" fill="none" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="3 2" />
             <circle cx="120" cy="146" r="46" fill="none" stroke="#C6FF00" stroke-width="1.4" stroke-dasharray="2 2" />
-            <circle cx="120" cy="146" r="24" fill="none" stroke="#F5F4F0" stroke-width="1.6" />
-            <circle cx="120" cy="70" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
-            <circle cx="120" cy="222" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
-            <circle cx="44" cy="146" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
-            <circle cx="196" cy="146" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
-            <circle cx="66" cy="92" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
-            <circle cx="174" cy="92" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
-            <circle cx="66" cy="200" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
-            <circle cx="174" cy="200" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
-            <line x1="34" y1="146" x2="206" y2="146" stroke="rgba(245,244,240,0.35)" stroke-width="1" stroke-dasharray="2 2" />
-            <line x1="120" y1="60" x2="120" y2="232" stroke="rgba(245,244,240,0.35)" stroke-width="1" stroke-dasharray="2 2" />
-            <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
-            <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+            <text x="120" y="255" text-anchor="middle" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="10">№11 (PDF 27) · ЗАВАНТАЖ pattern-11.jpg</text>
           </svg>`,
       },
       4: {
@@ -1019,26 +954,12 @@
         shareText: 'Мені випала РЕЗИДЕНТКА НОРИ — 5 год 40 хв у кролячій норі. Несіть їжу. #явипалазреальності #patternrabbithole',
         patternCode: '№20',
         pdfNote: 'PDF 36 ІЗ VOL. 1',
-        getPreviewSvg: () => {
-          let gridCells = '';
-          for (let r = 0; r < 7; r++) {
-            for (let c = 0; c < 6; c++) {
-              const x = 28 + c * 31;
-              const y = 32 + r * 32;
-              const accent = (r + c) % 3 === 0 ? '#C6FF00' : '#F5F4F0';
-              gridCells += `<rect x="${x}" y="${y}" width="26" height="26" fill="none" stroke="rgba(245,244,240,0.45)" stroke-width="1.2" stroke-dasharray="2 1.5" />`;
-              gridCells += `<circle cx="${x + 13}" cy="${y + 13}" r="7" fill="none" stroke="${accent}" stroke-width="1.2" />`;
-              gridCells += `<line x1="${x}" y1="${y}" x2="${x + 26}" y2="${y + 26}" stroke="rgba(245,244,240,0.22)" stroke-width="0.9" />`;
-            }
-          }
-          return `
-            <svg viewBox="0 0 240 320" class="w-full h-full block">
-              <rect x="16" y="16" width="208" height="260" fill="none" stroke="#F5F4F0" stroke-width="1.6" />
-              ${gridCells}
-              <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
-              <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
-            </svg>`;
-        },
+        getPreviewSvg: () => `
+          <svg viewBox="0 0 240 320" class="w-full h-full block">
+            <rect x="16" y="16" width="208" height="260" fill="none" stroke="#F5F4F0" stroke-width="1.6" />
+            <rect x="44" y="44" width="152" height="152" fill="none" stroke="#C6FF00" stroke-width="1.5" stroke-dasharray="3 2" />
+            <text x="120" y="255" text-anchor="middle" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="10">№20 (PDF 36) · ЗАВАНТАЖ pattern-20.jpg</text>
+          </svg>`,
       },
     };
 
@@ -1068,14 +989,12 @@
       const nameInput = document.getElementById('tester-name-input');
       const nameError = document.getElementById('name-validation-msg');
 
-      // Приховуємо повідомлення про помилку, щойно тестерка починає вводити ім'я
       nameInput.addEventListener('input', () => {
         if (nameInput.value.trim().length > 0) {
           nameError.classList.add('hidden');
         }
       });
 
-      // Кнопка старту квізу (з обов'язковою перевіркою імені та прізвища)
       document.getElementById('btn-start-quiz').addEventListener('click', () => {
         const cleanedName = nameInput.value.trim();
         if (!cleanedName) {
@@ -1089,7 +1008,6 @@
         renderQuestion();
       });
 
-      // Кнопка «Назад»
       document.getElementById('btn-prev').addEventListener('click', () => {
         if (state.currentQuestionIndex > 0) {
           state.currentQuestionIndex--;
@@ -1099,7 +1017,6 @@
         }
       });
 
-      // Кнопка «Пірнути глибше» / «Отримати квитанцію»
       document.getElementById('btn-next').addEventListener('click', () => {
         if (state.answers[state.currentQuestionIndex] === null) return;
 
@@ -1111,14 +1028,12 @@
         }
       });
 
-      // Кнопки екрана результату
       document.getElementById('btn-save-story').addEventListener('click', generateAndDownloadStoryReceipt);
       document.getElementById('btn-copy-share').addEventListener('click', copyShareTextToClipboard);
       document.getElementById('btn-close-story-preview').addEventListener('click', () => {
         document.getElementById('story-preview-box').classList.add('hidden');
       });
 
-      // Повторне проходження тесту
       document.getElementById('btn-retake').addEventListener('click', () => {
         state.currentQuestionIndex = 0;
         state.answers = new Array(QUIZ_QUESTIONS.length).fill(null);
@@ -1197,7 +1112,6 @@
       const idx = state.currentQuestionIndex;
       const qObj = QUIZ_QUESTIONS[idx];
 
-      // Оновлення прогресу
       document.getElementById('progress-label').textContent = qObj.progressLabel;
       const pct = Math.round(((idx + 1) / QUIZ_QUESTIONS.length) * 100);
       document.getElementById('progress-percent').textContent = `${pct}%`;
@@ -1215,11 +1129,9 @@
         }
       }
 
-      // Оновлення заголовка питання
       document.getElementById('question-tag').textContent = qObj.tag;
       document.getElementById('question-prompt').textContent = qObj.prompt;
 
-      // Рендер 4 варіантів відповіді (суворо без показу прихованих балів)
       const optionsContainer = document.getElementById('options-container');
       optionsContainer.innerHTML = '';
 
@@ -1250,7 +1162,6 @@
         optionsContainer.appendChild(btn);
       });
 
-      // Кнопка переходу
       const nextBtn = document.getElementById('btn-next');
       const nextBtnText = document.getElementById('btn-next-text');
       nextBtn.disabled = state.answers[idx] === null;
@@ -1307,7 +1218,6 @@
     function renderResultScreen() {
       const data = RESULT_LEVELS[state.calculatedLevel];
 
-      // Бейдж, заголовок, лід та 3 абзаци
       document.getElementById('res-level-badge').textContent = data.badge;
       document.getElementById('res-title').textContent = data.title;
       document.getElementById('res-lead').textContent = data.lead;
@@ -1316,7 +1226,6 @@
         .map((p) => `<p>${p}</p>`)
         .join('');
 
-      // Таблиця характеристик
       document.getElementById('res-table-body').innerHTML = data.table
         .map(
           (row) => `
@@ -1331,7 +1240,6 @@
         )
         .join('');
 
-      // Термоквитанція
       const dateStr = new Date().toISOString().split('T')[0];
       const serial = Math.floor(1000 + Math.random() * 9000);
       document.getElementById('receipt-meta').textContent = `ДАТА: ${dateStr} · ID: #YPL-${serial}`;
@@ -1339,12 +1247,10 @@
       document.getElementById('receipt-time-lost').textContent = data.receipt.timeLostFull;
       document.getElementById('receipt-status').textContent = data.receipt.status;
 
-      // Блок закритого тестування (без скачування)
       document.getElementById('tester-pattern-heading').textContent = `ТВІЙ ПАТЕРН ДЛЯ ТЕСТУ: ${data.patternCode}`;
       document.getElementById('tester-pdf-tag').textContent = data.pdfNote;
       document.getElementById('tester-watermark-text').textContent = `ЗРАЗОК ДЛЯ ТЕСТУ · ${data.patternCode}`;
 
-      // Відображення картинки прев'ю або процедурного SVG
       const visualContainer = document.getElementById('tester-pattern-visual');
       const customImgUrl = CONFIG.PREVIEW_IMAGES[state.calculatedLevel];
       if (customImgUrl && customImgUrl.trim() !== '') {
@@ -1359,13 +1265,11 @@
         visualContainer.innerHTML = data.getPreviewSvg();
       }
 
-      // Статус фіксації тестерки
       document.getElementById('tester-submission-status').textContent =
         `Зафіксовано: ${state.testerFullName} — Патерн ${data.patternCode}. Дякуємо, що пірнула в нору.`;
 
       document.getElementById('story-preview-box').classList.add('hidden');
 
-      // Автоматична відправка результату в Google Форму (один раз на проходження)
       if (!state.hasSyncedCurrentResult) {
         state.hasSyncedCurrentResult = true;
         sendResultToGoogleSheet(data);
@@ -1389,14 +1293,11 @@
         source: 'ua_tester_quiz',
       };
 
-      // Зберігаємо резервну копію в localStorage браузера
       try {
         const existingLogs = JSON.parse(localStorage.getItem('ypl_ua_tester_logs') || '[]');
         existingLogs.push(payload);
         localStorage.setItem('ypl_ua_tester_logs', JSON.stringify(existingLogs));
-      } catch (e) {
-        // Ігноруємо обмеження localStorage у приватному режимі
-      }
+      } catch (e) {}
 
       try {
         syncNote.textContent = 'Передаємо запис у Google Форму...';
@@ -1463,11 +1364,9 @@
       const W = 1080;
       const H = 1920;
 
-      // 1. Фон #202020
       ctx.fillStyle = '#202020';
       ctx.fillRect(0, 0, W, H);
 
-      // Тонка сітка на тлі
       ctx.fillStyle = '#333333';
       for (let gx = 48; gx < W; gx += 48) {
         for (let gy = 48; gy < H; gy += 48) {
@@ -1475,12 +1374,10 @@
         }
       }
 
-      // Зовнішня рамка
       ctx.strokeStyle = '#F5F4F0';
       ctx.lineWidth = 6;
       ctx.strokeRect(48, 48, W - 96, H - 96);
 
-      // 2. Шапка бренду
       ctx.fillStyle = '#F5F4F0';
       ctx.font = '900 32px "Unbounded", "Inter", sans-serif';
       ctx.textAlign = 'left';
@@ -1498,7 +1395,6 @@
       ctx.lineTo(W - 48, 168);
       ctx.stroke();
 
-      // 3. Кислотно-лаймова плашка рівня
       ctx.fillStyle = '#C6FF00';
       ctx.fillRect(92, 220, W - 184, 68);
       ctx.strokeStyle = '#F5F4F0';
@@ -1510,30 +1406,25 @@
       ctx.textAlign = 'center';
       ctx.fillText(data.badge, W / 2, 263);
 
-      // 4. Заголовок персонажа
       ctx.fillStyle = '#F5F4F0';
       ctx.font = '900 62px "Unbounded", "Inter", sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(data.title, W / 2, 375);
 
-      // 5. Термочек (#181818 з кислотно-лаймовою тінню та зубчастим краєм)
       const rx = 104;
       const ry = 435;
       const rw = W - 208;
       const rh = 1150;
 
-      // Жорстка тінь #C6FF00
       ctx.fillStyle = '#C6FF00';
       ctx.fillRect(rx + 14, ry + 14, rw, rh);
 
-      // Основне тіло чека #181818
       ctx.fillStyle = '#181818';
       ctx.fillRect(rx, ry, rw, rh);
       ctx.lineWidth = 5;
       ctx.strokeStyle = '#F5F4F0';
       ctx.strokeRect(rx, ry, rw, rh);
 
-      // Зубчастий нижній край
       const toothWidth = 36;
       const toothHeight = 24;
       const numTeeth = Math.floor(rw / toothWidth);
@@ -1551,7 +1442,6 @@
         ctx.stroke();
       }
 
-      // Заголовок всередині квитанції
       ctx.fillStyle = '#F5F4F0';
       ctx.font = '900 34px "Unbounded", "Inter", sans-serif';
       ctx.textAlign = 'center';
@@ -1567,7 +1457,6 @@
 
       drawDashedDivider(ctx, rx + 44, ry + 168, rx + rw - 44, ry + 168);
 
-      // Блок втраченого часу
       ctx.fillStyle = '#A8A8A8';
       ctx.font = '700 24px "IBM Plex Mono", monospace';
       ctx.fillText('ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', W / 2, ry + 232);
@@ -1584,7 +1473,6 @@
       ctx.font = '900 66px "Unbounded", "Inter", sans-serif';
       ctx.fillText(data.receipt.timeLostShort, W / 2, ry + 346);
 
-      // Завершено та статус
       ctx.fillStyle = '#F5F4F0';
       ctx.font = '700 26px "IBM Plex Mono", monospace';
       ctx.fillText(`ЗАВЕРШЕНО: ${data.receipt.completed}`, W / 2, ry + 455);
@@ -1595,7 +1483,6 @@
 
       drawDashedDivider(ctx, rx + 44, ry + 545, rx + rw - 44, ry + 545);
 
-      // Свідчення очевидців
       ctx.fillStyle = '#A8A8A8';
       ctx.font = '700 22px "IBM Plex Mono", monospace';
       ctx.fillText('СВІДЧЕННЯ ОЧЕВИДЦІВ:', W / 2, ry + 602);
@@ -1606,7 +1493,6 @@
 
       drawDashedDivider(ctx, rx + 44, ry + 830, rx + rw - 44, ry + 830);
 
-      // Баркод
       const barcodeBars = [6, 3, 9, 3, 5, 11, 3, 6, 3, 8, 5, 9, 3, 6, 3, 11, 5, 3, 8, 6, 3, 9, 5, 3, 8, 6];
       let bx = (W - 440) / 2;
       const by = ry + 875;
@@ -1618,7 +1504,6 @@
         bx += w * 2.6;
       });
 
-      // Хештеги внизу чека
       ctx.font = '700 26px "IBM Plex Mono", monospace';
       ctx.fillStyle = '#C6FF00';
       ctx.fillText('#явипалазреальності', W / 2, ry + 1025);
@@ -1627,7 +1512,6 @@
       ctx.fillStyle = '#F5F4F0';
       ctx.fillText('#patternrabbithole', W / 2, ry + 1068);
 
-      // 6. Нижній заклик поза чеком
       ctx.fillStyle = '#F5F4F0';
       ctx.font = '700 24px "IBM Plex Mono", monospace';
       ctx.textAlign = 'center';
@@ -1635,13 +1519,11 @@
 
       const dataUrl = canvas.toDataURL('image/png');
 
-      // Показуємо прев'ю на екрані для зручного збереження на iOS/Android
       const previewBox = document.getElementById('story-preview-box');
       const previewImg = document.getElementById('story-preview-img');
       previewImg.src = dataUrl;
       previewBox.classList.remove('hidden');
 
-      // Запускаємо завантаження PNG-файлу
       const dlLink = document.createElement('a');
       dlLink.href = dataUrl;
       dlLink.download = `PatternRabbitHole_Level${data.levelNum}_Stories.png`;
