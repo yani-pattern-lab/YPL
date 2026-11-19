@@ -1,1 +1,1684 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>THE PATTERN RABBIT HOLE · Режим гіперфокусу · Vol. 1 | YANI PATTERN LAB</title>
 
+  <!-- Google Fonts з повною підтримкою кирилиці: Unbounded, Inter та IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgmain: '#202020',
+            surface: '#292929',
+            deep: '#181818',
+            offwhite: '#F5F4F0',
+            muted: '#A8A8A8',
+            lime: '#C6FF00',
+            darkink: '#111111',
+            borderdim: '#444444',
+          },
+          fontFamily: {
+            display: ['"Unbounded"', '"Inter"', 'sans-serif'],
+            sansheavy: ['"Inter"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       SWISS BRUTALISM + THERMAL RECEIPT (DARK MODE #202020)
+       Строго прямі кути 0px, рамки 2px, жорсткі зміщені тіні
+       ========================================================================== */
+    *, *::before, *::after {
+      border-radius: 0px !important;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background-color: #202020;
+      color: #F5F4F0;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Бруталістичні картки та тіні */
+    .brutal-card {
+      background-color: #292929;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+    }
+
+    .brutal-card-lime-shadow {
+      background-color: #181818;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #C6FF00;
+    }
+
+    /* Тактильні кнопки */
+    .brutal-btn {
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease, color 0.12s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brutal-btn-lime {
+      background-color: #C6FF00;
+      color: #111111;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+    }
+
+    .brutal-btn:hover:not(:disabled) {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0px #0D0D0D;
+    }
+
+    .brutal-btn:active:not(:disabled) {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0px #0D0D0D;
+    }
+
+    .brutal-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: 2px 2px 0px #0D0D0D;
+    }
+
+    /* Картки варіантів відповідей */
+    .option-card {
+      border: 2px solid #444444;
+      background-color: #292929;
+      color: #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.1s ease, background-color 0.1s ease;
+      cursor: pointer;
+    }
+
+    .option-card:hover {
+      border-color: #F5F4F0;
+      background-color: #303030;
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0px #0D0D0D;
+    }
+
+    .option-card:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0px #0D0D0D;
+    }
+
+    .option-card.selected {
+      background-color: #C6FF00;
+      color: #111111;
+      border-color: #F5F4F0;
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #0D0D0D;
+    }
+
+    .option-card.selected .option-badge {
+      background-color: #111111;
+      color: #C6FF00;
+      border-color: #111111;
+    }
+
+    /* Термочек із зубчастим нижнім краєм */
+    .receipt-wrapper {
+      position: relative;
+      filter: drop-shadow(4px 4px 0px #0D0D0D);
+    }
+
+    .receipt-body {
+      background-color: #181818;
+      border-top: 2px solid #F5F4F0;
+      border-left: 2px solid #F5F4F0;
+      border-right: 2px solid #F5F4F0;
+      border-bottom: none;
+    }
+
+    .receipt-sawtooth {
+      height: 14px;
+      width: 100%;
+      background-color: transparent;
+      background-image:
+        linear-gradient(135deg, #181818 50%, transparent 50%),
+        linear-gradient(225deg, #181818 50%, transparent 50%);
+      background-position: top left, top left;
+      background-size: 16px 14px;
+      background-repeat: repeat-x;
+      position: relative;
+    }
+
+    /* Кастомний повзунок для проявлення контуру */
+    input[type="range"].brutal-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 12px;
+      background: #181818;
+      border: 2px solid #F5F4F0;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"].brutal-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      background: #C6FF00;
+      border: 2px solid #111111;
+      cursor: pointer;
+    }
+
+    input[type="range"].brutal-slider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background: #C6FF00;
+      border: 2px solid #111111;
+      cursor: pointer;
+    }
+
+    /* Анімація блимаючого курсора */
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blink 0.7s infinite;
+    }
+
+    /* Захист прев'ю патерна від зручного збереження */
+    .protected-preview {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .protected-preview img,
+    .protected-preview svg {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-bgmain text-offwhite selection:bg-lime selection:text-darkink">
+
+  <!-- ========================================================================
+       МІНІМАЛІСТИЧНА ШАПКА САЙТУ
+       ======================================================================== -->
+  <header class="w-full border-b-2 border-borderdim bg-bgmain sticky top-0 z-30">
+    <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="font-display font-black text-xs sm:text-sm tracking-tight uppercase text-offwhite">
+        YANI PATTERN LAB
+      </div>
+      <div class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-lime text-darkink px-2 py-1 border border-offwhite">
+        ЗАКРИТИЙ ТЕСТ · VOL. 1
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       ОСНОВНИЙ КОНТЕЙНЕР КВІЗУ
+       ======================================================================== -->
+  <main class="w-full max-w-xl mx-auto px-4 py-6 sm:py-8 flex-grow">
+
+    <!-- ======================================================================
+         ЕКРАН 1 · ВХІД У КВІЗ
+         ====================================================================== -->
+    <section id="screen-entry" class="space-y-6">
+      <!-- Кікер -->
+      <div class="inline-block bg-deep border-2 border-lime text-lime px-2.5 py-1 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+        THE PATTERN RABBIT HOLE · РЕЖИМ ГІПЕРФОКУСУ · VOL. 1
+      </div>
+
+      <!-- Головний заголовок та підзаголовок -->
+      <div class="space-y-3">
+        <h1 class="font-display font-black text-2xl sm:text-4xl leading-[1.08] tracking-tight uppercase text-offwhite">
+          СКІЛЬКИ ПРОЙДЕ, ПЕРШ НІЖ ТИ ПІДНІМЕШ ГОЛОВУ?
+        </h1>
+        <p class="font-mono text-sm sm:text-base leading-relaxed text-muted">
+          8 абсурдних ситуацій. 1 квитанція втраченого часу. І патерн, підібраний під твій рівень глибини.
+        </p>
+      </div>
+
+      <!-- Інтерактивне прев'ю (До / Після) -->
+      <div class="brutal-card p-4 sm:p-5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-borderdim pb-2.5">
+          <span class="font-mono text-xs font-bold uppercase tracking-tight text-offwhite">
+            БЛІДИЙ КОНТУР &rarr; ГОТОВИЙ АРТ
+          </span>
+          <button
+            type="button"
+            id="entry-ink-toggle"
+            class="font-mono text-[11px] font-bold uppercase px-2.5 py-1 border-2 border-offwhite bg-lime text-darkink hover:bg-offwhite transition-colors"
+          >
+            ПЕРЕМИКНУТИ ЧОРНИЛО
+          </button>
+        </div>
+
+        <!-- Полотно SVG на темному #181818 фоні -->
+        <div class="relative border-2 border-offwhite bg-deep aspect-[16/10] sm:aspect-[2/1] w-full overflow-hidden">
+          <!-- Шар 1: Блідий контур (rgba(245,244,240,0.22)) -->
+          <svg viewBox="0 0 360 180" class="w-full h-full block" aria-label="Блідий контур для трасування">
+            <defs>
+              <pattern id="darkGuideGrid" width="18" height="18" patternUnits="userSpaceOnUse">
+                <path d="M 18 0 L 0 0 0 18" fill="none" stroke="rgba(245,244,240,0.06)" stroke-width="1" />
+              </pattern>
+            </defs>
+            <rect width="360" height="180" fill="url(#darkGuideGrid)" />
+            <g stroke="rgba(245,244,240,0.22)" stroke-width="1.6" fill="none" stroke-dasharray="4 3">
+              <rect x="16" y="14" width="328" height="152" />
+              <circle cx="90" cy="90" r="62" />
+              <circle cx="90" cy="90" r="40" />
+              <circle cx="90" cy="90" r="18" />
+              <polygon points="90,22 158,90 90,158 22,90" />
+              <path d="M90 28 C118 46, 128 74, 90 90 C52 74, 62 46, 90 28 Z" />
+              <path d="M90 152 C118 134, 128 106, 90 90 C52 106, 62 134, 90 152 Z" />
+
+              <circle cx="270" cy="90" r="62" />
+              <circle cx="270" cy="90" r="40" />
+              <circle cx="270" cy="90" r="18" />
+              <polygon points="270,22 338,90 270,158 202,90" />
+              <path d="M208 90 C226 62, 254 52, 270 90 C254 128, 226 118, 208 90 Z" />
+              <path d="M332 90 C314 62, 286 52, 270 90 C286 128, 314 118, 332 90 Z" />
+
+              <line x1="152" y1="90" x2="208" y2="90" />
+              <rect x="166" y="76" width="28" height="28" />
+            </g>
+          </svg>
+
+          <!-- Шар 2: Проявлений арт (#F5F4F0 та #C6FF00) -->
+          <div
+            id="entry-ink-overlay"
+            class="absolute inset-0 pointer-events-none"
+            style="clip-path: inset(0 45% 0 0);"
+          >
+            <svg viewBox="0 0 360 180" class="w-full h-full block bg-deep" aria-hidden="true">
+              <rect x="16" y="14" width="328" height="152" fill="none" stroke="#F5F4F0" stroke-width="2.5" />
+              <!-- Ліва мандала -->
+              <circle cx="90" cy="90" r="62" fill="none" stroke="#F5F4F0" stroke-width="2.2" />
+              <circle cx="90" cy="90" r="40" fill="none" stroke="#C6FF00" stroke-width="2" />
+              <polygon points="90,22 158,90 90,158 22,90" fill="none" stroke="#F5F4F0" stroke-width="2" />
+              <path d="M90 28 C118 46, 128 74, 90 90 C52 74, 62 46, 90 28 Z" fill="#F5F4F0" />
+              <path d="M90 152 C118 134, 128 106, 90 90 C52 106, 62 134, 90 152 Z" fill="#F5F4F0" />
+              <circle cx="90" cy="90" r="18" fill="#C6FF00" stroke="#111111" stroke-width="2.5" />
+              <circle cx="90" cy="90" r="6" fill="#111111" />
+
+              <!-- Центральний місток -->
+              <line x1="152" y1="90" x2="208" y2="90" stroke="#C6FF00" stroke-width="2.5" />
+              <rect x="166" y="76" width="28" height="28" fill="#C6FF00" stroke="#F5F4F0" stroke-width="2" />
+              <circle cx="180" cy="90" r="6" fill="#111111" />
+
+              <!-- Права мандала -->
+              <circle cx="270" cy="90" r="62" fill="none" stroke="#F5F4F0" stroke-width="2.2" />
+              <circle cx="270" cy="90" r="40" fill="none" stroke="#C6FF00" stroke-width="2" />
+              <polygon points="270,22 338,90 270,158 202,90" fill="none" stroke="#F5F4F0" stroke-width="2" />
+              <path d="M208 90 C226 62, 254 52, 270 90 C254 128, 226 118, 208 90 Z" fill="#F5F4F0" />
+              <path d="M332 90 C314 62, 286 52, 270 90 C286 128, 314 118, 332 90 Z" fill="#F5F4F0" />
+              <circle cx="270" cy="90" r="18" fill="#C6FF00" stroke="#111111" stroke-width="2.5" />
+              <circle cx="270" cy="90" r="6" fill="#111111" />
+            </svg>
+          </div>
+
+          <!-- Вертикальна лінія розділення -->
+          <div
+            id="entry-ink-line"
+            class="absolute top-0 bottom-0 w-0.5 bg-lime pointer-events-none"
+            style="left: 55%;"
+          >
+            <div class="bg-lime text-darkink border border-darkink text-[9px] font-bold px-1.5 py-0.5 -translate-x-1/2 mt-1.5 whitespace-nowrap">
+              АРТ
+            </div>
+          </div>
+        </div>
+
+        <!-- Повзунок інтерактивного проявлення -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between font-mono text-[11px] uppercase text-muted">
+            <span>0% БЛІДИЙ КОНТУР</span>
+            <span id="entry-ink-pct" class="font-bold text-lime">55% ПРОЯВЛЕНО</span>
+          </div>
+          <input
+            type="range"
+            id="entry-ink-slider"
+            min="0"
+            max="100"
+            value="55"
+            aria-label="Повзунок проявлення контуру"
+            class="brutal-slider"
+          />
+        </div>
+
+        <p class="font-mono text-xs leading-relaxed text-offwhite/90 pt-1">
+          Проведи ручкою по блідому контуру — отримай деталізований графічний арт. Навички малювання не потрібні.
+        </p>
+      </div>
+
+      <!-- Поле введення ПІБ для українських тестерок -->
+      <div class="brutal-card p-4 sm:p-5 space-y-3">
+        <label for="tester-name-input" class="block font-mono text-xs sm:text-sm font-bold leading-snug text-offwhite">
+          Твоє ім’я та прізвище <span class="text-muted font-normal">(щоб ми знали, кому який патерн роздрукувати)</span>
+        </label>
+        <input
+          type="text"
+          id="tester-name-input"
+          name="tester_full_name"
+          autocomplete="name"
+          placeholder="Наприклад: Олена Коваленко"
+          class="w-full border-2 border-offwhite bg-deep px-3.5 py-3 font-mono text-sm text-offwhite placeholder:text-muted/50 focus:outline-none focus:border-lime"
+        />
+        <div id="name-validation-msg" class="hidden bg-lime text-darkink font-mono text-xs font-bold px-3 py-2 border border-offwhite">
+          Введи ім’я та прізвище, щоб ми зафіксували твій патерн для друку.
+        </div>
+      </div>
+
+      <!-- Головна кнопка старту та дисклеймер -->
+      <div class="space-y-3">
+        <button
+          type="button"
+          id="btn-start-quiz"
+          class="brutal-btn brutal-btn-lime w-full font-display font-black text-base sm:text-lg uppercase tracking-tight py-4 px-5 flex items-center justify-center gap-2"
+        >
+          <span>РОЗРАХУВАТИ ВТРАЧЕНИЙ ЧАС</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+
+        <p class="font-mono text-[11px] sm:text-xs leading-relaxed text-muted border-l-2 border-lime pl-3">
+          Без обіцянок просвітлення. Жодної відповідальності за охололий чай і пропущені повідомлення.
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ЕКРАНИ 2–9 · УСІ 8 ПИТАНЬ КВІЗУ
+         ====================================================================== -->
+    <section id="screen-quiz" class="hidden space-y-6">
+      <!-- Сегментована шкала прогресу -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between font-mono text-xs font-bold uppercase">
+          <span id="progress-label" class="text-lime">01 / 08 · Тільки заходимо</span>
+          <span id="progress-percent" class="text-muted">12%</span>
+        </div>
+        <div
+          id="progress-segments"
+          class="grid grid-cols-8 gap-1.5"
+          role="progressbar"
+          aria-valuemin="1"
+          aria-valuemax="8"
+          aria-valuenow="1"
+        >
+          <!-- 8 сегментів генеруються через JS -->
+        </div>
+      </div>
+
+      <!-- Картка питання -->
+      <div class="brutal-card p-5 sm:p-6 space-y-3.5">
+        <div
+          id="question-tag"
+          class="inline-block bg-deep border border-lime text-lime font-mono text-[11px] font-bold uppercase px-2.5 py-1 tracking-wider"
+        >
+          01 / 08 · ІНЦИДЕНТ ІЗ ЛАЗЕРНОЮ КРАПКОЮ
+        </div>
+        <h2
+          id="question-prompt"
+          class="font-sansheavy font-extrabold text-xl sm:text-2xl leading-snug text-offwhite"
+        >
+          Ти — кіт. На підлозі з’являється червона лазерна крапка. Твої дії?
+        </h2>
+      </div>
+
+      <!-- Список варіантів відповіді (без відображення балів!) -->
+      <div id="options-container" class="space-y-3" role="radiogroup" aria-labelledby="question-prompt">
+        <!-- Варіанти генеруються через JS -->
+      </div>
+
+      <!-- Навігація внизу питання -->
+      <div class="pt-2 flex items-center justify-between gap-4">
+        <button
+          type="button"
+          id="btn-prev"
+          class="font-mono text-xs sm:text-sm font-bold uppercase text-muted hover:text-lime underline underline-offset-4 px-2 py-2 transition-colors"
+        >
+          &larr; НАЗАД
+        </button>
+
+        <button
+          type="button"
+          id="btn-next"
+          disabled
+          class="brutal-btn brutal-btn-lime font-display font-black text-sm sm:text-base uppercase tracking-tight py-3.5 px-6 flex items-center gap-2"
+        >
+          <span id="btn-next-text">ПІРНУТИ ГЛИБШЕ</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ПРОМІЖНИЙ ЕКРАН РОЗРАХУНКУ (800 мс)
+         ====================================================================== -->
+    <section id="screen-calculating" class="hidden py-14">
+      <div class="brutal-card-lime-shadow p-6 sm:p-8 space-y-4">
+        <div class="font-mono text-xs text-lime uppercase tracking-widest">
+          YANI PATTERN LAB // ДІАГНОСТИКА ГЛИБИНИ
+        </div>
+        <div class="font-display font-black text-xl sm:text-2xl uppercase leading-snug text-offwhite">
+          ЗВІРЯЄМО ПОКАЗИ ГОДИННИКА ТА РІВЕНЬ ЗАЛИПАННЯ...<span class="cursor-blink text-lime">_</span>
+        </div>
+        <div class="w-full h-4 border-2 border-offwhite bg-bgmain p-0.5">
+          <div id="calc-bar" class="h-full bg-lime transition-all duration-700 ease-out" style="width: 12%;"></div>
+        </div>
+        <div class="font-mono text-xs text-muted">
+          Аналізуємо охололий чай, ігноровані повідомлення та витривалість ручки.
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ЕКРАН 10 · КАРТКА РЕЗУЛЬТАТУ + КВИТАНЦІЯ + ЗАКРИТИЙ ТЕСТ
+         ====================================================================== -->
+    <section id="screen-result" class="hidden space-y-8">
+
+      <!-- 1. ЗАГОЛОВОК РІВНЯ + ЛІД + 3 АБЗАЦИ + ТАБЛИЦЯ ХАРАКТЕРИСТИК -->
+      <div class="space-y-4">
+        <div
+          id="res-level-badge"
+          class="bg-lime text-darkink border-2 border-offwhite px-3 py-2 font-mono text-xs font-bold uppercase tracking-wide"
+        >
+          РІВЕНЬ 3 / 5 · СТОП, КОТРА ГОДИНА? · ГЛИБИНА ■■■□□
+        </div>
+
+        <h1
+          id="res-title"
+          class="font-display font-black text-3xl sm:text-4xl uppercase tracking-tight leading-tight text-offwhite"
+        >
+          ТИ: ПРИВИД
+        </h1>
+
+        <p
+          id="res-lead"
+          class="font-sansheavy font-extrabold text-base sm:text-lg leading-snug text-lime"
+        >
+          Ти ніби в кімнаті. І водночас тебе тут немає.
+        </p>
+
+        <!-- Основний текст (3 абзаци) -->
+        <div
+          id="res-paragraphs"
+          class="space-y-3.5 font-mono text-xs sm:text-sm leading-relaxed text-offwhite bg-surface border-2 border-offwhite p-4 sm:p-5"
+        >
+          <!-- 3 абзаци генеруються через JS -->
+        </div>
+
+        <!-- Таблиця характеристик -->
+        <div class="brutal-card overflow-hidden">
+          <table class="w-full border-collapse font-mono text-xs sm:text-sm">
+            <tbody id="res-table-body" class="divide-y-2 divide-borderdim">
+              <!-- Рядки таблиці генеруються через JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2. ТЕРМОКВИТАНЦІЯ З КРОЛЯЧОЇ НОРИ + КНОПКИ ШЕРИНГУ -->
+      <div class="space-y-3">
+        <div class="receipt-wrapper">
+          <div class="receipt-body p-5 sm:p-6 space-y-4">
+            <!-- Шапка чека -->
+            <div class="text-center border-b-2 border-dashed border-borderdim pb-3 space-y-1">
+              <div class="font-mono text-[10px] uppercase tracking-widest text-muted">
+                YANI PATTERN LAB · РЕЖИМ ГІПЕРФОКУСУ · VOL. 1
+              </div>
+              <div class="font-display font-black text-lg sm:text-xl uppercase tracking-tight text-offwhite">
+                ТВОЯ КВИТАНЦІЯ З КРОЛЯЧОЇ НОРИ
+              </div>
+              <div id="receipt-meta" class="font-mono text-[10px] text-muted uppercase">
+                ДАТА: 2026-11-19 · ID: #YPL-0000
+              </div>
+            </div>
+
+            <!-- Дані чека -->
+            <div class="space-y-3 font-mono text-xs sm:text-sm">
+              <div class="flex justify-between items-baseline gap-2">
+                <span class="text-muted uppercase">ЗАВЕРШЕНО:</span>
+                <span id="receipt-completed" class="font-bold text-offwhite text-right">1+ готовий арт.</span>
+              </div>
+              <div class="flex justify-between items-center gap-2">
+                <span class="text-muted uppercase">ВТРАЧЕНИЙ ЧАС:</span>
+                <span
+                  id="receipt-time-lost"
+                  class="font-bold text-darkink bg-lime px-2 py-0.5 border border-offwhite text-right"
+                >
+                  3 год 25 хв (розчинилися в повітрі).
+                </span>
+              </div>
+              <div class="flex justify-between items-baseline gap-2">
+                <span class="text-muted uppercase">СТАТУС:</span>
+                <span id="receipt-status" class="font-bold text-offwhite text-right">кілька годин належали іншому виміру.</span>
+              </div>
+            </div>
+
+            <!-- Баркод і хештеги -->
+            <div class="pt-3 border-t-2 border-dashed border-borderdim flex flex-col items-center space-y-2">
+              <svg class="w-48 h-9" viewBox="0 0 200 36" aria-hidden="true">
+                <rect x="2" y="0" width="4" height="36" fill="#F5F4F0" />
+                <rect x="9" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="15" y="0" width="6" height="36" fill="#F5F4F0" />
+                <rect x="25" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="31" y="0" width="3" height="36" fill="#F5F4F0" />
+                <rect x="38" y="0" width="7" height="36" fill="#F5F4F0" />
+                <rect x="49" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="55" y="0" width="4" height="36" fill="#F5F4F0" />
+                <rect x="63" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="69" y="0" width="5" height="36" fill="#F5F4F0" />
+                <rect x="78" y="0" width="3" height="36" fill="#F5F4F0" />
+                <rect x="85" y="0" width="6" height="36" fill="#F5F4F0" />
+                <rect x="95" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="101" y="0" width="4" height="36" fill="#F5F4F0" />
+                <rect x="109" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="115" y="0" width="7" height="36" fill="#F5F4F0" />
+                <rect x="126" y="0" width="3" height="36" fill="#F5F4F0" />
+                <rect x="133" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="139" y="0" width="5" height="36" fill="#F5F4F0" />
+                <rect x="148" y="0" width="4" height="36" fill="#F5F4F0" />
+                <rect x="156" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="162" y="0" width="6" height="36" fill="#F5F4F0" />
+                <rect x="172" y="0" width="3" height="36" fill="#F5F4F0" />
+                <rect x="179" y="0" width="2" height="36" fill="#F5F4F0" />
+                <rect x="185" y="0" width="5" height="36" fill="#F5F4F0" />
+                <rect x="194" y="0" width="4" height="36" fill="#F5F4F0" />
+              </svg>
+              <div class="font-mono text-xs font-bold tracking-wide text-lime">
+                #явипалазреальності #patternrabbithole
+              </div>
+            </div>
+          </div>
+          <!-- Зубчастий нижній край квитанції -->
+          <div class="receipt-sawtooth"></div>
+        </div>
+
+        <!-- Дві кнопки квитанції -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <button
+            type="button"
+            id="btn-save-story"
+            class="brutal-btn bg-surface text-offwhite hover:bg-lime hover:text-darkink font-mono text-xs font-bold uppercase py-3.5 px-3 flex items-center justify-center text-center"
+          >
+            ЗБЕРЕГТИ КВИТАНЦІЮ ДЛЯ STORIES
+          </button>
+          <button
+            type="button"
+            id="btn-copy-share"
+            class="brutal-btn bg-surface text-offwhite hover:bg-lime hover:text-darkink font-mono text-xs font-bold uppercase py-3.5 px-3 flex items-center justify-center text-center"
+          >
+            <span id="copy-share-label">СКОПІЮВАТИ ТЕКСТ РЕЗУЛЬТАТУ</span>
+          </button>
+        </div>
+
+        <!-- Прев'ю згенерованої картки 9:16 для зручного збереження на мобільних -->
+        <div id="story-preview-box" class="hidden brutal-card p-3 space-y-2">
+          <div class="flex items-center justify-between font-mono text-[11px] font-bold uppercase text-lime">
+            <span>КАРТКА ДЛЯ STORIES 9:16 ГОТОВА (ЗАТИСНИ ФОТО ДЛЯ ЗБЕРЕЖЕННЯ)</span>
+            <button type="button" id="btn-close-story-preview" class="underline text-offwhite">ЗАКРИТИ</button>
+          </div>
+          <img
+            id="story-preview-img"
+            alt="Квитанція для Instagram Stories 9:16"
+            class="w-44 mx-auto border-2 border-offwhite block"
+          />
+        </div>
+      </div>
+
+      <!-- 3. БЛОК ВИДАЧІ ДЛЯ УКРАЇНСЬКИХ ТЕСТЕРОК (БЕЗ СКАЧУВАННЯ) -->
+      <div class="brutal-card-lime-shadow p-5 sm:p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-borderdim pb-3">
+          <h3 id="tester-pattern-heading" class="font-display font-black text-lg sm:text-xl uppercase text-lime">
+            ТВІЙ ПАТЕРН ДЛЯ ТЕСТУ: №11
+          </h3>
+          <span id="tester-pdf-tag" class="font-mono text-[11px] font-bold uppercase bg-surface border border-borderdim px-2 py-0.5 text-muted">
+            PDF 27 ІЗ VOL. 1
+          </span>
+        </div>
+
+        <!-- Захищений контейнер попереднього перегляду (max-width 300px) -->
+        <div
+          class="protected-preview relative max-w-[300px] w-full mx-auto border-2 border-offwhite bg-bgmain overflow-hidden"
+          oncontextmenu="return false;"
+        >
+          <!-- Слот для прев'ю патерна (кастомне зображення або процедурний SVG) -->
+          <div id="tester-pattern-visual" class="w-full aspect-[3/4] flex items-center justify-center bg-[#141414]">
+            <!-- Генерується через JS -->
+          </div>
+
+          <!-- Діагональний водяний знак поверх прев'ю -->
+          <div class="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+            <div
+              id="tester-watermark-text"
+              class="-rotate-30 font-mono text-xs font-bold uppercase tracking-widest text-offwhite/35 bg-bgmain/75 border border-offwhite/30 px-3 py-1.5 whitespace-nowrap"
+              style="transform: rotate(-28deg);"
+            >
+              ЗРАЗОК ДЛЯ ТЕСТУ · №11
+            </div>
+          </div>
+        </div>
+
+        <!-- Підпис під прев'ю -->
+        <p class="font-mono text-xs sm:text-sm leading-relaxed text-offwhite/90">
+          Це попередній перегляд патерна під твій рівень. Нічого скачувати не потрібно — твій вибір уже зафіксовано, ми роздрукуємо цей аркуш спеціально для тебе.
+        </p>
+
+        <!-- Плашка статусу фіксації ПІБ та номера патерна -->
+        <div class="bg-lime text-darkink border-2 border-offwhite p-3.5 font-mono text-xs sm:text-sm font-bold leading-snug">
+          <span id="tester-submission-status">
+            Зафіксовано: Олена Коваленко — Патерн №11. Дякуємо, що пірнула в нору.
+          </span>
+          <div id="webhook-sync-note" class="text-[10px] font-normal mt-1 opacity-85">
+            Дані автоматично передано в Google Форму та таблицю друку.
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. ПЛАШКА ЗАБЛОКОВАНОГО 5-ГО РІВНЯ -->
+      <div class="brutal-card p-5 space-y-2 border-borderdim bg-deep">
+        <div class="font-mono text-xs font-bold uppercase tracking-wider text-lime">
+          РІВЕНЬ 5 / 5 · БЕЗОДНЯ · ГЛИБИНА ■■■■■ — ЗАБЛОКОВАНО
+        </div>
+        <p class="font-mono text-xs sm:text-sm leading-relaxed text-muted">
+          Доступно лише у повній книзі «THE PATTERN RABBIT HOLE: Lock In Mode · Vol. 1». У цьому тесті ми не беремо на себе відповідальність за твою ніч.
+        </p>
+      </div>
+
+      <!-- Кнопка повторного проходження -->
+      <div class="pt-2">
+        <button
+          type="button"
+          id="btn-retake"
+          class="font-mono text-xs uppercase text-muted hover:text-lime underline underline-offset-4"
+        >
+          &circlearrowleft; ПРОЙТИ ТЕСТ ЩЕ РАЗ
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       МІНІМАЛІСТИЧНИЙ ФУТЕР
+       ======================================================================== -->
+  <footer class="w-full border-t-2 border-borderdim bg-bgmain mt-10">
+    <div class="max-w-xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-[11px] text-muted">
+      <span>&copy; 2026 YANI PATTERN LAB · УКРАЇНА</span>
+      <span>#явипалазреальності #patternrabbithole</span>
+    </div>
+  </footer>
+
+  <!-- Прихований Canvas для генерації картки 1080x1920 (9:16) для Instagram Stories -->
+  <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
+
+  <!-- ========================================================================
+       JAVASCRIPT: КОНФІГУРАЦІЯ, 8 ПИТАНЬ, 4 РЕЗУЛЬТАТИ ТА GOOGLE FORM SYNC
+       ======================================================================== -->
+  <script>
+    /**
+     * ==========================================================================
+     * КОНФІГУРАЦІЯ САЙТУ (ПІДКЛЮЧЕНО ДО ТВОЄЇ GOOGLE ФОРМИ)
+     * ==========================================================================
+     */
+    const CONFIG = {
+      GOOGLE_FORM_ACTION_URL: 'https://docs.google.com/forms/d/e/1FAIpQLScqAVqLb1TtNS5JMy2IBfUWRE6XqIt4C63qgRXK40YzIhEb5w/formResponse',
+      FORM_FIELDS: {
+        name: 'entry.1793568081',
+        level: 'entry.1660912714',
+        title: 'entry.76560368',
+        pattern: 'entry.712635991',
+        score: 'entry.967962361',
+      },
+
+      // Опціонально: вставте шляхи до реальних зменшених прев'ю-картинок патернів (наприклад, 'previews/pattern-01.jpg')
+      // Якщо залишити порожнім '', автоматично відобразиться захищений процедурний SVG-патерн відповідної складності
+      PREVIEW_IMAGES: {
+        1: '', // Патерн №01 (PDF 9 із Vol. 1)
+        2: '', // Патерн №06 (PDF 49 із Vol. 1)
+        3: '', // Патерн №11 (PDF 27 із Vol. 1)
+        4: '', // Патерн №20 (PDF 36 із Vol. 1)
+      },
+    };
+
+    /**
+     * ==========================================================================
+     * УСІ 8 ПИТАНЬ КВІЗУ (ВАГИ 1–4 ПРИХОВАНІ ВІД КОРИСТУВАЧОК)
+     * ==========================================================================
+     */
+    const QUIZ_QUESTIONS = [
+      {
+        progressLabel: '01 / 08 · Тільки заходимо',
+        tag: '01 / 08 · ІНЦИДЕНТ ІЗ ЛАЗЕРНОЮ КРАПКОЮ',
+        prompt: 'Ти — кіт. На підлозі з’являється червона лазерна крапка. Твої дії?',
+        options: [
+          { letter: 'А', text: 'Один удар лапою. Просто перевірити. Гаразд, ще один.', points: 2 },
+          { letter: 'Б', text: 'Крапка зникла у стіні. Я чекаю. І буду чекати.', points: 4 },
+          { letter: 'В', text: 'Дивлюся на неї. Засуджую її. Йду геть.', points: 1 },
+          { letter: 'Г', text: 'Ця крапка тепер — усе моє життя. Ваза просто стояла на шляху.', points: 3 },
+        ],
+      },
+      {
+        progressLabel: '02 / 08 · Вмощуємося зручніше',
+        tag: '02 / 08 · ІНЦИДЕНТ У THE ZIMS',
+        prompt: 'У твого зіма червона шкала голоду. А ти якраз у процесі. Що робиш?',
+        options: [
+          { letter: 'А', text: 'Забула, що в зімів є потреби. Вже 6-й день. Він тепер привид.', points: 4 },
+          { letter: 'Б', text: 'Годую його. Я відповідальний бог.', points: 1 },
+          { letter: 'В', text: 'Я сама ще не їла. Ми в цьому човні разом.', points: 3 },
+          { letter: 'Г', text: 'Сам розбереться. Він звик, що я зникаю на кілька годин.', points: 2 },
+        ],
+      },
+      {
+        progressLabel: '03 / 08 · Пірнаємо глибше',
+        tag: '03 / 08 · ІНЦИДЕНТ ІЗ ВИКРАДЕННЯМ ПРИБУЛЬЦЯМИ',
+        prompt: 'Тебе викрадають інопланетяни. Промінь світла вже відриває тебе від підлоги. На жаль, ти саме посеред важливої справи.',
+        options: [
+          { letter: 'А', text: 'Кажу їм дати мені ще п’ять хвилин. У них явно є технології, щоб поставити час на паузу.', points: 3 },
+          { letter: 'Б', text: 'Одразу погоджуюся. Нарешті хоч якась зміна обстановки.', points: 1 },
+          { letter: 'В', text: 'Питаю, чи на їхньому кораблі краще освітлення. Моє робоче місце щойно ідеально налаштувалося.', points: 4 },
+          { letter: 'Г', text: 'Хапаю те, над чим працюю, перш ніж ноги відірвуться від підлоги. Не можна просто кинути прогрес.', points: 2 },
+        ],
+      },
+      {
+        progressLabel: '04 / 08 · Ти ще тут?',
+        tag: '04 / 08 · ІНЦИДЕНТ ЗІ СВІЧКОЮ',
+        prompt: 'Ти зникла в AKEA. Зайшла лише по одну свічку. Камери спостереження зафіксували таке:',
+        options: [
+          { letter: 'А', text: 'Купила свічку. Вийшла. Чиста операція.', points: 1 },
+          { letter: 'Б', text: 'Магазин зачинився. Ти все ще порівнювала лампи.', points: 3 },
+          { letter: 'В', text: 'Купила ще й лампу, бо свічці було самотньо.', points: 2 },
+          { letter: 'Г', text: 'Ти обрала спальню, дала їй назву і зараз обговорюєш із персоналом умови оренди.', points: 4 },
+        ],
+      },
+      {
+        progressLabel: '05 / 08 · Без поспіху',
+        tag: '05 / 08 · МУЗЕЙНИЙ ІНЦИДЕНТ · ЧАС ЗАКРИТТЯ — ЦЕ ЛИШЕ РЕКОМЕНДАЦІЯ',
+        prompt: 'Ти в музеї. Одна із зал — це кімната, від підлоги до стелі вкрита щільними, складними лініями й переплетіннями. Охоронець оголошує: «Ми зачиняємося через п’ять хвилин».',
+        options: [
+          { letter: 'А', text: 'Охоронець видав мені ліхтарик. Тепер ми обоє в темі.', points: 4 },
+          { letter: 'Б', text: 'Останній погляд — і я йду.', points: 2 },
+          { letter: 'В', text: 'Виходжу. У музеїв недарма є графік роботи.', points: 1 },
+          { letter: 'Г', text: 'Світло вже вимкнули. Я все ще намагаюся простежити, як з’єднуються ці лінії.', points: 3 },
+        ],
+      },
+      {
+        progressLabel: '06 / 08 · Майже на дні',
+        tag: '06 / 08 · ІНЦИДЕНТ ІЗ МАШИНОЮ ЧАСУ · ЧАСОВА БУХГАЛТЕРІЯ',
+        prompt: 'Вчений пропонує тобі машину часу. Користуватися можна безкоштовно, але є одне правило: повернутися треба рівно через 15 хвилин твого власного часу.',
+        options: [
+          { letter: 'А', text: 'Лише одним оком гляну на одну історичну подію.', points: 2 },
+          { letter: 'Б', text: 'Я заснувала цивілізацію, винайшла календар і стала дрібною історичною незручністю.', points: 4 },
+          { letter: 'В', text: 'Я повернулася з трьома новими історичними теоріями і без жодного поняття, який зараз рік.', points: 3 },
+          { letter: 'Г', text: 'Чудово. Буду за 15 хвилин.', points: 1 },
+        ],
+      },
+      {
+        progressLabel: '07 / 08 · Останнє. Мабуть.',
+        tag: '07 / 08 · ІНЦИДЕНТ ІЗ ТАЄМНИЧИМИ ДВЕРЦЯТАМИ · НЕСАНКЦІОНОВАНЕ ДОСЛІДЖЕННЯ',
+        prompt: 'У твоїй стіні з’являються крихітні дверцята. На них табличка: «БУДЬ ЛАСКА, НЕ ВІДЧИНЯТИ. ВСЕРЕДИНІ ЧАС ІДЕ ІНАКШЕ».',
+        options: [
+          { letter: 'А', text: 'Заходжу всередину. Подивлюся на годинник, коли вийду.', points: 3 },
+          { letter: 'Б', text: 'Поважаю табличку. Мені й своїх проблем вистачає.', points: 1 },
+          { letter: 'В', text: 'Я вже провела туди Wi-Fi, принесла перекус і подала заяву на зміну адреси реєстрації.', points: 4 },
+          { letter: 'Г', text: 'Трохи прочиняю. Просто перевірити.', points: 2 },
+        ],
+      },
+      {
+        progressLabel: '08 / 08 · Тепер точно останнє.',
+        tag: '08 / 08 · ІНЦИДЕНТ ІЗ ЄНОТОМ · ДУЖЕ ПОГАНЕ БІЗНЕС-РІШЕННЯ',
+        prompt: 'О першій ночі у твої двері стукає єнот. У нього дипломат, крихітна краватка і бізнес-пропозиція.',
+        options: [
+          { letter: 'А', text: 'Зачиняю двері. Я не веду переговорів із єнотами.', points: 1 },
+          { letter: 'Б', text: 'Тепер я співзасновниця єнотячої корпорації. У нас уже є логотип.', points: 4 },
+          { letter: 'В', text: 'Вислухаю пітч. П’ять хвилин.', points: 2 },
+          { letter: 'Г', text: 'Переговори тривають третю годину. Я вже навіть не пам’ятаю, що саме ми продаємо.', points: 3 },
+        ],
+      },
+    ];
+
+    /**
+     * ==========================================================================
+     * 4 КАРТКИ РЕЗУЛЬТАТІВ (8–32 БАЛИ)
+     * ==========================================================================
+     */
+    const RESULT_LEVELS = {
+      1: {
+        levelNum: 1,
+        badge: 'РІВЕНЬ 1 / 5 · ПРОСТО ДИВЛЮСЯ · ГЛИБИНА ■□□□□',
+        title: 'ТИ: ТУРИСТКА',
+        characterShort: 'ТУРИСТКА',
+        lead: 'Ти знаєш, як зайти в кролячу нору, не оформлюючи там прописку.',
+        paragraphs: [
+          'Ти допитлива, але без самогубного фанатизму. Тобі подобається пірнути в цікавий процес, пройти кілька поворотів і подивитися, куди це виведе — не дозволяючи йому вкрасти весь твій вечір.',
+          'Поки інші випадково залишають три години на одному куточку, ти реально стежиш за часом. Ти доводиш справу до кінця, закриваєш ручку і йдеш далі зі своїм графіком у повному порядку.',
+          'Ти кажеш «лише одна сторінка» — і справді маєш на увазі одну сторінку. Виходиш із готовим графічним артом без жодних навичок малювання і з самоконтролем, який трохи лякає.',
+        ],
+        table: [
+          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Вчасно розуміти, коли досить.' },
+          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Іноді йдеш рівно за крок до найцікавішого.' },
+          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '1 год 20 хв' },
+          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Сказала — одна сторінка. Зробила — одну сторінку. Ми перевірили по камерах».' },
+        ],
+        receipt: {
+          completed: '1 готовий арт.',
+          timeLostShort: '1 год 20 хв',
+          timeLostFull: '1 год 20 хв (зафіксовано).',
+          status: 'заяву про зникнення не подавали.',
+          witness: '«Сказала — одна сторінка. Зробила — одну сторінку. Ми перевірили по камерах».',
+        },
+        shareText: 'Мені випала ТУРИСТКА — 1 год 20 хв у кролячій норі. Скільки пройде, перш ніж піднімеш голову ти? #явипалазреальності #patternrabbithole',
+        patternCode: '№01',
+        pdfNote: 'PDF 9 ІЗ VOL. 1',
+        getPreviewSvg: () => `
+          <svg viewBox="0 0 240 320" class="w-full h-full block">
+            <rect x="16" y="16" width="208" height="260" fill="none" stroke="rgba(245,244,240,0.3)" stroke-width="1.5" stroke-dasharray="3 2" />
+            <circle cx="120" cy="146" r="76" fill="none" stroke="rgba(245,244,240,0.45)" stroke-width="1.8" stroke-dasharray="3 2" />
+            <path d="M120 68 C166 95, 178 148, 120 224 C62 148, 74 95, 120 68 Z" fill="none" stroke="#F5F4F0" stroke-width="1.6" stroke-dasharray="4 2" />
+            <line x1="120" y1="68" x2="120" y2="224" stroke="#F5F4F0" stroke-width="1.5" />
+            <path d="M120 105 L155 88 M120 138 L160 124 M120 172 L148 162" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="3 2" />
+            <path d="M120 105 L85 88 M120 138 L80 124 M120 172 L92 162" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="3 2" />
+            <circle cx="120" cy="146" r="14" fill="none" stroke="#C6FF00" stroke-width="1.8" />
+            <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
+            <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+          </svg>`,
+      },
+      2: {
+        levelNum: 2,
+        badge: 'РІВЕНЬ 2 / 5 · ЩЕ ОДНУ ЛІНІЮ · ГЛИБИНА ■■□□□',
+        title: 'ТИ: ПЕРЕГОВОРНИЦЯ',
+        characterShort: 'ПЕРЕГОВОРНИЦЯ',
+        lead: 'Ти не губиш фінішну лінію. Ти просто постійно її пересуваєш.',
+        paragraphs: [
+          'Усе завжди починається як коротка перерва. «Ще одну лінію». «Ще оцей сектор». «Гаразд, тільки оцей куточок». Кожна твоя угода з годинником гірша за попередню, і ти підписуєш їх добровільно.',
+          'Тобі кайфово бачити, як картинка збирається фрагмент за фрагментом, тому зупинитися посередині здається особистою зрадою. Кинути ділянку недопрацьованою — взагалі не варіант.',
+          'Навіть без навичок малювання ти ведеш ручку по блідому контуру, і з-під пальців виходить складний графічний арт. І якимось дивом завжди лишається ще одна дрібниця, яку треба довести до ладу, перш ніж ти піднімеш голову.',
+        ],
+        table: [
+          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Перетворювати десятихвилинну паузу на повноцінну вечірню спецоперацію.' },
+          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Твоє визначення фрази «майже закінчила» юридично дуже гнучке.' },
+          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '2 год 10 хв' },
+          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Сказала — ще п’ять хвилин. Минула година. Судячи з усього, переговори досі тривають».' },
+        ],
+        receipt: {
+          completed: '1 готовий арт (плюс «ще трохи» деталей).',
+          timeLostShort: '2 год 10 хв',
+          timeLostFull: '2 год 10 хв (виторгувано в ночі).',
+          status: 'відбій успішно перенесено.',
+          witness: '«Сказала — ще п’ять хвилин. Минула година. Судячи з усього, переговори досі тривають».',
+        },
+        shareText: 'Мені випала ПЕРЕГОВОРНИЦЯ — 2 год 10 хв у кролячій норі. Скільки пройде, перш ніж піднімеш голову ти? #явипалазреальності #patternrabbithole',
+        patternCode: '№06',
+        pdfNote: 'PDF 49 ІЗ VOL. 1',
+        getPreviewSvg: () => `
+          <svg viewBox="0 0 240 320" class="w-full h-full block">
+            <rect x="16" y="16" width="208" height="260" fill="none" stroke="rgba(245,244,240,0.35)" stroke-width="1.5" />
+            <rect x="30" y="30" width="180" height="232" fill="none" stroke="rgba(245,244,240,0.25)" stroke-width="1.2" stroke-dasharray="3 2" />
+            <polygon points="120,44 202,146 120,248 38,146" fill="none" stroke="#F5F4F0" stroke-width="1.5" stroke-dasharray="3 2" />
+            <circle cx="120" cy="146" r="64" fill="none" stroke="#F5F4F0" stroke-width="1.5" stroke-dasharray="2 2" />
+            <path d="M120 82 C154 106, 154 186, 120 210 C86 186, 86 106, 120 82 Z" fill="none" stroke="#F5F4F0" stroke-width="1.5" />
+            <path d="M56 146 C80 112, 160 112, 184 146 C160 180, 80 180, 56 146 Z" fill="none" stroke="#C6FF00" stroke-width="1.4" stroke-dasharray="3 2" />
+            <circle cx="120" cy="146" r="18" fill="none" stroke="#C6FF00" stroke-width="1.8" />
+            <rect x="32" y="32" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
+            <rect x="190" y="32" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
+            <rect x="32" y="242" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
+            <rect x="190" y="242" width="18" height="18" fill="none" stroke="#F5F4F0" stroke-width="1.2" />
+            <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
+            <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+          </svg>`,
+      },
+      3: {
+        levelNum: 3,
+        badge: 'РІВЕНЬ 3 / 5 · СТОП, КОТРА ГОДИНА? · ГЛИБИНА ■■■□□',
+        title: 'ТИ: ПРИВИД',
+        characterShort: 'ПРИВИД',
+        lead: 'Ти ніби в кімнаті. І водночас тебе тут немає.',
+        paragraphs: [
+          'Ти заглянула просто подивитися, а решта вечора тихо пішла без тебе. Повідомлення приходять, напої холонуть, а годинник непомітно перестрибує на три години вперед без твого дозволу.',
+          'Тобі не потрібне нове відволікання кожні п’ять хвилин. Дай тобі достатньо щільну структуру, і ти спокійно провалишся в неї на пів ночі, поки рука просто веде лінію за лінією.',
+          'Навички малювання для цього не потрібні — ти проявляєш блідий контур і виринаєш із графічним артом на столі, який виглядає так, ніби над ним тиждень сидів ілюстратор. Час може йти далі. Ти зайнята.',
+        ],
+        table: [
+          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Глибокий фокус і вміння зникати з радарів за командою.' },
+          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Забуваєш, що решта суспільства живе за розкладом.' },
+          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '3 год 25 хв' },
+          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Чай заварили о восьмій. Чай досі там. Ми вирішили не заважати».' },
+        ],
+        receipt: {
+          completed: '1+ готовий арт.',
+          timeLostShort: '3 год 25 хв',
+          timeLostFull: '3 год 25 хв (розчинилися в повітрі).',
+          status: 'кілька годин належали іншому виміру.',
+          witness: '«Чай заварили о восьмій. Чай досі там. Ми вирішили не заважати».',
+        },
+        shareText: 'Мені випав ПРИВИД — 3 год 25 хв у кролячій норі. Скільки пройде, перш ніж піднімеш голову ти? #явипалазреальності #patternrabbithole',
+        patternCode: '№11',
+        pdfNote: 'PDF 27 ІЗ VOL. 1',
+        getPreviewSvg: () => `
+          <svg viewBox="0 0 240 320" class="w-full h-full block">
+            <rect x="16" y="16" width="208" height="260" fill="none" stroke="rgba(245,244,240,0.4)" stroke-width="1.5" />
+            <circle cx="120" cy="146" r="86" fill="none" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="2 2" />
+            <circle cx="120" cy="146" r="66" fill="none" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="3 2" />
+            <circle cx="120" cy="146" r="46" fill="none" stroke="#C6FF00" stroke-width="1.4" stroke-dasharray="2 2" />
+            <circle cx="120" cy="146" r="24" fill="none" stroke="#F5F4F0" stroke-width="1.6" />
+            <circle cx="120" cy="70" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
+            <circle cx="120" cy="222" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
+            <circle cx="44" cy="146" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
+            <circle cx="196" cy="146" r="11" fill="none" stroke="#F5F4F0" stroke-width="1.4" />
+            <circle cx="66" cy="92" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
+            <circle cx="174" cy="92" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
+            <circle cx="66" cy="200" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
+            <circle cx="174" cy="200" r="8" fill="none" stroke="#C6FF00" stroke-width="1.3" />
+            <line x1="34" y1="146" x2="206" y2="146" stroke="rgba(245,244,240,0.35)" stroke-width="1" stroke-dasharray="2 2" />
+            <line x1="120" y1="60" x2="120" y2="232" stroke="rgba(245,244,240,0.35)" stroke-width="1" stroke-dasharray="2 2" />
+            <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
+            <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+          </svg>`,
+      },
+      4: {
+        levelNum: 4,
+        badge: 'РІВЕНЬ 4 / 5 · НЕСІТЬ ЇЖУ · ГЛИБИНА ■■■■□',
+        title: 'ТИ: РЕЗИДЕНТКА НОРИ',
+        characterShort: 'РЕЗИДЕНТКА НОРИ',
+        lead: 'Ти не впала в кролячу нору. Ти туди переїхала.',
+        paragraphs: [
+          'Щойно деталь чіпляє твій погляд, ти не просто пробуєш воду. Ти облаштовуєшся, розбираєш кожен куточок і розгортаєш навколо цього цілу операцію.',
+          'Випадкова сесія миттєво перетворюється на повномасштабний проєкт — із власною системою, холодним напоєм, про який ти забула дві години тому, і нульовим зв’язком із зовнішнім світом.',
+          'Тобі не потрібні вмовляння, щоб продовжувати, і не потрібен талант художника, щоб на аркуші з’явився ювелірний графічний арт. Тобі просто треба, щоб хтось приніс перекус і підказав, який сьогодні день тижня.',
+        ],
+        table: [
+          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Повне занурення. Нуль самоконтролю.' },
+          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Потребуєш провізії, води й періодичного контакту з цивілізацією.' },
+          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '5 год 40 хв' },
+          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Настав світанок. Вона просто відмахнулася».' },
+        ],
+        receipt: {
+          completed: 'кілька артів пережито.',
+          timeLostShort: '5 год 40 хв',
+          timeLostFull: '5 год 40 хв (офіційно засекречено).',
+          status: 'обґрунтована підозра на постійне місце проживання.',
+          witness: '«Настав світанок. Вона просто відмахнулася».',
+        },
+        shareText: 'Мені випала РЕЗИДЕНТКА НОРИ — 5 год 40 хв у кролячій норі. Несіть їжу. #явипалазреальності #patternrabbithole',
+        patternCode: '№20',
+        pdfNote: 'PDF 36 ІЗ VOL. 1',
+        getPreviewSvg: () => {
+          let gridCells = '';
+          for (let r = 0; r < 7; r++) {
+            for (let c = 0; c < 6; c++) {
+              const x = 28 + c * 31;
+              const y = 32 + r * 32;
+              const accent = (r + c) % 3 === 0 ? '#C6FF00' : '#F5F4F0';
+              gridCells += `<rect x="${x}" y="${y}" width="26" height="26" fill="none" stroke="rgba(245,244,240,0.45)" stroke-width="1.2" stroke-dasharray="2 1.5" />`;
+              gridCells += `<circle cx="${x + 13}" cy="${y + 13}" r="7" fill="none" stroke="${accent}" stroke-width="1.2" />`;
+              gridCells += `<line x1="${x}" y1="${y}" x2="${x + 26}" y2="${y + 26}" stroke="rgba(245,244,240,0.22)" stroke-width="0.9" />`;
+            }
+          }
+          return `
+            <svg viewBox="0 0 240 320" class="w-full h-full block">
+              <rect x="16" y="16" width="208" height="260" fill="none" stroke="#F5F4F0" stroke-width="1.6" />
+              ${gridCells}
+              <line x1="16" y1="292" x2="224" y2="292" stroke="rgba(245,244,240,0.35)" stroke-width="1" />
+              <text x="16" y="306" fill="#A8A8A8" font-family="IBM Plex Mono, monospace" font-size="8">ПІРНУЛА О ___ · ВИРИНУЛА О ___ · ЧАС: ___</text>
+            </svg>`;
+        },
+      },
+    };
+
+    /**
+     * ==========================================================================
+     * СТАН ДОДАТКУ
+     * ==========================================================================
+     */
+    const state = {
+      testerFullName: '',
+      currentQuestionIndex: 0,
+      answers: new Array(QUIZ_QUESTIONS.length).fill(null),
+      totalScore: 0,
+      calculatedLevel: 3,
+      hasSyncedCurrentResult: false,
+    };
+
+    /**
+     * ==========================================================================
+     * ІНІЦІАЛІЗАЦІЯ ТА ОБРОБНИКИ ПОДІЙ
+     * ==========================================================================
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      setupEntryInkPreview();
+      buildProgressSegments();
+
+      const nameInput = document.getElementById('tester-name-input');
+      const nameError = document.getElementById('name-validation-msg');
+
+      // Приховуємо повідомлення про помилку, щойно тестерка починає вводити ім'я
+      nameInput.addEventListener('input', () => {
+        if (nameInput.value.trim().length > 0) {
+          nameError.classList.add('hidden');
+        }
+      });
+
+      // Кнопка старту квізу (з обов'язковою перевіркою імені та прізвища)
+      document.getElementById('btn-start-quiz').addEventListener('click', () => {
+        const cleanedName = nameInput.value.trim();
+        if (!cleanedName) {
+          nameError.classList.remove('hidden');
+          nameInput.focus();
+          return;
+        }
+        state.testerFullName = cleanedName;
+        state.currentQuestionIndex = 0;
+        showScreen('screen-quiz');
+        renderQuestion();
+      });
+
+      // Кнопка «Назад»
+      document.getElementById('btn-prev').addEventListener('click', () => {
+        if (state.currentQuestionIndex > 0) {
+          state.currentQuestionIndex--;
+          renderQuestion();
+        } else {
+          showScreen('screen-entry');
+        }
+      });
+
+      // Кнопка «Пірнути глибше» / «Отримати квитанцію»
+      document.getElementById('btn-next').addEventListener('click', () => {
+        if (state.answers[state.currentQuestionIndex] === null) return;
+
+        if (state.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
+          state.currentQuestionIndex++;
+          renderQuestion();
+        } else {
+          finishQuizAndCalculate();
+        }
+      });
+
+      // Кнопки екрана результату
+      document.getElementById('btn-save-story').addEventListener('click', generateAndDownloadStoryReceipt);
+      document.getElementById('btn-copy-share').addEventListener('click', copyShareTextToClipboard);
+      document.getElementById('btn-close-story-preview').addEventListener('click', () => {
+        document.getElementById('story-preview-box').classList.add('hidden');
+      });
+
+      // Повторне проходження тесту
+      document.getElementById('btn-retake').addEventListener('click', () => {
+        state.currentQuestionIndex = 0;
+        state.answers = new Array(QUIZ_QUESTIONS.length).fill(null);
+        state.totalScore = 0;
+        state.hasSyncedCurrentResult = false;
+        showScreen('screen-entry');
+      });
+    });
+
+    /**
+     * ==========================================================================
+     * ПЕРЕМИКАННЯ ЕКРАНІВ
+     * ==========================================================================
+     */
+    function showScreen(screenId) {
+      const allScreens = ['screen-entry', 'screen-quiz', 'screen-calculating', 'screen-result'];
+      allScreens.forEach((id) => {
+        const el = document.getElementById(id);
+        if (id === screenId) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * ==========================================================================
+     * ЕКРАН 1: ІНТЕРАКТИВНИЙ СЛАЙДЕР ПРОЯВЛЕННЯ КОНТУРУ
+     * ==========================================================================
+     */
+    function setupEntryInkPreview() {
+      const slider = document.getElementById('entry-ink-slider');
+      const toggleBtn = document.getElementById('entry-ink-toggle');
+      const overlay = document.getElementById('entry-ink-overlay');
+      const divider = document.getElementById('entry-ink-line');
+      const pctLabel = document.getElementById('entry-ink-pct');
+
+      function applyReveal(value) {
+        const clamped = Math.max(0, Math.min(100, Number(value)));
+        const rightClip = 100 - clamped;
+        overlay.style.clipPath = `inset(0 ${rightClip}% 0 0)`;
+        divider.style.left = `${clamped}%`;
+        pctLabel.textContent = `${clamped}% ПРОЯВЛЕНО`;
+      }
+
+      slider.addEventListener('input', (e) => {
+        applyReveal(e.target.value);
+      });
+
+      toggleBtn.addEventListener('click', () => {
+        const current = Number(slider.value);
+        const nextVal = current < 50 ? 100 : 0;
+        slider.value = nextVal;
+        applyReveal(nextVal);
+      });
+    }
+
+    /**
+     * ==========================================================================
+     * ЕКРАНИ 2–9: РЕНДЕР ПИТАНЬ ТА ПРОГРЕС-БАРУ
+     * ==========================================================================
+     */
+    function buildProgressSegments() {
+      const container = document.getElementById('progress-segments');
+      container.innerHTML = '';
+      for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
+        const seg = document.createElement('div');
+        seg.className = 'h-2.5 border-2 border-borderdim bg-deep transition-colors';
+        container.appendChild(seg);
+      }
+    }
+
+    function renderQuestion() {
+      const idx = state.currentQuestionIndex;
+      const qObj = QUIZ_QUESTIONS[idx];
+
+      // Оновлення прогресу
+      document.getElementById('progress-label').textContent = qObj.progressLabel;
+      const pct = Math.round(((idx + 1) / QUIZ_QUESTIONS.length) * 100);
+      document.getElementById('progress-percent').textContent = `${pct}%`;
+
+      const bar = document.getElementById('progress-segments');
+      bar.setAttribute('aria-valuenow', idx + 1);
+      const segments = bar.children;
+      for (let i = 0; i < segments.length; i++) {
+        if (i < idx) {
+          segments[i].className = 'h-2.5 border-2 border-offwhite bg-offwhite';
+        } else if (i === idx) {
+          segments[i].className = 'h-2.5 border-2 border-offwhite bg-lime';
+        } else {
+          segments[i].className = 'h-2.5 border-2 border-borderdim bg-deep';
+        }
+      }
+
+      // Оновлення заголовка питання
+      document.getElementById('question-tag').textContent = qObj.tag;
+      document.getElementById('question-prompt').textContent = qObj.prompt;
+
+      // Рендер 4 варіантів відповіді (суворо без показу прихованих балів)
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      qObj.options.forEach((opt, optIdx) => {
+        const isSelected = state.answers[idx] === optIdx;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('role', 'radio');
+        btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+        btn.className = `option-card w-full text-left p-4 flex items-start gap-3.5 ${isSelected ? 'selected' : ''}`;
+
+        btn.innerHTML = `
+          <span class="option-badge shrink-0 w-7 h-7 border-2 flex items-center justify-center font-mono text-xs font-bold ${
+            isSelected ? 'bg-darkink text-lime border-darkink' : 'bg-deep text-offwhite border-borderdim'
+          }">
+            ${opt.letter}
+          </span>
+          <span class="font-mono text-xs sm:text-sm leading-snug pt-0.5">
+            ${opt.text}
+          </span>
+        `;
+
+        btn.addEventListener('click', () => {
+          state.answers[idx] = optIdx;
+          renderQuestion();
+        });
+
+        optionsContainer.appendChild(btn);
+      });
+
+      // Кнопка переходу
+      const nextBtn = document.getElementById('btn-next');
+      const nextBtnText = document.getElementById('btn-next-text');
+      nextBtn.disabled = state.answers[idx] === null;
+      nextBtnText.textContent = idx === QUIZ_QUESTIONS.length - 1 ? 'ОТРИМАТИ КВИТАНЦІЮ' : 'ПІРНУТИ ГЛИБШЕ';
+    }
+
+    /**
+     * ==========================================================================
+     * ПІДРАХУНОК БАЛІВ (8–32) ТА 800 мс ПЕРЕХІД
+     * ==========================================================================
+     */
+    function finishQuizAndCalculate() {
+      let sum = 0;
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const chosen = state.answers[idx];
+        if (chosen !== null) {
+          sum += q.options[chosen].points;
+        }
+      });
+
+      state.totalScore = sum;
+
+      if (sum <= 13) {
+        state.calculatedLevel = 1;
+      } else if (sum <= 19) {
+        state.calculatedLevel = 2;
+      } else if (sum <= 26) {
+        state.calculatedLevel = 3;
+      } else {
+        state.calculatedLevel = 4;
+      }
+
+      showScreen('screen-calculating');
+      const calcBar = document.getElementById('calc-bar');
+      calcBar.style.width = '15%';
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          calcBar.style.width = '100%';
+        }, 40);
+      });
+
+      setTimeout(() => {
+        renderResultScreen();
+        showScreen('screen-result');
+      }, 800);
+    }
+
+    /**
+     * ==========================================================================
+     * ЕКРАН 10 · ВІДОБРАЖЕННЯ КАРТКИ РЕЗУЛЬТАТУ, КВИТАНЦІЇ ТА ЗАПИС У ФОРМУ
+     * ==========================================================================
+     */
+    function renderResultScreen() {
+      const data = RESULT_LEVELS[state.calculatedLevel];
+
+      // Бейдж, заголовок, лід та 3 абзаци
+      document.getElementById('res-level-badge').textContent = data.badge;
+      document.getElementById('res-title').textContent = data.title;
+      document.getElementById('res-lead').textContent = data.lead;
+
+      document.getElementById('res-paragraphs').innerHTML = data.paragraphs
+        .map((p) => `<p>${p}</p>`)
+        .join('');
+
+      // Таблиця характеристик
+      document.getElementById('res-table-body').innerHTML = data.table
+        .map(
+          (row) => `
+          <tr>
+            <td class="p-3 sm:p-3.5 font-bold text-lime uppercase align-top w-2/5 bg-deep">
+              ${row.label}
+            </td>
+            <td class="p-3 sm:p-3.5 text-offwhite align-top bg-surface">
+              ${row.value}
+            </td>
+          </tr>`
+        )
+        .join('');
+
+      // Термоквитанція
+      const dateStr = new Date().toISOString().split('T')[0];
+      const serial = Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('receipt-meta').textContent = `ДАТА: ${dateStr} · ID: #YPL-${serial}`;
+      document.getElementById('receipt-completed').textContent = data.receipt.completed;
+      document.getElementById('receipt-time-lost').textContent = data.receipt.timeLostFull;
+      document.getElementById('receipt-status').textContent = data.receipt.status;
+
+      // Блок закритого тестування (без скачування)
+      document.getElementById('tester-pattern-heading').textContent = `ТВІЙ ПАТЕРН ДЛЯ ТЕСТУ: ${data.patternCode}`;
+      document.getElementById('tester-pdf-tag').textContent = data.pdfNote;
+      document.getElementById('tester-watermark-text').textContent = `ЗРАЗОК ДЛЯ ТЕСТУ · ${data.patternCode}`;
+
+      // Відображення картинки прев'ю або процедурного SVG
+      const visualContainer = document.getElementById('tester-pattern-visual');
+      const customImgUrl = CONFIG.PREVIEW_IMAGES[state.calculatedLevel];
+      if (customImgUrl && customImgUrl.trim() !== '') {
+        visualContainer.innerHTML = `
+          <img
+            src="${customImgUrl}"
+            alt="Попередній перегляд патерна ${data.patternCode}"
+            class="w-full h-full object-contain block"
+            draggable="false"
+          />`;
+      } else {
+        visualContainer.innerHTML = data.getPreviewSvg();
+      }
+
+      // Статус фіксації тестерки
+      document.getElementById('tester-submission-status').textContent =
+        `Зафіксовано: ${state.testerFullName} — Патерн ${data.patternCode}. Дякуємо, що пірнула в нору.`;
+
+      document.getElementById('story-preview-box').classList.add('hidden');
+
+      // Автоматична відправка результату в Google Форму (один раз на проходження)
+      if (!state.hasSyncedCurrentResult) {
+        state.hasSyncedCurrentResult = true;
+        sendResultToGoogleSheet(data);
+      }
+    }
+
+    /**
+     * ==========================================================================
+     * АВТОМАТИЧНА ПЕРЕДАЧА РЕЗУЛЬТАТУ В GOOGLE ФОРМУ (+ ЛОКАЛЬНИЙ РЕЗЕРВ)
+     * ==========================================================================
+     */
+    async function sendResultToGoogleSheet(levelData) {
+      const syncNote = document.getElementById('webhook-sync-note');
+      const payload = {
+        timestamp: new Date().toISOString(),
+        fullName: state.testerFullName,
+        score: state.totalScore,
+        level: `РІВЕНЬ ${levelData.levelNum}`,
+        characterTitle: levelData.characterShort,
+        patternNumber: `${levelData.patternCode} (${levelData.pdfNote})`,
+        source: 'ua_tester_quiz',
+      };
+
+      // Зберігаємо резервну копію в localStorage браузера
+      try {
+        const existingLogs = JSON.parse(localStorage.getItem('ypl_ua_tester_logs') || '[]');
+        existingLogs.push(payload);
+        localStorage.setItem('ypl_ua_tester_logs', JSON.stringify(existingLogs));
+      } catch (e) {
+        // Ігноруємо обмеження localStorage у приватному режимі
+      }
+
+      try {
+        syncNote.textContent = 'Передаємо запис у Google Форму...';
+        const formData = new URLSearchParams();
+        formData.append(CONFIG.FORM_FIELDS.name, payload.fullName);
+        formData.append(CONFIG.FORM_FIELDS.level, payload.level);
+        formData.append(CONFIG.FORM_FIELDS.title, payload.characterTitle);
+        formData.append(CONFIG.FORM_FIELDS.pattern, payload.patternNumber);
+        formData.append(CONFIG.FORM_FIELDS.score, String(payload.score));
+
+        await fetch(CONFIG.GOOGLE_FORM_ACTION_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          },
+          body: formData.toString(),
+        });
+        syncNote.textContent = 'Дані автоматично зафіксовано в Google Формі та таблиці друку.';
+      } catch (err) {
+        syncNote.textContent = 'Запис збережено локально (помилка мережі при передачі).';
+      }
+    }
+
+    /**
+     * ==========================================================================
+     * КОПІЮВАННЯ ТЕКСТУ РЕЗУЛЬТАТУ В БУФЕР ОБМІНУ
+     * ==========================================================================
+     */
+    function copyShareTextToClipboard() {
+      const shareText = RESULT_LEVELS[state.calculatedLevel].shareText;
+      const labelEl = document.getElementById('copy-share-label');
+
+      const textarea = document.createElement('textarea');
+      textarea.value = shareText;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand('copy');
+        labelEl.textContent = 'СКОПІЙОВАНО ✓';
+        setTimeout(() => {
+          labelEl.textContent = 'СКОПІЮВАТИ ТЕКСТ РЕЗУЛЬТАТУ';
+        }, 2200);
+      } catch (err) {
+        labelEl.textContent = 'ПОМИЛКА КОПІЮВАННЯ';
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    /**
+     * ==========================================================================
+     * HTML5 CANVAS: ГЕНЕРАЦІЯ КАРТКИ 1080x1920 (9:16) ДЛЯ INSTAGRAM STORIES
+     * ==========================================================================
+     */
+    function generateAndDownloadStoryReceipt() {
+      const canvas = document.getElementById('story-canvas');
+      const ctx = canvas.getContext('2d');
+      const data = RESULT_LEVELS[state.calculatedLevel];
+
+      const W = 1080;
+      const H = 1920;
+
+      // 1. Фон #202020
+      ctx.fillStyle = '#202020';
+      ctx.fillRect(0, 0, W, H);
+
+      // Тонка сітка на тлі
+      ctx.fillStyle = '#333333';
+      for (let gx = 48; gx < W; gx += 48) {
+        for (let gy = 48; gy < H; gy += 48) {
+          ctx.fillRect(gx, gy, 3, 3);
+        }
+      }
+
+      // Зовнішня рамка
+      ctx.strokeStyle = '#F5F4F0';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(48, 48, W - 96, H - 96);
+
+      // 2. Шапка бренду
+      ctx.fillStyle = '#F5F4F0';
+      ctx.font = '900 32px "Unbounded", "Inter", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('YANI PATTERN LAB', 92, 130);
+
+      ctx.fillStyle = '#C6FF00';
+      ctx.font = '700 22px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('VOL. 1 · ТЕСТ', W - 92, 130);
+
+      ctx.strokeStyle = '#444444';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(48, 168);
+      ctx.lineTo(W - 48, 168);
+      ctx.stroke();
+
+      // 3. Кислотно-лаймова плашка рівня
+      ctx.fillStyle = '#C6FF00';
+      ctx.fillRect(92, 220, W - 184, 68);
+      ctx.strokeStyle = '#F5F4F0';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(92, 220, W - 184, 68);
+
+      ctx.fillStyle = '#111111';
+      ctx.font = '700 24px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(data.badge, W / 2, 263);
+
+      // 4. Заголовок персонажа
+      ctx.fillStyle = '#F5F4F0';
+      ctx.font = '900 62px "Unbounded", "Inter", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(data.title, W / 2, 375);
+
+      // 5. Термочек (#181818 з кислотно-лаймовою тінню та зубчастим краєм)
+      const rx = 104;
+      const ry = 435;
+      const rw = W - 208;
+      const rh = 1150;
+
+      // Жорстка тінь #C6FF00
+      ctx.fillStyle = '#C6FF00';
+      ctx.fillRect(rx + 14, ry + 14, rw, rh);
+
+      // Основне тіло чека #181818
+      ctx.fillStyle = '#181818';
+      ctx.fillRect(rx, ry, rw, rh);
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#F5F4F0';
+      ctx.strokeRect(rx, ry, rw, rh);
+
+      // Зубчастий нижній край
+      const toothWidth = 36;
+      const toothHeight = 24;
+      const numTeeth = Math.floor(rw / toothWidth);
+      ctx.fillStyle = '#181818';
+      for (let i = 0; i < numTeeth; i++) {
+        const tx = rx + i * toothWidth;
+        const ty = ry + rh;
+        ctx.beginPath();
+        ctx.moveTo(tx, ty - 2);
+        ctx.lineTo(tx + toothWidth / 2, ty + toothHeight);
+        ctx.lineTo(tx + toothWidth, ty - 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      // Заголовок всередині квитанції
+      ctx.fillStyle = '#F5F4F0';
+      ctx.font = '900 34px "Unbounded", "Inter", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('КВИТАНЦІЯ З КРОЛЯЧОЇ НОРИ', W / 2, ry + 84);
+
+      const dateStr = new Date().toISOString().split('T')[0];
+      const subMeta = state.testerFullName
+        ? `УЧАСНИЦЯ: ${state.testerFullName.toUpperCase()} · ${dateStr}`
+        : `ДАТА ПЕРЕВІРКИ: ${dateStr}`;
+      ctx.font = '500 22px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#A8A8A8';
+      ctx.fillText(subMeta, W / 2, ry + 130);
+
+      drawDashedDivider(ctx, rx + 44, ry + 168, rx + rw - 44, ry + 168);
+
+      // Блок втраченого часу
+      ctx.fillStyle = '#A8A8A8';
+      ctx.font = '700 24px "IBM Plex Mono", monospace';
+      ctx.fillText('ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', W / 2, ry + 232);
+
+      const timeBoxW = 540;
+      const timeBoxH = 126;
+      ctx.fillStyle = '#C6FF00';
+      ctx.fillRect((W - timeBoxW) / 2, ry + 260, timeBoxW, timeBoxH);
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#F5F4F0';
+      ctx.strokeRect((W - timeBoxW) / 2, ry + 260, timeBoxW, timeBoxH);
+
+      ctx.fillStyle = '#111111';
+      ctx.font = '900 66px "Unbounded", "Inter", sans-serif';
+      ctx.fillText(data.receipt.timeLostShort, W / 2, ry + 346);
+
+      // Завершено та статус
+      ctx.fillStyle = '#F5F4F0';
+      ctx.font = '700 26px "IBM Plex Mono", monospace';
+      ctx.fillText(`ЗАВЕРШЕНО: ${data.receipt.completed}`, W / 2, ry + 455);
+
+      ctx.fillStyle = '#C6FF00';
+      ctx.font = '500 23px "IBM Plex Mono", monospace';
+      ctx.fillText(`СТАТУС: ${data.receipt.status}`, W / 2, ry + 502);
+
+      drawDashedDivider(ctx, rx + 44, ry + 545, rx + rw - 44, ry + 545);
+
+      // Свідчення очевидців
+      ctx.fillStyle = '#A8A8A8';
+      ctx.font = '700 22px "IBM Plex Mono", monospace';
+      ctx.fillText('СВІДЧЕННЯ ОЧЕВИДЦІВ:', W / 2, ry + 602);
+
+      ctx.fillStyle = '#F5F4F0';
+      ctx.font = 'italic 500 28px "IBM Plex Mono", monospace';
+      wrapCanvasText(ctx, data.receipt.witness, W / 2, ry + 658, rw - 110, 42);
+
+      drawDashedDivider(ctx, rx + 44, ry + 830, rx + rw - 44, ry + 830);
+
+      // Баркод
+      const barcodeBars = [6, 3, 9, 3, 5, 11, 3, 6, 3, 8, 5, 9, 3, 6, 3, 11, 5, 3, 8, 6, 3, 9, 5, 3, 8, 6];
+      let bx = (W - 440) / 2;
+      const by = ry + 875;
+      ctx.fillStyle = '#F5F4F0';
+      barcodeBars.forEach((w, idx) => {
+        if (idx % 2 === 0) {
+          ctx.fillRect(bx, by, w * 2.2, 92);
+        }
+        bx += w * 2.6;
+      });
+
+      // Хештеги внизу чека
+      ctx.font = '700 26px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#C6FF00';
+      ctx.fillText('#явипалазреальності', W / 2, ry + 1025);
+
+      ctx.font = '500 24px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#F5F4F0';
+      ctx.fillText('#patternrabbithole', W / 2, ry + 1068);
+
+      // 6. Нижній заклик поза чеком
+      ctx.fillStyle = '#F5F4F0';
+      ctx.font = '700 24px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('СКІЛЬКИ ПРОЙДЕ, ПЕРШ НІЖ ПІДНІМЕШ ГОЛОВУ ТИ?', W / 2, H - 108);
+
+      const dataUrl = canvas.toDataURL('image/png');
+
+      // Показуємо прев'ю на екрані для зручного збереження на iOS/Android
+      const previewBox = document.getElementById('story-preview-box');
+      const previewImg = document.getElementById('story-preview-img');
+      previewImg.src = dataUrl;
+      previewBox.classList.remove('hidden');
+
+      // Запускаємо завантаження PNG-файлу
+      const dlLink = document.createElement('a');
+      dlLink.href = dataUrl;
+      dlLink.download = `PatternRabbitHole_Level${data.levelNum}_Stories.png`;
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      document.body.removeChild(dlLink);
+    }
+
+    function drawDashedDivider(ctx, x1, y1, x2, y2) {
+      ctx.save();
+      ctx.strokeStyle = '#555555';
+      ctx.lineWidth = 4;
+      ctx.setLineDash([14, 10]);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function wrapCanvasText(ctx, text, centerX, startY, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      let y = startY;
+
+      for (let i = 0; i < words.length; i++) {
+        const testLine = line + words[i] + ' ';
+        if (ctx.measureText(testLine).width > maxWidth && i > 0) {
+          ctx.fillText(line.trim(), centerX, y);
+          line = words[i] + ' ';
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line.trim(), centerX, y);
+    }
+  </script>
+</body>
+</html>
