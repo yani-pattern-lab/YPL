@@ -65,7 +65,6 @@
       border-color: #C6FF00;
       box-shadow: 4px 4px 0 #C6FF00;
     }
-    /* Екран пароля */
     .lock-card {
       max-width: 460px;
       margin: 40px auto;
@@ -365,6 +364,15 @@
         mainView.classList.remove("hidden");
         bar.classList.remove("hidden");
         try { sessionStorage.setItem("ypl_auth", ACCESS_CODE); } catch (e) {}
+      }
+
+      var hash = window.location.hash || "";
+      if (hash.indexOf("#code=") === 0) {
+        var passed = decodeURIComponent(hash.slice(6));
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+        if (passed === ACCESS_CODE) unlock();
       }
 
       try {
