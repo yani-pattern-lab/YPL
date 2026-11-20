@@ -9,141 +9,498 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Unbounded:wght@900&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0!important}
-    body{background:#191919;color:#F5F4F0;font-family:'IBM Plex Mono',monospace;min-height:100vh;padding-bottom:96px;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
-    .hidden{display:none!important}
-    .wrap{max-width:1060px;margin:0 auto;padding:0 16px}
-    header{position:sticky;top:0;z-index:30;background:#191919;border-bottom:2px solid #333;padding:12px 0}
-    header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{font-family:'Unbounded',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase}
-    .badge{background:#C6FF00;color:#111;border:1px solid #F5F4F0;font-size:11px;font-weight:700;padding:4px 8px;text-transform:uppercase}
-    main{padding-top:24px}
-    .card{background:#141414;border:2px solid #F5F4F0;box-shadow:4px 4px 0 #080808}
-    .card.picked{border-color:#C6FF00;box-shadow:4px 4px 0 #C6FF00}
-    .intro{padding:22px;margin-bottom:24px}
-    h1{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(20px,3.5vw,30px);line-height:1.15;text-transform:uppercase;margin-bottom:12px}
-    .desc{font-size:13px;line-height:1.6;color:#A8A8A8;max-width:720px;margin-bottom:18px}
-    .name-box{max-width:420px}
-    label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
-    label span{color:#C6FF00}
-    input{width:100%;background:#0E0E0E;border:2px solid #F5F4F0;color:#F5F4F0;font:14px 'IBM Plex Mono',monospace;padding:12px 14px;outline:none}
-    input:focus{border-color:#C6FF00}
-    .err{margin-top:10px;background:#C6FF00;color:#111;border:1px solid #F5F4F0;font-size:12px;font-weight:700;padding:8px 12px}
-    .grid{display:grid;grid-template-columns:1fr;gap:20px}
-    @media(min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:960px){.grid{grid-template-columns:repeat(3,1fr)}}
-    .p-card{padding:16px;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
-    .p-head{font-family:'Unbounded',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;border-bottom:1px solid #2E2E2E;padding-bottom:8px;margin-bottom:12px}
-    .img-box{position:relative;width:100%;aspect-ratio:3/4;min-height:260px;background:#0E0E0E;border:2px solid #2E2E2E;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-    .img-box img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
-    .wm{position:absolute;inset:-30%;display:flex;flex-direction:column;justify-content:space-around;transform:rotate(-28deg);pointer-events:none;opacity:.28;font-size:10px;font-weight:700;letter-spacing:.14em;white-space:nowrap}
-    .p-bot{display:flex;flex-direction:column;gap:10px}
-    .s-row{display:flex;justify-content:space-between;font-size:12px}
-    .s-row span:first-child{color:#A8A8A8}
-    .s-row span:last-child{font-weight:700}
-    .scale{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}
-    .r-btn{background:#0E0E0E;border:1px solid #333;color:#F5F4F0;font:700 11px 'IBM Plex Mono',monospace;padding:7px 0;cursor:pointer}
-    .r-btn:hover{border-color:#F5F4F0;background:#242424}
-    .r-btn.active{background:#F5F4F0;border-color:#F5F4F0;color:#111}
-    .p-btn{width:100%;background:#0E0E0E;border:2px solid #F5F4F0;color:#F5F4F0;font:700 12px 'IBM Plex Mono',monospace;text-transform:uppercase;padding:10px 12px;cursor:pointer}
-    .p-btn:hover{background:#242424}
-    .card.picked .p-btn{background:#C6FF00;color:#111}
-    .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#0E0E0E;border-top:2px solid #F5F4F0;padding:12px 0}
-    .bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
-    .stats{font-size:13px}
-    .stats b{color:#C6FF00}
-    .stats i{font-style:normal;color:#A8A8A8}
-    .sub-btn{background:#C6FF00;color:#111;border:2px solid #F5F4F0;box-shadow:4px 4px 0 #080808;font:900 12px 'Unbounded',sans-serif;text-transform:uppercase;padding:12px 18px;cursor:pointer}
-    .sub-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #080808}
-    .done{max-width:560px;margin:32px auto;padding:28px;display:flex;flex-direction:column;gap:16px}
-    .done h2{font-family:'Unbounded',sans-serif;font-weight:900;font-size:24px;text-transform:uppercase;line-height:1.2}
-    .sum{background:#0E0E0E;border:2px solid #F5F4F0;padding:16px;font-size:13px;line-height:1.6;white-space:pre-line}
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+    }
+    body {
+      background: #191919;
+      color: #F5F4F0;
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      padding-bottom: 96px;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hidden { display: none !important; }
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: #191919;
+      border-bottom: 2px solid #333333;
+      padding: 12px 0;
+    }
+    header .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    .badge {
+      background: #C6FF00;
+      color: #111111;
+      border: 1px solid #F5F4F0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      text-transform: uppercase;
+    }
+    main { padding-top: 24px; }
+    .card {
+      background: #141414;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0 #080808;
+    }
+    .card.picked {
+      border-color: #C6FF00;
+      box-shadow: 4px 4px 0 #C6FF00;
+    }
+    .intro { padding: 22px; margin-bottom: 24px; }
+    h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(20px, 3.5vw, 30px);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #A8A8A8;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+    .name-box { max-width: 420px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    label span { color: #C6FF00; }
+    input {
+      width: 100%;
+      background: #0E0E0E;
+      border: 2px solid #F5F4F0;
+      color: #F5F4F0;
+      font: 14px 'IBM Plex Mono', monospace;
+      padding: 12px 14px;
+      outline: none;
+    }
+    input:focus { border-color: #C6FF00; }
+    .err {
+      margin-top: 10px;
+      background: #C6FF00;
+      color: #111111;
+      border: 1px solid #F5F4F0;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .p-card {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .p-head {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #2E2E2E;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .img-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      min-height: 260px;
+      background: #191919;
+      border: 2px solid #2E2E2E;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+    }
+    .img-err {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      font-size: 11px;
+      color: #C6FF00;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+    .wm {
+      position: absolute;
+      inset: -30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      transform: rotate(-28deg);
+      pointer-events: none;
+      opacity: 0.28;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+    }
+    .p-bot { display: flex; flex-direction: column; gap: 10px; }
+    .s-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .s-row span:first-child { color: #A8A8A8; }
+    .s-row span:last-child { font-weight: 700; }
+    .scale {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 3px;
+    }
+    .r-btn {
+      background: #0E0E0E;
+      border: 1px solid #333333;
+      color: #F5F4F0;
+      font: 700 11px 'IBM Plex Mono', monospace;
+      padding: 7px 0;
+      cursor: pointer;
+    }
+    .r-btn:hover { border-color: #F5F4F0; background: #242424; }
+    .r-btn.active {
+      background: #F5F4F0;
+      border-color: #F5F4F0;
+      color: #111111;
+    }
+    .p-btn {
+      width: 100%;
+      background: #0E0E0E;
+      border: 2px solid #F5F4F0;
+      color: #F5F4F0;
+      font: 700 12px 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+    .p-btn:hover { background: #242424; }
+    .card.picked .p-btn { background: #C6FF00; color: #111111; }
+    .bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      background: #0E0E0E;
+      border-top: 2px solid #F5F4F0;
+      padding: 12px 0;
+    }
+    .bar .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .stats { font-size: 13px; }
+    .stats b { color: #C6FF00; }
+    .stats i { font-style: normal; color: #A8A8A8; }
+    .sub-btn {
+      background: #C6FF00;
+      color: #111111;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0 #080808;
+      font: 900 12px 'Unbounded', sans-serif;
+      text-transform: uppercase;
+      padding: 12px 18px;
+      cursor: pointer;
+    }
+    .sub-btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 #080808;
+    }
+    .done {
+      max-width: 560px;
+      margin: 32px auto;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .done h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .sum {
+      background: #0E0E0E;
+      border: 2px solid #F5F4F0;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body oncontextmenu="return false;">
-  <header><div class="wrap"><div class="brand">ЗАКРИТИЙ ТЕСТ · VOL. 1</div><div class="badge">27 ПАТЕРНІВ</div></div></header>
+
+  <header>
+    <div class="wrap">
+      <div class="brand">ЗАКРИТИЙ ТЕСТ · VOL. 1</div>
+      <div class="badge">27 ПАТЕРНІВ</div>
+    </div>
+  </header>
+
   <main class="wrap">
     <div id="main-view">
       <section class="card intro">
         <h1>ОЦІНИ 27 ПАТЕРНІВ ТА ОБЕРИ МІНІМУМ ОДИН НА ТЕСТ</h1>
-        <p class="desc">Постав кожному патерну оцінку від 0 до 10 і натисни «Обрати на тест» під тими, які хочеш отримати роздрукованими.</p>
+        <p class="desc">
+          Постав кожному патерну оцінку від 0 до 10 і натисни «Обрати на тест» під тими, які хочеш отримати роздрукованими.
+        </p>
         <div class="name-box">
           <label for="t-name">Твоє прізвище та ім’я <span>*</span></label>
           <input type="text" id="t-name" autocomplete="name" placeholder="Наприклад: Олена Коваленко">
           <div id="err" class="err hidden"></div>
         </div>
       </section>
+
       <section id="grid" class="grid"></section>
     </div>
+
     <section id="done" class="card done hidden">
       <div><span class="badge">ДАНІ ЗАФІКСОВАНО</span></div>
       <h2>ДЯКУЄМО! ТВІЙ ВИБІР ЗБЕРЕЖЕНО ✓</h2>
-      <p class="desc" style="margin:0">Ми отримали твої оцінки та список патернів, які потрібно підготувати для тестування.</p>
+      <p class="desc" style="margin:0">
+        Ми отримали твої оцінки та список патернів, які потрібно підготувати для тестування.
+      </p>
       <div id="sum" class="sum"></div>
     </section>
   </main>
+
   <div id="bar" class="bar">
     <div class="wrap">
-      <div class="stats">Оцінено: <b id="r-cnt">0</b> / <b>27</b> &nbsp;|&nbsp; Обрано на тест: <b id="p-cnt">0</b> <i>(мін. 1)</i></div>
-      <button type="button" id="sub" class="sub-btn">НАДІСЛАТИ ОЦІНКИ ТА ВИБІР &rarr;</button>
+      <div class="stats">
+        Оцінено: <b id="r-cnt">0</b> / <b>27</b> &nbsp;|&nbsp;
+        Обрано на тест: <b id="p-cnt">0</b> <i>(мін. 1)</i>
+      </div>
+      <button type="button" id="sub" class="sub-btn">
+        НАДІСЛАТИ ОЦІНКИ ТА ВИБІР &rarr;
+      </button>
     </div>
   </div>
+
   <script>
-    (function(){
-      var IDS=["01","02","03","04","06","07","09","10","16","19","20","21","23","25","26","27","30","34","35","36","40","42","49","55","56","59","60"];
-      var FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSczoVbiwreX3MLrOUqUtXpeVstjQ2qKGu1-qtUU0tsdC8sudw/formResponse";
-      var rated={},picked={},grid=document.getElementById("grid"),err=document.getElementById("err");
-      var html="";
-      for(var i=0;i<IDS.length;i++){
-        var id=IDS[i],wmRow=("PREVIEW · №"+id+" · CLOSED TEST · №"+id+" · ").repeat(3),wmHtml="";
-        for(var w=0;w<7;w++)wmHtml+="<div>"+wmRow+"</div>";
-        var btns="";
-        for(var s=0;s<=10;s++)btns+='<button type="button" class="r-btn" data-r="'+id+'" data-s="'+s+'">'+s+'</button>';
-        html+='<article class="card p-card" id="c-'+id+'"><div><div class="p-head">Патерн №'+id+'</div><div class="img-box"><img src="pattern-'+id+'.webp" alt="Патерн №'+id+'" loading="lazy" draggable="false"><div class="wm">'+wmHtml+'</div></div></div><div class="p-bot"><div class="s-row"><span>Оцінка (0–10):</span><span id="v-'+id+'">—</span></div><div class="scale">'+btns+'</div><button type="button" class="p-btn" data-p="'+id+'">+ Обрати на тест</button></div></article>';
+    (function () {
+      var IDS = [
+        "01", "02", "03", "04", "06", "07", "09", "10", "16",
+        "19", "20", "21", "23", "25", "26", "27", "30", "34",
+        "35", "36", "40", "42", "49", "55", "56", "59", "60"
+      ];
+      var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSczoVbiwreX3MLrOUqUtXpeVstjQ2qKGu1-qtUU0tsdC8sudw/formResponse";
+      var rated = {};
+      var picked = {};
+      var grid = document.getElementById("grid");
+      var err = document.getElementById("err");
+
+      for (var i = 0; i < IDS.length; i++) {
+        var id = IDS[i];
+        var fileName = "pattern-" + id + ".webp";
+
+        var card = document.createElement("article");
+        card.className = "card p-card";
+        card.id = "c-" + id;
+
+        var top = document.createElement("div");
+        var head = document.createElement("div");
+        head.className = "p-head";
+        head.textContent = "Патерн №" + id;
+
+        var box = document.createElement("div");
+        box.className = "img-box";
+
+        var img = document.createElement("img");
+        img.src = fileName;
+        img.alt = "Патерн №" + id;
+        img.loading = "lazy";
+        img.draggable = false;
+
+        (function (wrapBox, fName) {
+          img.onerror = function () {
+            this.style.display = "none";
+            var msg = document.createElement("div");
+            msg.className = "img-err";
+            msg.textContent = "Не знайдено: " + fName + " у " + window.location.pathname;
+            wrapBox.appendChild(msg);
+          };
+        })(box, fileName);
+
+        var wm = document.createElement("div");
+        wm.className = "wm";
+        var unit = "PREVIEW · №" + id + " · CLOSED TEST · №" + id + " · ";
+        for (var w = 0; w < 7; w++) {
+          var row = document.createElement("div");
+          row.textContent = unit + unit + unit;
+          wm.appendChild(row);
+        }
+
+        box.appendChild(img);
+        box.appendChild(wm);
+        top.appendChild(head);
+        top.appendChild(box);
+
+        var bot = document.createElement("div");
+        bot.className = "p-bot";
+
+        var sRow = document.createElement("div");
+        sRow.className = "s-row";
+        sRow.innerHTML = '<span>Оцінка (0–10):</span><span id="v-' + id + '">—</span>';
+
+        var scale = document.createElement("div");
+        scale.className = "scale";
+        for (var s = 0; s <= 10; s++) {
+          var rb = document.createElement("button");
+          rb.type = "button";
+          rb.className = "r-btn";
+          rb.setAttribute("data-r", id);
+          rb.setAttribute("data-s", String(s));
+          rb.textContent = String(s);
+          scale.appendChild(rb);
+        }
+
+        var pb = document.createElement("button");
+        pb.type = "button";
+        pb.className = "p-btn";
+        pb.setAttribute("data-p", id);
+        pb.textContent = "+ Обрати на тест";
+
+        bot.appendChild(sRow);
+        bot.appendChild(scale);
+        bot.appendChild(pb);
+
+        card.appendChild(top);
+        card.appendChild(bot);
+        grid.appendChild(card);
       }
-      grid.innerHTML=html;
-      grid.addEventListener("click",function(e){
-        var rb=e.target.closest("[data-r]");
-        if(rb){
-          var id=rb.getAttribute("data-r"),sc=Number(rb.getAttribute("data-s"));
-          rated[id]=sc;
-          document.getElementById("v-"+id).textContent=sc+" / 10";
-          rb.parentNode.querySelectorAll(".r-btn").forEach(function(b){b.classList.remove("active")});
+
+      grid.addEventListener("click", function (e) {
+        var rb = e.target.closest("[data-r]");
+        if (rb) {
+          var id = rb.getAttribute("data-r");
+          var sc = Number(rb.getAttribute("data-s"));
+          rated[id] = sc;
+          document.getElementById("v-" + id).textContent = sc + " / 10";
+          var all = rb.parentNode.querySelectorAll(".r-btn");
+          for (var j = 0; j < all.length; j++) {
+            all[j].classList.remove("active");
+          }
           rb.classList.add("active");
-          document.getElementById("r-cnt").textContent=Object.keys(rated).length;
+          document.getElementById("r-cnt").textContent = Object.keys(rated).length;
           return;
         }
-        var pb=e.target.closest("[data-p]");
-        if(pb){
-          var pid=pb.getAttribute("data-p"),card=document.getElementById("c-"+pid);
-          if(picked[pid]){delete picked[pid];card.classList.remove("picked");pb.textContent="+ Обрати на тест";}
-          else{picked[pid]=true;card.classList.add("picked");pb.textContent="✓ Обрано на тест";}
-          var cnt=Object.keys(picked).length;
-          document.getElementById("p-cnt").textContent=cnt;
-          if(cnt>=1)err.classList.add("hidden");
+
+        var pb = e.target.closest("[data-p]");
+        if (pb) {
+          var pid = pb.getAttribute("data-p");
+          var card = document.getElementById("c-" + pid);
+          if (picked[pid]) {
+            delete picked[pid];
+            card.classList.remove("picked");
+            pb.textContent = "+ Обрати на тест";
+          } else {
+            picked[pid] = true;
+            card.classList.add("picked");
+            pb.textContent = "✓ Обрано на тест";
+          }
+          var cnt = Object.keys(picked).length;
+          document.getElementById("p-cnt").textContent = cnt;
+          if (cnt >= 1) err.classList.add("hidden");
         }
       });
-      document.getElementById("sub").addEventListener("click",function(){
-        var inp=document.getElementById("t-name"),name=inp.value.trim();
-        if(!name){err.textContent="Вкажи, будь ласка, своє прізвище та ім’я у верхньому полі.";err.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});inp.focus();return;}
-        if(Object.keys(picked).length<1){err.textContent="Обери хоча б один патерн на тест (натисни кнопку «+ Обрати на тест» під патерном).";err.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});return;}
-        err.classList.add("hidden");
-        var rArr=[],sArr=[];
-        for(var k=0;k<IDS.length;k++){
-          var n=IDS[k];
-          rArr.push("№"+n+": "+(rated[n]!==undefined?rated[n]:"-"));
-          if(picked[n])sArr.push("№"+n);
+
+      document.getElementById("sub").addEventListener("click", function () {
+        var inp = document.getElementById("t-name");
+        var name = inp.value.trim();
+        if (!name) {
+          err.textContent = "Вкажи, будь ласка, своє прізвище та ім’я у верхньому полі.";
+          err.classList.remove("hidden");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          inp.focus();
+          return;
         }
-        var fd=new URLSearchParams();
-        fd.append("entry.1226914517",name);
-        fd.append("entry.338563084",rArr.join(" | "));
-        fd.append("entry.650374529",sArr.join(", "));
-        fetch(FORM_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:fd.toString()}).catch(function(){});
+        if (Object.keys(picked).length < 1) {
+          err.textContent = "Обери хоча б один патерн на тест (натисни кнопку «+ Обрати на тест» під патерном).";
+          err.classList.remove("hidden");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+
+        err.classList.add("hidden");
+        var rArr = [];
+        var sArr = [];
+        for (var k = 0; k < IDS.length; k++) {
+          var n = IDS[k];
+          rArr.push("№" + n + ": " + (rated[n] !== undefined ? rated[n] : "-"));
+          if (picked[n]) sArr.push("№" + n);
+        }
+
+        var fd = new URLSearchParams();
+        fd.append("entry.1226914517", name);
+        fd.append("entry.338563084", rArr.join(" | "));
+        fd.append("entry.650374529", sArr.join(", "));
+
+        fetch(FORM_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: fd.toString()
+        }).catch(function () {});
+
         document.getElementById("main-view").classList.add("hidden");
         document.getElementById("bar").classList.add("hidden");
         document.getElementById("done").classList.remove("hidden");
-        document.getElementById("sum").textContent="Учасниця: "+name+"\nОбрані на тест: "+sArr.join(", ")+"\nОцінено патернів: "+Object.keys(rated).length+" із 27";
-        window.scrollTo({top:0,behavior:"smooth"});
+        document.getElementById("sum").textContent =
+          "Учасниця: " + name +
+          "\nОбрані на тест: " + sArr.join(", ") +
+          "\nОцінено патернів: " + Object.keys(rated).length + " із 27";
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     })();
   </script>
