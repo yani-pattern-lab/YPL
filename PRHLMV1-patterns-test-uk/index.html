@@ -1,1 +1,429 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>THE PATTERN RABBIT HOLE · Оцінка 27 патернів · Vol. 1 | YANI PATTERN LAB</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgmain: '#202020',
+            surface: '#292929',
+            deep: '#181818',
+            offwhite: '#F5F4F0',
+            muted: '#A8A8A8',
+            lime: '#C6FF00',
+            darkink: '#111111',
+            borderdim: '#444444',
+          },
+          fontFamily: {
+            display: ['"Unbounded"', '"Inter"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after {
+      border-radius: 0px !important;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background-color: #202020;
+      color: #F5F4F0;
+      font-family: 'IBM Plex Mono', monospace;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .brutal-card {
+      background-color: #292929;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+    }
+
+    .brutal-card.picked {
+      border-color: #C6FF00;
+      box-shadow: 4px 4px 0px #C6FF00;
+    }
+
+    .brutal-btn {
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease, color 0.12s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brutal-btn-lime {
+      background-color: #C6FF00;
+      color: #111111;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0px #0D0D0D;
+    }
+
+    .brutal-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0px #0D0D0D;
+    }
+
+    .brutal-btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0px #0D0D0D;
+    }
+
+    .rate-btn {
+      background-color: #181818;
+      border: 1px solid #444444;
+      color: #F5F4F0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 7px 0;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .rate-btn:hover {
+      border-color: #F5F4F0;
+      background-color: #303030;
+    }
+
+    .rate-btn.active {
+      background-color: #F5F4F0;
+      border-color: #F5F4F0;
+      color: #111111;
+    }
+
+    .pick-btn {
+      background-color: #181818;
+      border: 2px solid #F5F4F0;
+      color: #F5F4F0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 10px 12px;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .pick-btn:hover {
+      background-color: #303030;
+    }
+
+    .brutal-card.picked .pick-btn {
+      background-color: #C6FF00;
+      border-color: #F5F4F0;
+      color: #111111;
+    }
+
+    .protected-img {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .protected-img img {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-bgmain text-offwhite pb-28" oncontextmenu="return false;">
+
+  <!-- Шапка -->
+  <header class="w-full border-b-2 border-borderdim bg-bgmain sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="font-display font-black text-xs sm:text-sm tracking-tight uppercase text-offwhite">
+        YANI PATTERN LAB
+      </div>
+      <div class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-lime text-darkink px-2 py-1 border border-offwhite">
+        КАТАЛОГ ТЕСТЕРОК · 27 ПАТЕРНІВ
+      </div>
+    </div>
+  </header>
+
+  <!-- Основний контент -->
+  <main class="w-full max-w-5xl mx-auto px-4 py-6 sm:py-8 flex-grow">
+    <div id="main-view" class="space-y-6">
+
+      <!-- Вступна картка та ім'я -->
+      <section class="brutal-card p-5 sm:p-6 space-y-4">
+        <div class="inline-block bg-deep border-2 border-lime text-lime px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider">
+          THE PATTERN RABBIT HOLE · VOL. 1 · ОЦІНКА ТА ВИБІР
+        </div>
+
+        <h1 class="font-display font-black text-2xl sm:text-3xl leading-[1.1] tracking-tight uppercase text-offwhite">
+          ОЦІНИ 27 ПАТЕРНІВ ТА ОБЕРИ МІНІМУМ ОДИН НА ТЕСТ
+        </h1>
+
+        <p class="font-mono text-xs sm:text-sm leading-relaxed text-muted max-w-3xl">
+          Переглянь патерни (натисни на зображення, щоб збільшити), постав кожному оцінку від 0 до 10 і познач мінімум один патерн, який хочеш отримати роздрукованим на тест.
+        </p>
+
+        <div class="max-w-md pt-1 space-y-2">
+          <label for="tester-name" class="block font-mono text-xs sm:text-sm font-bold text-offwhite">
+            Твоє прізвище та ім’я <span class="text-lime">*</span>
+          </label>
+          <input
+            type="text"
+            id="tester-name"
+            autocomplete="name"
+            placeholder="Наприклад: Олена Коваленко"
+            class="w-full border-2 border-offwhite bg-deep px-3.5 py-3 font-mono text-sm text-offwhite placeholder:text-muted/50 focus:outline-none focus:border-lime"
+          />
+          <div id="validation-error" class="hidden bg-lime text-darkink font-mono text-xs font-bold px-3 py-2 border border-offwhite"></div>
+        </div>
+      </section>
+
+      <!-- Сітка 27 патернів -->
+      <section id="patterns-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></section>
+    </div>
+
+    <!-- Екран успішної відправки -->
+    <section id="done-screen" class="hidden max-w-xl mx-auto my-8 brutal-card p-6 sm:p-8 space-y-5">
+      <div class="inline-block bg-lime text-darkink border-2 border-offwhite px-3 py-1 font-mono text-xs font-bold uppercase">
+        ДАНІ ЗАФІКСОВАНО В ТАБЛИЦІ
+      </div>
+      <h2 class="font-display font-black text-2xl sm:text-3xl uppercase text-offwhite">
+        ДЯКУЄМО! ТВІЙ ВИБІР ЗБЕРЕЖЕНО ✓
+      </h2>
+      <p class="font-mono text-xs sm:text-sm text-muted leading-relaxed">
+        Ми отримали твої оцінки та список патернів, які потрібно роздрукувати для тестування.
+      </p>
+      <div id="done-summary" class="bg-deep border-2 border-offwhite p-4 font-mono text-xs sm:text-sm text-offwhite whitespace-pre-line leading-relaxed"></div>
+    </section>
+  </main>
+
+  <!-- Нижня фіксована панель -->
+  <div id="sticky-bar" class="fixed left-0 right-0 bottom-0 bg-deep/95 border-t-2 border-offwhite px-4 py-3.5 z-40">
+    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="font-mono text-xs sm:text-sm text-offwhite">
+        Оцінено: <span id="rated-count" class="font-bold text-lime">0</span> / 27
+        <span class="mx-2 text-borderdim">|</span>
+        Обрано на тест: <span id="picked-count" class="font-bold text-lime">0</span> <span class="text-muted">(мін. 1)</span>
+      </div>
+      <button type="button" id="submit-btn" class="brutal-btn brutal-btn-lime font-display font-black text-xs sm:text-sm uppercase px-5 py-3">
+        НАДІСЛАТИ ОЦІНКИ ТА ВИБІР &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- Модальне вікно збільшення патерна -->
+  <div id="zoom-modal" class="hidden fixed inset-0 bg-black/90 z-50 items-center justify-center p-4">
+    <div class="brutal-card max-w-md w-full p-4 space-y-3">
+      <div class="flex items-center justify-between border-b-2 border-borderdim pb-2">
+        <span id="modal-title" class="font-display font-black text-sm uppercase text-lime">ПАТЕРН №01</span>
+        <span class="font-mono text-[10px] text-muted uppercase">ЗРАЗОК · VOL. 1</span>
+      </div>
+      <div class="protected-img relative aspect-[3/4] w-full bg-deep border-2 border-offwhite overflow-hidden">
+        <img id="modal-img" src="" alt="Збільшений патерн" class="w-full h-full object-contain block" draggable="false" />
+        <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <span class="font-mono text-xs font-bold uppercase tracking-widest text-offwhite/35 bg-bgmain/75 border border-offwhite/30 px-3 py-1" style="transform: rotate(-28deg);">
+            YANI PATTERN LAB · PREVIEW
+          </span>
+        </div>
+      </div>
+      <button type="button" id="close-modal" class="brutal-btn bg-deep text-offwhite hover:bg-lime hover:text-darkink w-full font-mono text-xs font-bold uppercase py-3">
+        ЗАКРИТИ ПЕРЕГЛЯД
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ПІДКЛЮЧЕНО ДО ТВОЄЇ НОВОЇ GOOGLE ФОРМИ
+    const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSczoVbiwreX3MLrOUqUtXpeVstjQ2qKGu1-qtUU0tsdC8sudw/formResponse";
+    const FORM_FIELDS = {
+      name: "entry.1226914517",     // Прізвище та ім'я
+      ratings: "entry.338563084",   // Оцінки патернів (0-10)
+      selected: "entry.650374529"   // Обрані патерни на тест
+    };
+
+    // 27 ПАТЕРНІВ: pattern-01.webp ... pattern-27.webp
+    const TOTAL_PATTERNS = 27;
+    const patterns = Array.from({ length: TOTAL_PATTERNS }, (_, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return {
+        id: num,
+        label: `Патерн №${num}`,
+        image: `pattern-${num}.webp`
+      };
+    });
+
+    const ratingsState = {};
+    const pickedState = new Set();
+
+    const grid = document.getElementById("patterns-grid");
+    const ratedCountEl = document.getElementById("rated-count");
+    const pickedCountEl = document.getElementById("picked-count");
+    const errorBox = document.getElementById("validation-error");
+
+    patterns.forEach((p) => {
+      const card = document.createElement("article");
+      card.className = "brutal-card p-4 flex flex-col justify-between space-y-3.5";
+      card.id = `card-${p.id}`;
+
+      let scaleButtonsHtml = "";
+      for (let score = 0; score <= 10; score++) {
+        scaleButtonsHtml += `<button type="button" class="rate-btn" data-id="${p.id}" data-score="${score}">${score}</button>`;
+      }
+
+      card.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-borderdim pb-2">
+            <span class="font-display font-black text-sm uppercase text-offwhite">${p.label}</span>
+            <span class="font-mono text-[11px] text-lime uppercase">[+ ЗБІЛЬШИТИ]</span>
+          </div>
+
+          <div class="img-wrap protected-img relative aspect-[3/4] w-full bg-deep border-2 border-borderdim hover:border-offwhite overflow-hidden cursor-zoom-in" data-id="${p.id}">
+            <img src="${p.image}" alt="${p.label}" loading="lazy" class="w-full h-full object-contain block" draggable="false" />
+            <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <span class="font-mono text-[10px] font-bold uppercase tracking-widest text-offwhite/25" style="transform: rotate(-25deg);">
+                PREVIEW · №${p.id}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-1">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <span class="text-muted">Оцінка (0–10):</span>
+            <span id="val-${p.id}" class="font-bold text-offwhite">—</span>
+          </div>
+          <div class="grid grid-cols-11 gap-1">${scaleButtonsHtml}</div>
+          <button type="button" class="pick-btn" data-id="${p.id}">+ Обрати на тест</button>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    grid.addEventListener("click", (e) => {
+      const rateBtn = e.target.closest(".rate-btn");
+      if (rateBtn) {
+        const id = rateBtn.dataset.id;
+        const score = Number(rateBtn.dataset.score);
+        ratingsState[id] = score;
+
+        document.getElementById(`val-${id}`).textContent = `${score} / 10`;
+        rateBtn.parentElement.querySelectorAll(".rate-btn").forEach((b) => b.classList.remove("active"));
+        rateBtn.classList.add("active");
+
+        ratedCountEl.textContent = Object.keys(ratingsState).length;
+        return;
+      }
+
+      const pickBtn = e.target.closest(".pick-btn");
+      if (pickBtn) {
+        const id = pickBtn.dataset.id;
+        const card = document.getElementById(`card-${id}`);
+
+        if (pickedState.has(id)) {
+          pickedState.delete(id);
+          card.classList.remove("picked");
+          pickBtn.textContent = "+ Обрати на тест";
+        } else {
+          pickedState.add(id);
+          card.classList.add("picked");
+          pickBtn.textContent = "✓ Обрано на тест";
+        }
+
+        pickedCountEl.textContent = pickedState.size;
+        if (pickedState.size >= 1) errorBox.classList.add("hidden");
+        return;
+      }
+
+      const imgWrap = e.target.closest(".img-wrap");
+      if (imgWrap) {
+        const id = imgWrap.dataset.id;
+        const item = patterns.find((x) => x.id === id);
+        if (!item) return;
+        document.getElementById("modal-title").textContent = item.label.toUpperCase();
+        document.getElementById("modal-img").src = item.image;
+        const modal = document.getElementById("zoom-modal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    });
+
+    const zoomModal = document.getElementById("zoom-modal");
+    document.getElementById("close-modal").addEventListener("click", () => {
+      zoomModal.classList.add("hidden");
+      zoomModal.classList.remove("flex");
+    });
+    zoomModal.addEventListener("click", (e) => {
+      if (e.target === zoomModal) {
+        zoomModal.classList.add("hidden");
+        zoomModal.classList.remove("flex");
+      }
+    });
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.getElementById("submit-btn").addEventListener("click", () => {
+      const nameVal = document.getElementById("tester-name").value.trim();
+
+      if (!nameVal) {
+        showError("Вкажи, будь ласка, своє прізвище та ім’я у верхньому полі.");
+        document.getElementById("tester-name").focus();
+        return;
+      }
+
+      if (pickedState.size < 1) {
+        showError("Обери хоча б один патерн на тест (натисни кнопку «+ Обрати на тест» під патерном).");
+        return;
+      }
+
+      errorBox.classList.add("hidden");
+
+      const ratingsFormatted = patterns
+        .map((p) => `№${p.id}: ${ratingsState[p.id] !== undefined ? ratingsState[p.id] : "-"}`)
+        .join(" | ");
+
+      const selectedFormatted = Array.from(pickedState)
+        .sort()
+        .map((id) => `№${id}`)
+        .join(", ");
+
+      const formData = new URLSearchParams();
+      formData.append(FORM_FIELDS.name, nameVal);
+      formData.append(FORM_FIELDS.ratings, ratingsFormatted);
+      formData.append(FORM_FIELDS.selected, selectedFormatted);
+
+      fetch(GOOGLE_FORM_ACTION_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: formData.toString()
+      }).catch(() => {});
+
+      document.getElementById("main-view").style.display = "none";
+      document.getElementById("sticky-bar").style.display = "none";
+      const doneScreen = document.getElementById("done-screen");
+      doneScreen.classList.remove("hidden");
+      document.getElementById("done-summary").textContent =
+        `Учасниця: ${nameVal}\nОбрані на тест: ${selectedFormatted}\nОцінено патернів: ${Object.keys(ratingsState).length} із ${TOTAL_PATTERNS}`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
