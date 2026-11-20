@@ -1,1103 +1,961 @@
 <!DOCTYPE html>
 <html lang="uk" translate="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Тест · YPL</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@700;800;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bgmain: '#191919',
-            surface: '#141414',
-            deep: '#0E0E0E',
-            offwhite: '#F5F4F0',
-            muted: '#A8A8A8',
-            lime: '#C6FF00',
-            darkink: '#111111',
-            borderdim: '#333333',
-          },
-          fontFamily: {
-            display: ['"Unbounded"', '"Inter"', 'sans-serif'],
-            sansheavy: ['"Inter"', 'sans-serif'],
-            mono: ['"IBM Plex Mono"', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Unbounded:wght@900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
-      border-radius: 0px !important;
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
     }
-
-    html, body {
-      background-color: #191919;
+    body {
+      background: #191919;
       color: #F5F4F0;
       font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      padding-bottom: 48px;
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
     }
-
-    .brutal-card {
-      background-color: #141414;
-      border: 2px solid #F5F4F0;
-      box-shadow: 4px 4px 0px #080808;
+    .hidden { display: none !important; }
+    .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: #191919;
+      border-bottom: 2px solid #333333;
+      padding: 12px 0;
     }
-
-    .brutal-card-lime-shadow {
-      background-color: #141414;
-      border: 2px solid #F5F4F0;
-      box-shadow: 4px 4px 0px #C6FF00;
+    header .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-
-    .brutal-btn {
-      border: 2px solid #F5F4F0;
-      box-shadow: 4px 4px 0px #080808;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease, color 0.12s ease;
-      cursor: pointer;
-      user-select: none;
+    .brand {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      text-transform: uppercase;
     }
-
-    .brutal-btn-lime {
-      background-color: #C6FF00;
+    .badge {
+      background: #C6FF00;
       color: #111111;
+      border: 1px solid #F5F4F0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      text-transform: uppercase;
+    }
+    main { padding-top: 24px; }
+    .card {
+      background: #141414;
       border: 2px solid #F5F4F0;
-      box-shadow: 4px 4px 0px #080808;
+      box-shadow: 4px 4px 0 #080808;
+      padding: 22px;
+      margin-bottom: 20px;
     }
-
-    .brutal-btn:hover:not(:disabled) {
-      transform: translate(-1px, -1px);
-      box-shadow: 5px 5px 0px #080808;
+    .card-lime {
+      background: #141414;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0 #C6FF00;
+      padding: 22px;
+      margin-bottom: 20px;
     }
-
-    .brutal-btn:active:not(:disabled) {
-      transform: translate(3px, 3px);
-      box-shadow: 1px 1px 0px #080808;
+    h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(20px, 4vw, 28px);
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
-
-    .brutal-btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-      box-shadow: 2px 2px 0px #080808;
+    h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(17px, 3.2vw, 22px);
+      line-height: 1.28;
+      margin-bottom: 16px;
     }
-
-    .option-card {
-      border: 2px solid #333333;
-      background-color: #141414;
-      color: #F5F4F0;
-      box-shadow: 4px 4px 0px #080808;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.1s ease, background-color 0.1s ease;
-      cursor: pointer;
+    .desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #A8A8A8;
+      margin-bottom: 18px;
     }
-
-    .option-card:hover {
-      border-color: #F5F4F0;
-      background-color: #202020;
-      transform: translate(-1px, -1px);
-      box-shadow: 5px 5px 0px #080808;
+    /* Слайдер До / Після */
+    .slider-box {
+      background: #0E0E0E;
+      border: 2px solid #2E2E2E;
+      padding: 14px;
+      margin-bottom: 20px;
     }
-
-    .option-card:active {
-      transform: translate(3px, 3px);
-      box-shadow: 1px 1px 0px #080808;
-    }
-
-    .option-card.selected {
-      background-color: #C6FF00;
-      color: #111111;
-      border-color: #F5F4F0;
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0px #080808;
-    }
-
-    .option-card.selected .option-badge {
-      background-color: #111111;
+    .slider-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
       color: #C6FF00;
-      border-color: #111111;
+      text-transform: uppercase;
+      margin-bottom: 10px;
     }
-
-    .receipt-wrapper {
+    .ba-stage {
       position: relative;
-      filter: drop-shadow(4px 4px 0px #080808);
-    }
-
-    .receipt-body {
-      background-color: #141414;
-      border-top: 2px solid #F5F4F0;
-      border-left: 2px solid #F5F4F0;
-      border-right: 2px solid #F5F4F0;
-      border-bottom: none;
-    }
-
-    .receipt-sawtooth {
-      height: 14px;
       width: 100%;
-      background-color: transparent;
-      background-image:
-        linear-gradient(135deg, #141414 50%, transparent 50%),
-        linear-gradient(225deg, #141414 50%, transparent 50%);
-      background-position: top left, top left;
-      background-size: 16px 14px;
-      background-repeat: repeat-x;
-      position: relative;
+      aspect-ratio: 4 / 3;
+      background: #191919;
+      border: 2px solid #F5F4F0;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
     }
-
+    .ba-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+    }
+    .ba-after {
+      position: absolute;
+      inset: 0;
+      background: #191919;
+      clip-path: inset(0 45% 0 0);
+      pointer-events: none;
+    }
+    .ba-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 55%;
+      width: 2px;
+      background: #C6FF00;
+      pointer-events: none;
+    }
+    .ba-tag {
+      background: #C6FF00;
+      color: #111111;
+      border: 1px solid #111111;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      transform: translateX(-50%);
+      display: inline-block;
+      margin-top: 6px;
+    }
     input[type="range"].brutal-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 12px;
-      background: #0E0E0E;
+      height: 10px;
+      background: #191919;
       border: 2px solid #F5F4F0;
-      outline: none;
+      margin-top: 12px;
       cursor: pointer;
     }
-
     input[type="range"].brutal-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      appearance: none;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       background: #C6FF00;
       border: 2px solid #111111;
       cursor: pointer;
     }
-
-    input[type="range"].brutal-slider::-moz-range-thumb {
-      width: 24px;
-      height: 24px;
+    .slider-cap {
+      font-size: 12.5px;
+      color: #A8A8A8;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    /* Поля та кнопки */
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    label span { color: #A8A8A8; font-weight: 400; }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      background: #0E0E0E;
+      border: 2px solid #F5F4F0;
+      color: #F5F4F0;
+      font: 14px 'IBM Plex Mono', monospace;
+      padding: 12px 14px;
+      outline: none;
+      margin-bottom: 14px;
+    }
+    input[type="text"]:focus, input[type="password"]:focus { border-color: #C6FF00; }
+    .err {
       background: #C6FF00;
-      border: 2px solid #111111;
+      color: #111111;
+      border: 1px solid #F5F4F0;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+    }
+    .btn {
+      width: 100%;
+      background: #C6FF00;
+      color: #111111;
+      border: 2px solid #F5F4F0;
+      box-shadow: 4px 4px 0 #080808;
+      font: 900 13px 'Unbounded', sans-serif;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      cursor: pointer;
+      display: block;
+      text-align: center;
+    }
+    .btn:active:not(:disabled) {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0 #080808;
+    }
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .note {
+      font-size: 12px;
+      color: #A8A8A8;
+      border-left: 2px solid #C6FF00;
+      padding-left: 10px;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    /* Питання */
+    .prog-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: #C6FF00;
+      margin-bottom: 8px;
+    }
+    .prog-bar {
+      width: 100%;
+      height: 8px;
+      background: #0E0E0E;
+      border: 1px solid #333333;
+      margin-bottom: 18px;
+    }
+    .prog-fill {
+      height: 100%;
+      background: #C6FF00;
+      width: 12.5%;
+      transition: width 0.25s ease;
+    }
+    .tag-box {
+      display: inline-block;
+      background: #0E0E0E;
+      border: 1px solid #C6FF00;
+      color: #C6FF00;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 9px;
+      margin-bottom: 12px;
+    }
+    .opts {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .opt {
+      width: 100%;
+      background: #0E0E0E;
+      border: 2px solid #333333;
+      color: #F5F4F0;
+      font: 13.5px 'IBM Plex Mono', monospace;
+      line-height: 1.5;
+      padding: 13px 14px;
+      text-align: left;
       cursor: pointer;
     }
-
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
+    .opt:hover { border-color: #F5F4F0; background: #202020; }
+    .opt.sel {
+      background: #C6FF00;
+      border-color: #F5F4F0;
+      color: #111111;
+      font-weight: 700;
     }
-    .cursor-blink {
-      animation: blink 0.7s infinite;
+    /* Результат та термочек */
+    .res-badge {
+      background: #C6FF00;
+      color: #111111;
+      border: 2px solid #F5F4F0;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 11px;
+      margin-bottom: 14px;
     }
-
-    .protected-preview {
+    .res-lead {
+      font-size: 15px;
+      font-weight: 700;
+      color: #C6FF00;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .res-text p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #E4E4E7;
+      margin-bottom: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #0E0E0E;
+      border: 2px solid #333333;
+      margin: 18px 0 0;
+      font-size: 12.5px;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #333333;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    td:first-child {
+      font-weight: 700;
+      color: #C6FF00;
+      width: 38%;
+    }
+    .receipt-wrap { margin-bottom: 20px; }
+    .receipt-body {
+      background: #141414;
+      border: 2px solid #F5F4F0;
+      border-bottom: none;
+      padding: 20px;
+    }
+    .receipt-head {
+      text-align: center;
+      border-bottom: 2px dashed #333333;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .receipt-title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      margin: 4px 0;
+    }
+    .receipt-meta { font-size: 11px; color: #A8A8A8; }
+    .rec-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12.5px;
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+    .rec-row span:first-child { color: #A8A8A8; }
+    .rec-row span:last-child { font-weight: 700; text-align: right; }
+    .rec-lime {
+      background: #C6FF00;
+      color: #111111;
+      padding: 2px 6px;
+      border: 1px solid #F5F4F0;
+    }
+    .barcode {
+      border-top: 2px dashed #333333;
+      padding-top: 12px;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .sawtooth {
+      height: 12px;
+      width: 100%;
+      background-image:
+        linear-gradient(135deg, #141414 50%, transparent 50%),
+        linear-gradient(225deg, #141414 50%, transparent 50%);
+      background-size: 16px 12px;
+      background-repeat: repeat-x;
+    }
+    /* Прев'ю патерна */
+    .pat-title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      color: #C6FF00;
+      border-bottom: 2px solid #333333;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .pat-frame {
+      position: relative;
+      max-width: 260px;
+      aspect-ratio: 3 / 4;
+      margin: 0 auto 16px;
+      background: #0E0E0E;
+      border: 2px solid #F5F4F0;
+      overflow: hidden;
       user-select: none;
       -webkit-user-select: none;
-      -webkit-touch-callout: none;
     }
-    .protected-preview img,
-    .protected-preview svg {
+    .pat-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
       pointer-events: none;
+    }
+    .wm {
+      position: absolute;
+      inset: -30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      transform: rotate(-28deg);
+      pointer-events: none;
+      opacity: 0.28;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+    }
+    .sync-box {
+      background: #C6FF00;
+      color: #111111;
+      border: 2px solid #F5F4F0;
+      padding: 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    /* Блок пароля в кінці квізу */
+    .gate-box {
+      background: #0E0E0E;
+      border: 2px solid #C6FF00;
+      padding: 16px;
+      margin-top: 14px;
+    }
+    .gate-title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      color: #C6FF00;
+      margin-bottom: 10px;
+      text-transform: uppercase;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-bgmain text-offwhite selection:bg-lime selection:text-darkink pb-12" oncontextmenu="return false;">
-
-  <header class="w-full border-b-2 border-borderdim bg-bgmain sticky top-0 z-30">
-    <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
-      <div class="font-display font-black text-xs sm:text-sm tracking-tight uppercase text-offwhite">
-        YPL
-      </div>
-      <div class="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-lime text-darkink px-2 py-1 border border-offwhite">
-        8 ПИТАНЬ
-      </div>
+<body oncontextmenu="return false;">
+  <header>
+    <div class="wrap">
+      <div class="brand">YPL</div>
+      <div class="badge">8 ПИТАНЬ</div>
     </div>
   </header>
 
-  <main class="w-full max-w-xl mx-auto px-4 py-6 sm:py-8 flex-grow">
+  <main class="wrap">
+    <!-- ЕКРАН 1: СТАРТ (БЕЗ ПАРОЛЯ) -->
+    <section id="s-start" class="card">
+      <h1>СКІЛЬКИ ПРОЙДЕ, ПЕРШ НІЖ ТИ ПІДНІМЕШ ГОЛОВУ?</h1>
+      <p class="desc">8 абсурдних ситуацій. 1 квитанція втраченого часу. І патерн, підібраний під твій рівень глибини.</p>
 
-    <!-- ЕКРАН 1 · ВХІД У КВІЗ -->
-    <section id="screen-entry" class="space-y-6">
-      <div class="space-y-3">
-        <h1 class="font-display font-black text-2xl sm:text-4xl leading-[1.08] tracking-tight uppercase text-offwhite">
-          СКІЛЬКИ ПРОЙДЕ, ПЕРШ НІЖ ТИ ПІДНІМЕШ ГОЛОВУ?
-        </h1>
-        <p class="font-mono text-sm sm:text-base leading-relaxed text-muted">
-          8 абсурдних ситуацій. 1 квитанція втраченого часу. І патерн, підібраний під твій рівень глибини.
-        </p>
-      </div>
-
-      <!-- Інтерактивне прев'ю (До / Після) -->
-      <div class="brutal-card p-4 sm:p-5 space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-borderdim pb-2.5">
-          <span class="font-mono text-xs font-bold uppercase tracking-tight text-offwhite">
-            БЛІДИЙ КОНТУР &rarr; ГОТОВИЙ АРТ
-          </span>
-          <button
-            type="button"
-            id="entry-ink-toggle"
-            class="font-mono text-[11px] font-bold uppercase px-2.5 py-1 border-2 border-offwhite bg-lime text-darkink hover:bg-offwhite transition-colors"
-          >
-            ПЕРЕМИКНУТИ ЧОРНИЛО
-          </button>
+      <div class="slider-box">
+        <div class="slider-top">
+          <span>БЛІДИЙ КОНТУР &rarr; ГОТОВИЙ АРТ</span>
+          <span id="ba-pct">55%</span>
         </div>
-
-        <div class="relative border-2 border-offwhite bg-deep aspect-[4/3] w-full overflow-hidden select-none">
+        <div class="ba-stage">
           <img
             src="before.webp"
             onerror="if(!this.dataset.fb){this.dataset.fb=1;this.src='before.jpg';}"
-            alt="Блідий контур для трасування"
-            class="w-full h-full object-contain block pointer-events-none"
+            alt="Блідий контур"
             draggable="false"
-          />
-
-          <div
-            id="entry-ink-overlay"
-            class="absolute inset-0 pointer-events-none"
-            style="clip-path: inset(0 45% 0 0);"
           >
+          <div class="ba-after" id="ba-after">
             <img
               src="after.webp"
               onerror="if(!this.dataset.fb){this.dataset.fb=1;this.src='after.jpg';}"
-              alt="Готовий деталізований арт"
-              class="w-full h-full object-contain block bg-deep pointer-events-none"
+              alt="Готовий арт"
               draggable="false"
-            />
+            >
           </div>
-
-          <div
-            id="entry-ink-line"
-            class="absolute top-0 bottom-0 w-0.5 bg-lime pointer-events-none"
-            style="left: 55%;"
-          >
-            <div class="bg-lime text-darkink border border-darkink text-[9px] font-bold px-1.5 py-0.5 -translate-x-1/2 mt-1.5 whitespace-nowrap">
-              АРТ
-            </div>
-          </div>
+          <div class="ba-line" id="ba-line"><span class="ba-tag">АРТ</span></div>
         </div>
-
-        <div class="space-y-1.5">
-          <div class="flex justify-between font-mono text-[11px] uppercase text-muted">
-            <span>0% БЛІДИЙ КОНТУР</span>
-            <span id="entry-ink-pct" class="font-bold text-lime">55% ПРОЯВЛЕНО</span>
-          </div>
-          <input
-            type="range"
-            id="entry-ink-slider"
-            min="0"
-            max="100"
-            value="55"
-            aria-label="Повзунок проявлення контуру"
-            class="brutal-slider"
-          />
-        </div>
-
-        <p class="font-mono text-xs leading-relaxed text-offwhite/90 pt-1">
-          Проведи ручкою по блідому контуру — отримай деталізований графічний арт. Навички малювання не потрібні.
-        </p>
+        <input type="range" min="0" max="100" value="55" class="brutal-slider" id="ba-range" aria-label="Порівняння до і після">
+        <p class="slider-cap">Проведи ручкою по блідому контуру — отримай деталізований графічний арт. Навички малювання не потрібні.</p>
       </div>
 
-      <!-- Поле введення ПІБ -->
-      <div class="brutal-card p-4 sm:p-5 space-y-3">
-        <label for="tester-name-input" class="block font-mono text-xs sm:text-sm font-bold leading-snug text-offwhite">
-          Твоє ім’я та прізвище <span class="text-muted font-normal">(щоб ми знали, кому який патерн роздрукувати)</span>
-        </label>
-        <input
-          type="text"
-          id="tester-name-input"
-          name="tester_full_name"
-          autocomplete="name"
-          placeholder="Наприклад: Олена Коваленко"
-          class="w-full border-2 border-offwhite bg-deep px-3.5 py-3 font-mono text-sm text-offwhite placeholder:text-muted/50 focus:outline-none focus:border-lime"
-        />
-        <div id="name-validation-msg" class="hidden bg-lime text-darkink font-mono text-xs font-bold px-3 py-2 border border-offwhite">
-          Введи ім’я та прізвище, щоб ми зафіксували твій патерн для друку.
-        </div>
-      </div>
+      <label for="u-name">Твоє ім’я та прізвище <span>(щоб ми знали, кому який патерн роздрукувати)</span></label>
+      <input type="text" id="u-name" placeholder="Наприклад: Олена Коваленко" autocomplete="name">
+      <div id="u-err" class="err hidden">Вкажи, будь ласка, своє ім’я та прізвище перед стартом.</div>
 
-      <div class="space-y-3">
-        <button
-          type="button"
-          id="btn-start-quiz"
-          class="brutal-btn brutal-btn-lime w-full font-display font-black text-base sm:text-lg uppercase tracking-tight py-4 px-5 flex items-center justify-center gap-2"
-        >
-          <span>РОЗРАХУВАТИ ВТРАЧЕНИЙ ЧАС</span>
-          <span aria-hidden="true">&rarr;</span>
-        </button>
-
-        <p class="font-mono text-[11px] sm:text-xs leading-relaxed text-muted border-l-2 border-lime pl-3">
-          Без обіцянок просвітлення. Жодної відповідальності за охололий чай і пропущені повідомлення.
-        </p>
-      </div>
+      <button type="button" class="btn" id="btn-start">РОЗРАХУВАТИ ВТРАЧЕНИЙ ЧАС &rarr;</button>
+      <p class="note">Без обіцянок просвітлення. Жодної відповідальності за охололий чай і пропущені повідомлення.</p>
     </section>
 
-    <!-- ЕКРАНИ 2–9 · УСІ 8 ПИТАНЬ КВІЗУ -->
-    <section id="screen-quiz" class="hidden space-y-6">
-      <div class="space-y-2">
-        <div class="flex items-center justify-between font-mono text-xs font-bold uppercase">
-          <span id="progress-label" class="text-lime">01 / 08 · Тільки заходимо</span>
-          <span id="progress-percent" class="text-muted">12%</span>
-        </div>
-        <div
-          id="progress-segments"
-          class="grid grid-cols-8 gap-1.5"
-          role="progressbar"
-          aria-valuemin="1"
-          aria-valuemax="8"
-          aria-valuenow="1"
-        ></div>
+    <!-- ЕКРАН 2: ПИТАННЯ -->
+    <section id="s-quiz" class="card hidden">
+      <div class="prog-top">
+        <span id="q-step">01 / 08</span>
+        <span>YPL</span>
       </div>
-
-      <div class="brutal-card p-5 sm:p-6 space-y-3.5">
-        <div
-          id="question-tag"
-          class="inline-block bg-deep border border-lime text-lime font-mono text-[11px] font-bold uppercase px-2.5 py-1 tracking-wider"
-        >
-          01 / 08 · ІНЦИДЕНТ ІЗ ЛАЗЕРНОЮ КРАПКОЮ
-        </div>
-        <h2
-          id="question-prompt"
-          class="font-sansheavy font-extrabold text-xl sm:text-2xl leading-snug text-offwhite"
-        ></h2>
-      </div>
-
-      <div id="options-container" class="space-y-3" role="radiogroup" aria-labelledby="question-prompt"></div>
-
-      <div class="pt-2 flex items-center justify-between gap-4">
-        <button
-          type="button"
-          id="btn-prev"
-          class="font-mono text-xs sm:text-sm font-bold uppercase text-muted hover:text-lime underline underline-offset-4 px-2 py-2 transition-colors"
-        >
-          &larr; НАЗАД
-        </button>
-
-        <button
-          type="button"
-          id="btn-next"
-          disabled
-          class="brutal-btn brutal-btn-lime font-display font-black text-sm sm:text-base uppercase tracking-tight py-3.5 px-6 flex items-center gap-2"
-        >
-          <span id="btn-next-text">ПІРНУТИ ГЛИБШЕ</span>
-          <span aria-hidden="true">&rarr;</span>
-        </button>
-      </div>
+      <div class="prog-bar"><div class="prog-fill" id="q-fill"></div></div>
+      <div class="tag-box" id="q-inc"></div>
+      <h2 id="q-title"></h2>
+      <div class="opts" id="q-opts"></div>
+      <button type="button" class="btn" id="btn-next" disabled>ПІРНУТИ ГЛИБШЕ &rarr;</button>
     </section>
 
-    <!-- ПРОМІЖНИЙ ЕКРАН РОЗРАХУНКУ -->
-    <section id="screen-calculating" class="hidden py-14">
-      <div class="brutal-card-lime-shadow p-6 sm:p-8 space-y-4">
-        <div class="font-mono text-xs text-lime uppercase tracking-widest">
-          YPL // ДІАГНОСТИКА ГЛИБИНИ
-        </div>
-        <div class="font-display font-black text-xl sm:text-2xl uppercase leading-snug text-offwhite">
-          ЗВІРЯЄМО ПОКАЗИ ГОДИННИКА ТА РІВЕНЬ ЗАЛИПАННЯ...<span class="cursor-blink text-lime">_</span>
-        </div>
-        <div class="w-full h-4 border-2 border-offwhite bg-bgmain p-0.5">
-          <div id="calc-bar" class="h-full bg-lime transition-all duration-700 ease-out" style="width: 12%;"></div>
-        </div>
-        <div class="font-mono text-xs text-muted">
-          Аналізуємо охололий чай, ігноровані повідомлення та витривалість ручки.
-        </div>
-      </div>
-    </section>
+    <!-- ЕКРАН 3: РЕЗУЛЬТАТ -->
+    <section id="s-res" class="hidden">
+      <div class="card">
+        <div class="res-badge" id="r-badge"></div>
+        <h1 id="r-title"></h1>
+        <p class="res-lead" id="r-lead"></p>
+        <div class="res-text" id="r-body"></div>
 
-    <!-- ЕКРАН 10 · РЕЗУЛЬТАТ + ТЕРМОКВИТАНЦІЯ + ПРЕВ'Ю ПАТЕРНА + ПЕРЕХІД ДО ОЦІНЮВАННЯ -->
-    <section id="screen-result" class="hidden space-y-8">
-
-      <!-- 1. ЗАГОЛОВОК РІВНЯ + ЛІД + 3 АБЗАЦИ + ТАБЛИЦЯ ХАРАКТЕРИСТИК -->
-      <div class="space-y-4">
-        <div
-          id="res-level-badge"
-          class="bg-lime text-darkink border-2 border-offwhite px-3 py-2 font-mono text-xs font-bold uppercase tracking-wide"
-        ></div>
-
-        <h1
-          id="res-title"
-          class="font-display font-black text-3xl sm:text-4xl uppercase tracking-tight leading-tight text-offwhite"
-        ></h1>
-
-        <p
-          id="res-lead"
-          class="font-sansheavy font-extrabold text-base sm:text-lg leading-snug text-lime"
-        ></p>
-
-        <div
-          id="res-paragraphs"
-          class="space-y-3.5 font-mono text-xs sm:text-sm leading-relaxed text-offwhite bg-surface border-2 border-offwhite p-4 sm:p-5"
-        ></div>
-
-        <div class="brutal-card overflow-hidden">
-          <table class="w-full border-collapse font-mono text-xs sm:text-sm">
-            <tbody id="res-table-body" class="divide-y-2 divide-borderdim"></tbody>
-          </table>
-        </div>
+        <table>
+          <tbody>
+            <tr><td>ТВОЯ СУПЕРСИЛА</td><td id="p-pow"></td></tr>
+            <tr><td>ТВОЯ СЛАБКІСТЬ</td><td id="p-weak"></td></tr>
+            <tr><td>ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС</td><td id="p-time"></td></tr>
+            <tr><td>СВІДЧЕННЯ ОЧЕВИДЦІВ</td><td id="p-wit"></td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- 2. ТЕРМОКВИТАНЦІЯ (ТІЛЬКИ ПЕРЕГЛЯД НА ЕКРАНІ, БЕЗ ХЕШТЕГІВ І СКАЧУВАННЯ) -->
-      <div class="receipt-wrapper">
-        <div class="receipt-body p-5 sm:p-6 space-y-4">
-          <div class="text-center border-b-2 border-dashed border-borderdim pb-3 space-y-1">
-            <div class="font-mono text-[10px] uppercase tracking-widest text-muted">
-              YPL
-            </div>
-            <div class="font-display font-black text-lg sm:text-xl uppercase tracking-tight text-offwhite">
-              ТВОЯ КВИТАНЦІЯ ВТРАЧЕНОГО ЧАСУ
-            </div>
-            <div id="receipt-meta" class="font-mono text-[10px] text-muted uppercase"></div>
+      <!-- КВИТАНЦІЯ (ТІЛЬКИ НА ЕКРАНІ) -->
+      <div class="receipt-wrap">
+        <div class="receipt-body">
+          <div class="receipt-head">
+            <div class="receipt-meta">YPL</div>
+            <div class="receipt-title">ТВОЯ КВИТАНЦІЯ ВТРАЧЕНОГО ЧАСУ</div>
+            <div class="receipt-meta" id="rec-meta"></div>
           </div>
-
-          <div class="space-y-3 font-mono text-xs sm:text-sm">
-            <div class="flex justify-between items-baseline gap-2">
-              <span class="text-muted uppercase">ЗАВЕРШЕНО:</span>
-              <span id="receipt-completed" class="font-bold text-offwhite text-right"></span>
-            </div>
-            <div class="flex justify-between items-center gap-2">
-              <span class="text-muted uppercase">ВТРАЧЕНИЙ ЧАС:</span>
-              <span
-                id="receipt-time-lost"
-                class="font-bold text-darkink bg-lime px-2 py-0.5 border border-offwhite text-right"
-              ></span>
-            </div>
-            <div class="flex justify-between items-baseline gap-2">
-              <span class="text-muted uppercase">СТАТУС:</span>
-              <span id="receipt-status" class="font-bold text-offwhite text-right"></span>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t-2 border-dashed border-borderdim flex flex-col items-center">
-            <svg class="w-48 h-9" viewBox="0 0 200 36" aria-hidden="true">
-              <rect x="2" y="0" width="4" height="36" fill="#F5F4F0" />
-              <rect x="9" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="15" y="0" width="6" height="36" fill="#F5F4F0" />
-              <rect x="25" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="31" y="0" width="3" height="36" fill="#F5F4F0" />
-              <rect x="38" y="0" width="7" height="36" fill="#F5F4F0" />
-              <rect x="49" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="55" y="0" width="4" height="36" fill="#F5F4F0" />
-              <rect x="63" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="69" y="0" width="5" height="36" fill="#F5F4F0" />
-              <rect x="78" y="0" width="3" height="36" fill="#F5F4F0" />
-              <rect x="85" y="0" width="6" height="36" fill="#F5F4F0" />
-              <rect x="95" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="101" y="0" width="4" height="36" fill="#F5F4F0" />
-              <rect x="109" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="115" y="0" width="7" height="36" fill="#F5F4F0" />
-              <rect x="126" y="0" width="3" height="36" fill="#F5F4F0" />
-              <rect x="133" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="139" y="0" width="5" height="36" fill="#F5F4F0" />
-              <rect x="148" y="0" width="4" height="36" fill="#F5F4F0" />
-              <rect x="156" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="162" y="0" width="6" height="36" fill="#F5F4F0" />
-              <rect x="172" y="0" width="3" height="36" fill="#F5F4F0" />
-              <rect x="179" y="0" width="2" height="36" fill="#F5F4F0" />
-              <rect x="185" y="0" width="5" height="36" fill="#F5F4F0" />
-              <rect x="194" y="0" width="4" height="36" fill="#F5F4F0" />
+          <div class="rec-row"><span>ЗАВЕРШЕНО:</span><span id="rec-1"></span></div>
+          <div class="rec-row"><span>ВТРАЧЕНИЙ ЧАС:</span><span class="rec-lime" id="rec-2"></span></div>
+          <div class="rec-row"><span>СТАТУС:</span><span id="rec-3"></span></div>
+          <div class="barcode">
+            <svg width="180" height="30" viewBox="0 0 200 36" aria-hidden="true">
+              <rect x="2" y="0" width="4" height="36" fill="#F5F4F0"/><rect x="10" y="0" width="2" height="36" fill="#F5F4F0"/>
+              <rect x="16" y="0" width="6" height="36" fill="#F5F4F0"/><rect x="28" y="0" width="3" height="36" fill="#F5F4F0"/>
+              <rect x="36" y="0" width="7" height="36" fill="#F5F4F0"/><rect x="48" y="0" width="2" height="36" fill="#F5F4F0"/>
+              <rect x="56" y="0" width="4" height="36" fill="#F5F4F0"/><rect x="66" y="0" width="5" height="36" fill="#F5F4F0"/>
+              <rect x="76" y="0" width="3" height="36" fill="#F5F4F0"/><rect x="84" y="0" width="6" height="36" fill="#F5F4F0"/>
+              <rect x="96" y="0" width="2" height="36" fill="#F5F4F0"/><rect x="104" y="0" width="4" height="36" fill="#F5F4F0"/>
+              <rect x="114" y="0" width="7" height="36" fill="#F5F4F0"/><rect x="126" y="0" width="3" height="36" fill="#F5F4F0"/>
+              <rect x="136" y="0" width="5" height="36" fill="#F5F4F0"/><rect x="148" y="0" width="4" height="36" fill="#F5F4F0"/>
+              <rect x="160" y="0" width="6" height="36" fill="#F5F4F0"/><rect x="172" y="0" width="3" height="36" fill="#F5F4F0"/>
+              <rect x="182" y="0" width="5" height="36" fill="#F5F4F0"/><rect x="192" y="0" width="4" height="36" fill="#F5F4F0"/>
             </svg>
           </div>
         </div>
-        <div class="receipt-sawtooth"></div>
+        <div class="sawtooth"></div>
       </div>
 
-      <!-- 3. БЛОК ПОПЕРЕДНЬОГО ПЕРЕГЛЯДУ ПАТЕРНА (БЕЗ НОМЕРІВ PDF) -->
-      <div class="brutal-card-lime-shadow p-5 sm:p-6 space-y-5">
-        <div class="border-b-2 border-borderdim pb-3">
-          <h3 id="tester-pattern-heading" class="font-display font-black text-lg sm:text-xl uppercase text-lime">
-            ТВІЙ ПАТЕРН ДЛЯ ТЕСТУ: №11
-          </h3>
+      <!-- ПРЕВ'Ю ПАТЕРНА (БЕЗ НОМЕРІВ PDF) -->
+      <div class="card-lime">
+        <div class="pat-title" id="pat-head"></div>
+        <div class="pat-frame">
+          <img id="pat-img" src="" alt="Патерн" draggable="false">
+          <div class="wm" id="pat-wm"></div>
         </div>
-
-        <div class="protected-preview relative max-w-[300px] w-full mx-auto border-2 border-offwhite bg-bgmain overflow-hidden">
-          <div id="tester-pattern-visual" class="w-full aspect-[3/4] flex items-center justify-center bg-deep"></div>
-
-          <div class="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
-            <div
-              id="tester-watermark-text"
-              class="font-mono text-xs font-bold uppercase tracking-widest text-offwhite/35 bg-bgmain/75 border border-offwhite/30 px-3 py-1.5 whitespace-nowrap"
-              style="transform: rotate(-28deg);"
-            >
-              YPL · PREVIEW · №11
-            </div>
-          </div>
-        </div>
-
-        <p class="font-mono text-xs sm:text-sm leading-relaxed text-offwhite/90">
+        <p class="desc" style="margin-bottom:14px;">
           Це попередній перегляд патерна під твій рівень. Нічого скачувати не потрібно — твій вибір уже зафіксовано, ми роздрукуємо цей аркуш спеціально для тебе.
         </p>
-
-        <div class="bg-lime text-darkink border-2 border-offwhite p-3.5 font-mono text-xs sm:text-sm font-bold leading-snug">
-          <span id="tester-submission-status"></span>
-          <div id="webhook-sync-note" class="text-[10px] font-normal mt-1 opacity-85">
-            Дані автоматично передано в таблицю друку.
-          </div>
-        </div>
+        <div class="sync-box" id="sync-msg">Фіксуємо твій вибір...</div>
       </div>
 
-      <!-- 4. КНОПКА ПЕРЕХОДУ ДО ОЦІНЮВАННЯ 27 ПАТЕРНІВ (ЗАКРИТИХ ПАРОЛЕМ) -->
-      <div class="space-y-4">
-        <a
-          href="../PRHLMV1-patterns-test-uk/"
-          class="brutal-btn brutal-btn-lime w-full font-display font-black text-sm sm:text-base uppercase tracking-tight py-4 px-5 flex items-center justify-center gap-2 text-center no-underline"
-        >
-          <span>ПЕРЕЙТИ ДО ОЦІНЮВАННЯ ПАТЕРНІВ</span>
-          <span aria-hidden="true">&rarr;</span>
-        </a>
+      <!-- ПЕРЕХІД ДО ОЦІНЮВАННЯ ПАТЕРНІВ ЗА КОДОМ -->
+      <div class="card" style="margin-bottom:0;">
+        <button type="button" class="btn" id="btn-open-pass">
+          ПЕРЕЙТИ ДО ОЦІНЮВАННЯ ПАТЕРНІВ &rarr;
+        </button>
 
-        <div>
-          <button
-            type="button"
-            id="btn-retake"
-            class="font-mono text-xs uppercase text-muted hover:text-lime underline underline-offset-4"
-          >
-            &circlearrowleft; ПРОЙТИ ТЕСТ ЩЕ РАЗ
-          </button>
+        <div id="pass-gate" class="gate-box hidden">
+          <div class="gate-title">ВВЕДИ КОД ДОСТУПУ ДЛЯ ПЕРЕХОДУ</div>
+          <label for="quiz-pass-inp">Код доступу <span>*</span></label>
+          <input type="password" id="quiz-pass-inp" placeholder="Введи код...">
+          <div id="quiz-pass-err" class="err hidden">Невірний код доступу.</div>
+          <button type="button" class="btn" id="quiz-pass-btn">ВІДКРИТИ 27 ПАТЕРНІВ &rarr;</button>
         </div>
       </div>
     </section>
-
   </main>
 
   <script>
-    const CONFIG = {
-      GOOGLE_FORM_ACTION_URL: 'https://docs.google.com/forms/d/e/1FAIpQLScqAVqLb1TtNS5JMy2IBfUWRE6XqIt4C63qgRXK40YzIhEb5w/formResponse',
-      FORM_FIELDS: {
-        name: 'entry.1793568081',
-        level: 'entry.1660912714',
-        title: 'entry.76560368',
-        pattern: 'entry.712635991',
-        score: 'entry.967962361',
-      },
-      PREVIEW_IMAGES: {
-        1: { webp: 'pattern-01.webp', jpg: 'pattern-01.jpg' },
-        2: { webp: 'pattern-06.webp', jpg: 'pattern-06.jpg' },
-        3: { webp: 'pattern-11.webp', jpg: 'pattern-11.jpg' },
-        4: { webp: 'pattern-20.webp', jpg: 'pattern-20.jpg' },
-      },
-    };
+    (function () {
+      // КОД ДОСТУПУ ДО СТОРІНКИ З 27 ПАТЕРНАМИ
+      var ACCESS_CODE = "YPL2026";
+      var PATTERNS_URL = "../PRHLMV1-patterns-test-uk/";
+      var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScqAVqLb1TtNS5JMy2IBfUWRE6XqIt4C63qgRXK40YzIhEb5w/formResponse";
 
-    const QUIZ_QUESTIONS = [
-      {
-        progressLabel: '01 / 08 · Тільки заходимо',
-        tag: '01 / 08 · ІНЦИДЕНТ ІЗ ЛАЗЕРНОЮ КРАПКОЮ',
-        prompt: 'Ти — кіт. На підлозі з’являється червона лазерна крапка. Твої дії?',
-        options: [
-          { letter: 'А', text: 'Один удар лапою. Просто перевірити. Гаразд, ще один.', points: 2 },
-          { letter: 'Б', text: 'Крапка зникла у стіні. Я чекаю. І буду чекати.', points: 4 },
-          { letter: 'В', text: 'Дивлюся на неї. Засуджую її. Йду геть.', points: 1 },
-          { letter: 'Г', text: 'Ця крапка тепер — усе моє життя. Ваза просто стояла на шляху.', points: 3 },
-        ],
-      },
-      {
-        progressLabel: '02 / 08 · Вмощуємося зручніше',
-        tag: '02 / 08 · ІНЦИДЕНТ У THE SIMS',
-        prompt: 'У твого сіма червона шкала голоду. А ти якраз у процесі. Що робиш?',
-        options: [
-          { letter: 'А', text: 'Забула, що в сімів є потреби. Вже 6-й день. Він тепер привид.', points: 4 },
-          { letter: 'Б', text: 'Годую його. Я відповідальний бог.', points: 1 },
-          { letter: 'В', text: 'Я сама ще не їла. Ми в цьому човні разом.', points: 3 },
-          { letter: 'Г', text: 'Сам розбереться. Він звик, що я зникаю на кілька годин.', points: 2 },
-        ],
-      },
-      {
-        progressLabel: '03 / 08 · Пірнаємо глибше',
-        tag: '03 / 08 · ІНЦИДЕНТ ІЗ ВИКРАДЕННЯМ ПРИБУЛЬЦЯМИ',
-        prompt: 'Тебе викрадають інопланетяни. Промінь світла вже відриває тебе від підлоги. На жаль, ти саме посеред важливої справи.',
-        options: [
-          { letter: 'А', text: 'Кажу їм дати мені ще п’ять хвилин. У них явно є технології, щоб поставити час на паузу.', points: 3 },
-          { letter: 'Б', text: 'Одразу погоджуюся. Нарешті хоч якась зміна обстановки.', points: 1 },
-          { letter: 'В', text: 'Питаю, чи на їхньому кораблі краще освітлення. Моє робоче місце щойно ідеально налаштувалося.', points: 4 },
-          { letter: 'Г', text: 'Хапаю те, над чим працюю, перш ніж ноги відірвуться від підлоги. Не можна просто кинути прогрес.', points: 2 },
-        ],
-      },
-      {
-        progressLabel: '04 / 08 · Ти ще тут?',
-        tag: '04 / 08 · ІНЦИДЕНТ ЗІ СВІЧКОЮ',
-        prompt: 'Ти зникла в IKEA. Зайшла лише по одну свічку. Камери спостереження зафіксували таке:',
-        options: [
-          { letter: 'А', text: 'Купила свічку. Вийшла. Чиста операція.', points: 1 },
-          { letter: 'Б', text: 'Магазин зачинився. Ти все ще порівнювала лампи.', points: 3 },
-          { letter: 'В', text: 'Купила ще й лампу, бо свічці було самотньо.', points: 2 },
-          { letter: 'Г', text: 'Ти обрала спальню, дала їй назву і зараз обговорюєш із персоналом умови оренди.', points: 4 },
-        ],
-      },
-      {
-        progressLabel: '05 / 08 · Без поспіху',
-        tag: '05 / 08 · МУЗЕЙНИЙ ІНЦИДЕНТ · ЧАС ЗАКРИТТЯ — ЦЕ ЛИШЕ РЕКОМЕНДАЦІЯ',
-        prompt: 'Ти в музеї. Одна із зал — це кімната, від підлоги до стелі вкрита щільними, складними лініями й переплетіннями. Охоронець оголошує: «Ми зачиняємося через п’ять хвилин».',
-        options: [
-          { letter: 'А', text: 'Охоронець видав мені ліхтарик. Тепер ми обоє в темі.', points: 4 },
-          { letter: 'Б', text: 'Останній погляд — і я йду.', points: 2 },
-          { letter: 'В', text: 'Виходжу. У музеїв недарма є графік роботи.', points: 1 },
-          { letter: 'Г', text: 'Світло вже вимкнули. Я все ще намагаюся простежити, як з’єднуються ці лінії.', points: 3 },
-        ],
-      },
-      {
-        progressLabel: '06 / 08 · Майже на дні',
-        tag: '06 / 08 · ІНЦИДЕНТ ІЗ МАШИНОЮ ЧАСУ · ЧАСОВА БУХГАЛТЕРІЯ',
-        prompt: 'Вчений пропонує тобі машину часу. Користуватися можна безкоштовно, але є одне правило: повернутися треба рівно через 15 хвилин твого власного часу.',
-        options: [
-          { letter: 'А', text: 'Лише одним оком гляну на одну історичну подію.', points: 2 },
-          { letter: 'Б', text: 'Я заснувала цивілізацію, винайшла календар і стала дрібною історичною незручністю.', points: 4 },
-          { letter: 'В', text: 'Я повернулася з трьома новими історичними теоріями і без жодного поняття, який зараз рік.', points: 3 },
-          { letter: 'Г', text: 'Чудово. Буду за 15 хвилин.', points: 1 },
-        ],
-      },
-      {
-        progressLabel: '07 / 08 · Останнє. Мабуть.',
-        tag: '07 / 08 · ІНЦИДЕНТ ІЗ ТАЄМНИЧИМИ ДВЕРЦЯТАМИ · НЕСАНКЦІОНОВАНЕ ДОСЛІДЖЕННЯ',
-        prompt: 'У твоїй стіні з’являються крихітні дверцята. На них табличка: «БУДЬ ЛАСКА, НЕ ВІДЧИНЯТИ. ВСЕРЕДИНІ ЧАС ІДЕ ІНАКШЕ».',
-        options: [
-          { letter: 'А', text: 'Заходжу всередину. Подивлюся на годинник, коли вийду.', points: 3 },
-          { letter: 'Б', text: 'Поважаю табличку. Мені й своїх проблем вистачає.', points: 1 },
-          { letter: 'В', text: 'Я вже провела туди Wi-Fi, принесла перекус і подала заяву на зміну адреси реєстрації.', points: 4 },
-          { letter: 'Г', text: 'Трохи прочиняю. Просто перевірити.', points: 2 },
-        ],
-      },
-      {
-        progressLabel: '08 / 08 · Тепер точно останнє.',
-        tag: '08 / 08 · ІНЦИДЕНТ ІЗ ЄНОТОМ · ДУЖЕ ПОГАНЕ БІЗНЕС-РІШЕННЯ',
-        prompt: 'О першій ночі у твої двері стукає єнот. У нього дипломат, крихітна краватка і бізнес-пропозиція.',
-        options: [
-          { letter: 'А', text: 'Зачиняю двері. Я не веду переговорів із єнотами.', points: 1 },
-          { letter: 'Б', text: 'Тепер я співзасновниця єнотячої корпорації. У нас уже є логотип.', points: 4 },
-          { letter: 'В', text: 'Вислухаю пітч. П’ять хвилин.', points: 2 },
-          { letter: 'Г', text: 'Переговори тривають третю годину. Я вже навіть не пам’ятаю, що саме ми продаємо.', points: 3 },
-        ],
-      },
-    ];
-
-    const RESULT_LEVELS = {
-      1: {
-        levelNum: 1,
-        badge: 'РІВЕНЬ 1 / 4 · ПРОСТО ДИВЛЮСЯ · ГЛИБИНА ■□□□',
-        title: 'ТИ: ТУРИСТКА',
-        characterShort: 'ТУРИСТКА',
-        lead: 'Ти знаєш, як зайти в процес на глибину, не оформлюючи там прописку.',
-        paragraphs: [
-          'Ти допитлива, але без самогубного фанатизму. Тобі подобається пірнути в цікавий процес, пройти кілька поворотів і подивитися, куди це виведе — не дозволяючи йому вкрасти весь твій вечір.',
-          'Поки інші випадково залишають три години на одному куточку, ти реально стежиш за часом. Ти доводиш справу до кінця, закриваєш ручку і йдеш далі зі своїм графіком у повному порядку.',
-          'Ти кажеш «лише одна сторінка» — і справді маєш на увазі одну сторінку. Виходиш із готовим графічним артом без жодних навичок малювання і з самоконтролем, який трохи лякає.',
-        ],
-        table: [
-          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Вчасно розуміти, коли досить.' },
-          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Іноді йдеш рівно за крок до найцікавішого.' },
-          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '1 год 20 хв' },
-          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Сказала — одна сторінка. Зробила — одну сторінку. Ми перевірили по камерах».' },
-        ],
-        receipt: {
-          completed: '1 готовий арт.',
-          timeLostFull: '1 год 20 хв (зафіксовано).',
-          status: 'заяву про зникнення не подавали.',
+      var QUESTIONS = [
+        {
+          step: "01 / 08",
+          inc: "01 / 08 · ІНЦИДЕНТ ІЗ ЛАЗЕРНОЮ КРАПКОЮ",
+          q: "Ти — кіт. На підлозі з’являється червона лазерна крапка. Твої дії?",
+          opts: [
+            { t: "А. Один удар лапою. Просто перевірити. Гаразд, ще один.", p: 2 },
+            { t: "Б. Крапка зникла у стіні. Я чекаю. І буду чекати.", p: 4 },
+            { t: "В. Дивлюся на неї. Засуджую її. Йду геть.", p: 1 },
+            { t: "Г. Ця крапка тепер — усе моє життя. Ваза просто стояла на шляху.", p: 3 }
+          ]
         },
-        patternCode: '№01',
-        getPreviewSvg: () => `
-          <svg viewBox="0 0 240 320" class="w-full h-full block">
-            <rect x="16" y="16" width="208" height="288" fill="none" stroke="rgba(245,244,240,0.3)" stroke-width="1.5" stroke-dasharray="3 2" />
-            <circle cx="120" cy="160" r="76" fill="none" stroke="rgba(245,244,240,0.45)" stroke-width="1.8" stroke-dasharray="3 2" />
-            <circle cx="120" cy="160" r="14" fill="none" stroke="#C6FF00" stroke-width="1.8" />
-          </svg>`,
-      },
-      2: {
-        levelNum: 2,
-        badge: 'РІВЕНЬ 2 / 4 · ЩЕ ОДНУ ЛІНІЮ · ГЛИБИНА ■■□□',
-        title: 'ТИ: ПЕРЕГОВОРНИЦЯ',
-        characterShort: 'ПЕРЕГОВОРНИЦЯ',
-        lead: 'Ти не губиш фінішну лінію. Ти просто постійно її пересуваєш.',
-        paragraphs: [
-          'Усе завжди починається як коротка перерва. «Ще одну лінію». «Ще оцей сектор». «Гаразд, тільки оцей куточок». Кожна твоя угода з годинником гірша за попередню, і ти підписуєш їх добровільно.',
-          'Тобі кайфово бачити, як картинка збирається фрагмент за фрагментом, тому зупинитися посередині здається особистою зрадою. Кинути ділянку недопрацьованою — взагалі не варіант.',
-          'Навіть без навичок малювання ти ведеш ручку по блідому контуру, і з-під пальців виходить складний графічний арт. І якимось дивом завжди лишається ще одна дрібниця, яку треба довести до ладу, перш ніж ти піднімеш голову.',
-        ],
-        table: [
-          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Перетворювати десятихвилинну паузу на повноцінну вечірню спецоперацію.' },
-          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Твоє визначення фрази «майже закінчила» юридично дуже гнучке.' },
-          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '2 год 10 хв' },
-          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Сказала — ще п’ять хвилин. Минула година. Судячи з усього, переговори досі тривають».' },
-        ],
-        receipt: {
-          completed: '1 готовий арт (плюс «ще трохи» деталей).',
-          timeLostFull: '2 год 10 хв (виторгувано в ночі).',
-          status: 'відбій успішно перенесено.',
+        {
+          step: "02 / 08",
+          inc: "02 / 08 · ІНЦИДЕНТ У THE SIMS",
+          q: "У твого сіма червона шкала голоду. А ти якраз у процесі. Що робиш?",
+          opts: [
+            { t: "А. Забула, що в сімів є потреби. Вже 6-й день. Він тепер привид.", p: 4 },
+            { t: "Б. Годую його. Я відповідальний бог.", p: 1 },
+            { t: "В. Я сама ще не їла. Ми в цьому човні разом.", p: 3 },
+            { t: "Г. Сам розбереться. Він звик, що я зникаю на кілька годин.", p: 2 }
+          ]
         },
-        patternCode: '№06',
-        getPreviewSvg: () => `
-          <svg viewBox="0 0 240 320" class="w-full h-full block">
-            <rect x="16" y="16" width="208" height="288" fill="none" stroke="rgba(245,244,240,0.35)" stroke-width="1.5" />
-            <polygon points="120,58 202,160 120,262 38,160" fill="none" stroke="#F5F4F0" stroke-width="1.5" stroke-dasharray="3 2" />
-            <circle cx="120" cy="160" r="18" fill="none" stroke="#C6FF00" stroke-width="1.8" />
-          </svg>`,
-      },
-      3: {
-        levelNum: 3,
-        badge: 'РІВЕНЬ 3 / 4 · СТОП, КОТРА ГОДИНА? · ГЛИБИНА ■■■□',
-        title: 'ТИ: ПРИВИД',
-        characterShort: 'ПРИВИД',
-        lead: 'Ти ніби в кімнаті. І водночас тебе тут немає.',
-        paragraphs: [
-          'Ти заглянула просто подивитися, а решта вечора тихо пішла без тебе. Повідомлення приходять, напої холонуть, а годинник непомітно перестрибує на три години вперед без твого дозволу.',
-          'Тобі не потрібне нове відволікання кожні п’ять хвилин. Дай тобі достатньо щільну структуру, і ти спокійно провалишся в неї на пів ночі, поки рука просто веде лінію за лінією.',
-          'Навички малювання для цього не потрібні — ти проявляєш блідий контур і виринаєш із графічним артом на столі, який виглядає так, ніби над ним тиждень сидів ілюстратор. Час може йти далі. Ти зайнята.',
-        ],
-        table: [
-          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Глибокий фокус і вміння зникати з радарів за командою.' },
-          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Забуваєш, що решта суспільства живе за розкладом.' },
-          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '3 год 25 хв' },
-          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Чай заварили о восьмій. Чай досі там. Ми вирішили не заважати».' },
-        ],
-        receipt: {
-          completed: '1+ готовий арт.',
-          timeLostFull: '3 год 25 хв (розчинилися в повітрі).',
-          status: 'кілька годин належали іншому виміру.',
+        {
+          step: "03 / 08",
+          inc: "03 / 08 · ІНЦИДЕНТ ІЗ ВИКРАДЕННЯМ ПРИБУЛЬЦЯМИ",
+          q: "Тебе викрадають інопланетяни. Промінь світла вже відриває тебе від підлоги. На жаль, ти саме посеред важливої справи.",
+          opts: [
+            { t: "А. Кажу їм дати мені ще п’ять хвилин. У них явно є технології, щоб поставити час на паузу.", p: 3 },
+            { t: "Б. Одразу погоджуюся. Нарешті хоч якась зміна обстановки.", p: 1 },
+            { t: "В. Питаю, чи на їхньому кораблі краще освітлення. Моє робоче місце щойно ідеально налаштувалося.", p: 4 },
+            { t: "Г. Хапаю те, над чим працюю, перш ніж ноги відірвуться від підлоги. Не можна просто кинути прогрес.", p: 2 }
+          ]
         },
-        patternCode: '№11',
-        getPreviewSvg: () => `
-          <svg viewBox="0 0 240 320" class="w-full h-full block">
-            <rect x="16" y="16" width="208" height="288" fill="none" stroke="rgba(245,244,240,0.4)" stroke-width="1.5" />
-            <circle cx="120" cy="160" r="86" fill="none" stroke="#F5F4F0" stroke-width="1.4" stroke-dasharray="2 2" />
-            <circle cx="120" cy="160" r="46" fill="none" stroke="#C6FF00" stroke-width="1.4" stroke-dasharray="2 2" />
-          </svg>`,
-      },
-      4: {
-        levelNum: 4,
-        badge: 'РІВЕНЬ 4 / 4 · НЕСІТЬ ЇЖУ · ГЛИБИНА ■■■■',
-        title: 'ТИ: РЕЗИДЕНТКА',
-        characterShort: 'РЕЗИДЕНТКА',
-        lead: 'Ти не зайшла на хвилинку. Ти туди переїхала.',
-        paragraphs: [
-          'Щойно деталь чіпляє твій погляд, ти не просто пробуєш воду. Ти облаштовуєшся, розбираєш кожен куточок і розгортаєш навколо цього цілу операцію.',
-          'Випадкова сесія миттєво перетворюється на повномасштабний проєкт — із власною системою, холодним напоєм, про який ти забула дві години тому, і нульовим зв’язком із зовнішнім світом.',
-          'Тобі не потрібні вмовляння, щоб продовжувати, і не потрібен талант художника, щоб на аркуші з’явився ювелірний графічний арт. Тобі просто треба, щоб хтось приніс перекус і підказав, який сьогодні день тижня.',
-        ],
-        table: [
-          { label: 'ТВОЯ СУПЕРСИЛА', value: 'Повне занурення. Нуль самоконтролю.' },
-          { label: 'ТВОЯ СЛАБКІСТЬ', value: 'Потребуєш провізії, води й періодичного контакту з цивілізацією.' },
-          { label: 'ОРІЄНТОВНИЙ ВТРАЧЕНИЙ ЧАС', value: '5 год 40 хв' },
-          { label: 'СВІДЧЕННЯ ОЧЕВИДЦІВ', value: '«Настав світанок. Вона просто відмахнулася».' },
-        ],
-        receipt: {
-          completed: 'кілька артів пережито.',
-          timeLostFull: '5 год 40 хв (офіційно засекречено).',
-          status: 'обґрунтована підозра на постійне місце проживання.',
+        {
+          step: "04 / 08",
+          inc: "04 / 08 · ІНЦИДЕНТ ЗІ СВІЧКОЮ",
+          q: "Ти зникла в IKEA. Зайшла лише по одну свічку. Камери спостереження зафіксували таке:",
+          opts: [
+            { t: "А. Купила свічку. Вийшла. Чиста операція.", p: 1 },
+            { t: "Б. Магазин зачинився. Ти все ще порівнювала лампи.", p: 3 },
+            { t: "В. Купила ще й лампу, бо свічці було самотньо.", p: 2 },
+            { t: "Г. Ти обрала спальню, дала їй назву і зараз обговорюєш із персоналом умови оренди.", p: 4 }
+          ]
         },
-        patternCode: '№20',
-        getPreviewSvg: () => `
-          <svg viewBox="0 0 240 320" class="w-full h-full block">
-            <rect x="16" y="16" width="208" height="288" fill="none" stroke="#F5F4F0" stroke-width="1.6" />
-            <rect x="44" y="84" width="152" height="152" fill="none" stroke="#C6FF00" stroke-width="1.5" stroke-dasharray="3 2" />
-          </svg>`,
-      },
-    };
-
-    const state = {
-      testerFullName: '',
-      currentQuestionIndex: 0,
-      answers: new Array(QUIZ_QUESTIONS.length).fill(null),
-      totalScore: 0,
-      calculatedLevel: 3,
-      hasSyncedCurrentResult: false,
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      setupEntryInkPreview();
-      buildProgressSegments();
-
-      const nameInput = document.getElementById('tester-name-input');
-      const nameError = document.getElementById('name-validation-msg');
-
-      nameInput.addEventListener('input', () => {
-        if (nameInput.value.trim().length > 0) {
-          nameError.classList.add('hidden');
+        {
+          step: "05 / 08",
+          inc: "05 / 08 · МУЗЕЙНИЙ ІНЦИДЕНТ · ЧАС ЗАКРИТТЯ — ЦЕ ЛИШЕ РЕКОМЕНДАЦІЯ",
+          q: "Ти в музеї. Одна із зал — це кімната, від підлоги до стелі вкрита щільними, складними лініями й переплетіннями. Охоронець оголошує: «Ми зачиняємося через п’ять хвилин».",
+          opts: [
+            { t: "А. Охоронець видав мені ліхтарик. Тепер ми обоє в темі.", p: 4 },
+            { t: "Б. Останній погляд — і я йду.", p: 2 },
+            { t: "В. Виходжу. У музеїв недарма є графік роботи.", p: 1 },
+            { t: "Г. Світло вже вимкнули. Я все ще намагаюся простежити, як з’єднуються ці лінії.", p: 3 }
+          ]
+        },
+        {
+          step: "06 / 08",
+          inc: "06 / 08 · ІНЦИДЕНТ ІЗ МАШИНОЮ ЧАСУ · ЧАСОВА БУХГАЛТЕРІЯ",
+          q: "Вчений пропонує тобі машину часу. Користуватися можна безкоштовно, але є одне правило: повернутися треба рівно через 15 хвилин твого власного часу.",
+          opts: [
+            { t: "А. Лише одним оком гляну на одну історичну подію.", p: 2 },
+            { t: "Б. Я заснувала цивілізацію, винайшла календар і стала дрібною історичною незручністю.", p: 4 },
+            { t: "В. Я повернулася з трьома новими історичними теоріями і без жодного поняття, який зараз рік.", p: 3 },
+            { t: "Г. Чудово. Буду за 15 хвилин.", p: 1 }
+          ]
+        },
+        {
+          step: "07 / 08",
+          inc: "07 / 08 · ІНЦИДЕНТ ІЗ ТАЄМНИЧИМИ ДВЕРЦЯТАМИ · НЕСАНКЦІОНОВАНЕ ДОСЛІДЖЕННЯ",
+          q: "У твоїй стіні з’являються крихітні дверцята. На них табличка: «БУДЬ ЛАСКА, НЕ ВІДЧИНЯТИ. ВСЕРЕДИНІ ЧАС ІДЕ ІНАКШЕ».",
+          opts: [
+            { t: "А. Заходжу всередину. Подивлюся на годинник, коли вийду.", p: 3 },
+            { t: "Б. Поважаю табличку. Мені й своїх проблем вистачає.", p: 1 },
+            { t: "В. Я вже провела туди Wi-Fi, принесла перекус і подала заяву на зміну адреси реєстрації.", p: 4 },
+            { t: "Г. Трохи прочиняю. Просто перевірити.", p: 2 }
+          ]
+        },
+        {
+          step: "08 / 08",
+          inc: "08 / 08 · ІНЦИДЕНТ ІЗ ЄНОТОМ · ДУЖЕ ПОГАНЕ БІЗНЕС-РІШЕННЯ",
+          q: "О першій ночі у твої двері стукає єнот. У нього дипломат, крихітна краватка і бізнес-пропозиція.",
+          opts: [
+            { t: "А. Зачиняю двері. Я не веду переговорів із єнотами.", p: 1 },
+            { t: "Б. Тепер я співзасновниця єнотячої корпорації. У нас уже є логотип.", p: 4 },
+            { t: "В. Вислухаю пітч. П’ять хвилин.", p: 2 },
+            { t: "Г. Переговори тривають третю годину. Я вже навіть не пам’ятаю, що саме ми продаємо.", p: 3 }
+          ]
         }
+      ];
+
+      var RESULTS = [
+        {
+          min: 8, max: 13,
+          lvlForm: "РІВЕНЬ 1 · ПРОСТО ДИВЛЮСЯ",
+          ttlForm: "Туристка",
+          pat: "№01",
+          webp: "pattern-01.webp", jpg: "pattern-01.jpg",
+          badge: "РІВЕНЬ 1 / 4 · ПРОСТО ДИВЛЮСЯ · ГЛИБИНА ■□□□",
+          title: "ТИ: ТУРИСТКА",
+          lead: "Ти знаєш, як зайти в процес на глибину, не оформлюючи там прописку.",
+          body: [
+            "Ти допитлива, але без самогубного фанатизму. Тобі подобається пірнути в цікавий процес, пройти кілька поворотів і подивитися, куди це виведе — не дозволяючи йому вкрасти весь твій вечір.",
+            "Поки інші випадково залишають три години на одному куточку, ти реально стежиш за часом. Ти доводиш справу до кінця, закриваєш ручку і йдеш далі зі своїм графіком у повному порядку.",
+            "Ти кажеш «лише одна сторінка» — і справді маєш на увазі одну сторінку. Виходиш із готовим графічним артом без жодних навичок малювання і з самоконтролем, який трохи лякає."
+          ],
+          pow: "Вчасно розуміти, коли досить.",
+          weak: "Іноді йдеш рівно за крок до найцікавішого.",
+          time: "1 год 20 хв",
+          wit: "«Сказала — одна сторінка. Зробила — одну сторінку. Ми перевірили по камерах».",
+          r1: "1 готовий арт.",
+          r2: "1 год 20 хв (зафіксовано).",
+          r3: "заяву про зникнення не подавали."
+        },
+        {
+          min: 14, max: 19,
+          lvlForm: "РІВЕНЬ 2 · ЩЕ ОДНУ ЛІНІЮ",
+          ttlForm: "Переговорниця",
+          pat: "№06",
+          webp: "pattern-06.webp", jpg: "pattern-06.jpg",
+          badge: "РІВЕНЬ 2 / 4 · ЩЕ ОДНУ ЛІНІЮ · ГЛИБИНА ■■□□",
+          title: "ТИ: ПЕРЕГОВОРНИЦЯ",
+          lead: "Ти не губиш фінішну лінію. Ти просто постійно її пересуваєш.",
+          body: [
+            "Усе завжди починається як коротка перерва. «Ще одну лінію». «Ще оцей сектор». «Гаразд, тільки оцей куточок». Кожна твоя угода з годинником гірша за попередню, і ти підписуєш їх добровільно.",
+            "Тобі кайфово бачити, як картинка збирається фрагмент за фрагментом, тому зупинитися посередині здається особистою зрадою. Кинути ділянку недопрацьованою — взагалі не варіант.",
+            "Навіть без навичок малювання ти ведеш ручку по блідому контуру, і з-під пальців виходить складний графічний арт. І якимось дивом завжди лишається ще одна дрібниця, яку треба довести до ладу, перш ніж ти піднімеш голову."
+          ],
+          pow: "Перетворювати десятихвилинну паузу на повноцінну вечірню спецоперацію.",
+          weak: "Твоє визначення фрази «майже закінчила» юридично дуже гнучке.",
+          time: "2 год 10 хв",
+          wit: "«Сказала — ще п’ять хвилин. Минула година. Судячи з усього, переговори досі тривають».",
+          r1: "1 готовий арт (плюс «ще трохи» деталей).",
+          r2: "2 год 10 хв (виторгувано в ночі).",
+          r3: "відбій успішно перенесено."
+        },
+        {
+          min: 20, max: 26,
+          lvlForm: "РІВЕНЬ 3 · СТОП, КОТРА ГОДИНА?",
+          ttlForm: "Привид",
+          pat: "№11",
+          webp: "pattern-11.webp", jpg: "pattern-11.jpg",
+          badge: "РІВЕНЬ 3 / 4 · СТОП, КОТРА ГОДИНА? · ГЛИБИНА ■■■□",
+          title: "ТИ: ПРИВИД",
+          lead: "Ти ніби в кімнаті. І водночас тебе тут немає.",
+          body: [
+            "Ти заглянула просто подивитися, а решта вечора тихо пішла без тебе. Повідомлення приходять, напої холонуть, а годинник непомітно перестрибує на три години вперед без твого дозволу.",
+            "Тобі не потрібне нове відволікання кожні п’ять хвилин. Дай тобі достатньо щільну структуру, і ти спокійно провалишся в неї на пів ночі, поки рука просто веде лінію за лінією.",
+            "Навички малювання для цього не потрібні — ти проявляєш блідий контур і виринаєш із графічним артом на столі, який виглядає так, ніби над ним тиждень сидів ілюстратор. Час може йти далі. Ти зайнята."
+          ],
+          pow: "Глибокий фокус і вміння зникати з радарів за командою.",
+          weak: "Забуваєш, що решта суспільства живе за розкладом.",
+          time: "3 год 25 хв",
+          wit: "«Чай заварили о восьмій. Чай досі там. Ми вирішили не заважати».",
+          r1: "1+ готовий арт.",
+          r2: "3 год 25 хв (розчинилися в повітрі).",
+          r3: "кілька годин належали іншому виміру."
+        },
+        {
+          min: 27, max: 32,
+          lvlForm: "РІВЕНЬ 4 · НЕСІТЬ ЇЖУ",
+          ttlForm: "Резидентка",
+          pat: "№20",
+          webp: "pattern-20.webp", jpg: "pattern-20.jpg",
+          badge: "РІВЕНЬ 4 / 4 · НЕСІТЬ ЇЖУ · ГЛИБИНА ■■■■",
+          title: "ТИ: РЕЗИДЕНТКА",
+          lead: "Ти не зайшла на хвилинку. Ти туди переїхала.",
+          body: [
+            "Щойно деталь чіпляє твій погляд, ти не просто пробуєш воду. Ти облаштовуєшся, розбираєш кожен куточок і розгортаєш навколо цього цілу операцію.",
+            "Випадкова сесія миттєво перетворюється на повномасштабний проєкт — із власною системою, холодним напоєм, про який ти забула дві години тому, і нульовим зв’язком із зовнішнім світом.",
+            "Тобі не потрібні вмовляння, щоб продовжувати, і не потрібен талант художника, щоб на аркуші з’явився ювелірний графічний арт. Тобі просто треба, щоб хтось приніс перекус і підказав, який сьогодні день тижня."
+          ],
+          pow: "Повне занурення. Нуль самоконтролю.",
+          weak: "Потребуєш провізії, води й періодичного контакту з цивілізацією.",
+          time: "5 год 40 хв",
+          wit: "«Настав світанок. Вона просто відмахнулася».",
+          r1: "кілька артів пережито.",
+          r2: "5 год 40 хв (офіційно засекречено).",
+          r3: "обґрунтована підозра на постійне місце проживання."
+        }
+      ];
+
+      // Слайдер До / Після
+      var range = document.getElementById("ba-range");
+      range.addEventListener("input", function () {
+        var v = this.value;
+        document.getElementById("ba-after").style.clipPath = "inset(0 " + (100 - v) + "% 0 0)";
+        document.getElementById("ba-line").style.left = v + "%";
+        document.getElementById("ba-pct").textContent = v + "%";
       });
 
-      document.getElementById('btn-start-quiz').addEventListener('click', () => {
-        const cleanedName = nameInput.value.trim();
-        if (!cleanedName) {
-          nameError.classList.remove('hidden');
-          nameInput.focus();
+      var userName = "";
+      var idx = 0;
+      var score = 0;
+      var pickedPts = null;
+
+      var sStart = document.getElementById("s-start");
+      var sQuiz = document.getElementById("s-quiz");
+      var sRes = document.getElementById("s-res");
+      var uInp = document.getElementById("u-name");
+      var uErr = document.getElementById("u-err");
+      var btnNext = document.getElementById("btn-next");
+
+      document.getElementById("btn-start").addEventListener("click", function () {
+        var v = uInp.value.trim();
+        if (!v) {
+          uErr.classList.remove("hidden");
+          uInp.focus();
           return;
         }
-        state.testerFullName = cleanedName;
-        state.currentQuestionIndex = 0;
-        showScreen('screen-quiz');
-        renderQuestion();
+        uErr.classList.add("hidden");
+        userName = v;
+        sStart.classList.add("hidden");
+        sQuiz.classList.remove("hidden");
+        renderQ();
       });
 
-      document.getElementById('btn-prev').addEventListener('click', () => {
-        if (state.currentQuestionIndex > 0) {
-          state.currentQuestionIndex--;
-          renderQuestion();
-        } else {
-          showScreen('screen-entry');
+      function renderQ() {
+        pickedPts = null;
+        btnNext.disabled = true;
+        var item = QUESTIONS[idx];
+        document.getElementById("q-step").textContent = item.step;
+        document.getElementById("q-inc").textContent = item.inc;
+        document.getElementById("q-title").textContent = item.q;
+        document.getElementById("q-fill").style.width = ((idx + 1) / QUESTIONS.length * 100) + "%";
+        btnNext.innerHTML = idx === QUESTIONS.length - 1 ? "ОТРИМАТИ КВИТАНЦІЮ &rarr;" : "ПІРНУТИ ГЛИБШЕ &rarr;";
+
+        var box = document.getElementById("q-opts");
+        box.innerHTML = "";
+        for (var i = 0; i < item.opts.length; i++) {
+          (function (opt) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "opt";
+            b.textContent = opt.t;
+            b.addEventListener("click", function () {
+              var all = box.querySelectorAll(".opt");
+              for (var j = 0; j < all.length; j++) all[j].classList.remove("sel");
+              b.classList.add("sel");
+              pickedPts = opt.p;
+              btnNext.disabled = false;
+            });
+            box.appendChild(b);
+          })(item.opts[i]);
         }
-      });
-
-      document.getElementById('btn-next').addEventListener('click', () => {
-        if (state.answers[state.currentQuestionIndex] === null) return;
-
-        if (state.currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
-          state.currentQuestionIndex++;
-          renderQuestion();
-        } else {
-          finishQuizAndCalculate();
-        }
-      });
-
-      document.getElementById('btn-retake').addEventListener('click', () => {
-        state.currentQuestionIndex = 0;
-        state.answers = new Array(QUIZ_QUESTIONS.length).fill(null);
-        state.totalScore = 0;
-        state.hasSyncedCurrentResult = false;
-        showScreen('screen-entry');
-      });
-    });
-
-    function showScreen(screenId) {
-      const allScreens = ['screen-entry', 'screen-quiz', 'screen-calculating', 'screen-result'];
-      allScreens.forEach((id) => {
-        const el = document.getElementById(id);
-        if (id === screenId) {
-          el.classList.remove('hidden');
-        } else {
-          el.classList.add('hidden');
-        }
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function setupEntryInkPreview() {
-      const slider = document.getElementById('entry-ink-slider');
-      const toggleBtn = document.getElementById('entry-ink-toggle');
-      const overlay = document.getElementById('entry-ink-overlay');
-      const divider = document.getElementById('entry-ink-line');
-      const pctLabel = document.getElementById('entry-ink-pct');
-
-      function applyReveal(value) {
-        const clamped = Math.max(0, Math.min(100, Number(value)));
-        const rightClip = 100 - clamped;
-        overlay.style.clipPath = `inset(0 ${rightClip}% 0 0)`;
-        divider.style.left = `${clamped}%`;
-        pctLabel.textContent = `${clamped}% ПРОЯВЛЕНО`;
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      slider.addEventListener('input', (e) => {
-        applyReveal(e.target.value);
-      });
-
-      toggleBtn.addEventListener('click', () => {
-        const current = Number(slider.value);
-        const nextVal = current < 50 ? 100 : 0;
-        slider.value = nextVal;
-        applyReveal(nextVal);
-      });
-    }
-
-    function buildProgressSegments() {
-      const container = document.getElementById('progress-segments');
-      container.innerHTML = '';
-      for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
-        const seg = document.createElement('div');
-        seg.className = 'h-2.5 border-2 border-borderdim bg-deep transition-colors';
-        container.appendChild(seg);
-      }
-    }
-
-    function renderQuestion() {
-      const idx = state.currentQuestionIndex;
-      const qObj = QUIZ_QUESTIONS[idx];
-
-      document.getElementById('progress-label').textContent = qObj.progressLabel;
-      const pct = Math.round(((idx + 1) / QUIZ_QUESTIONS.length) * 100);
-      document.getElementById('progress-percent').textContent = `${pct}%`;
-
-      const bar = document.getElementById('progress-segments');
-      bar.setAttribute('aria-valuenow', idx + 1);
-      const segments = bar.children;
-      for (let i = 0; i < segments.length; i++) {
-        if (i < idx) {
-          segments[i].className = 'h-2.5 border-2 border-offwhite bg-offwhite';
-        } else if (i === idx) {
-          segments[i].className = 'h-2.5 border-2 border-offwhite bg-lime';
+      btnNext.addEventListener("click", function () {
+        if (pickedPts === null) return;
+        score += pickedPts;
+        idx++;
+        if (idx < QUESTIONS.length) {
+          renderQ();
         } else {
-          segments[i].className = 'h-2.5 border-2 border-borderdim bg-deep';
-        }
-      }
-
-      document.getElementById('question-tag').textContent = qObj.tag;
-      document.getElementById('question-prompt').textContent = qObj.prompt;
-
-      const optionsContainer = document.getElementById('options-container');
-      optionsContainer.innerHTML = '';
-
-      qObj.options.forEach((opt, optIdx) => {
-        const isSelected = state.answers[idx] === optIdx;
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.setAttribute('role', 'radio');
-        btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
-        btn.className = `option-card w-full text-left p-4 flex items-start gap-3.5 ${isSelected ? 'selected' : ''}`;
-
-        btn.innerHTML = `
-          <span class="option-badge shrink-0 w-7 h-7 border-2 flex items-center justify-center font-mono text-xs font-bold ${
-            isSelected ? 'bg-darkink text-lime border-darkink' : 'bg-deep text-offwhite border-borderdim'
-          }">
-            ${opt.letter}
-          </span>
-          <span class="font-mono text-xs sm:text-sm leading-snug pt-0.5">
-            ${opt.text}
-          </span>
-        `;
-
-        btn.addEventListener('click', () => {
-          state.answers[idx] = optIdx;
-          renderQuestion();
-        });
-
-        optionsContainer.appendChild(btn);
-      });
-
-      const nextBtn = document.getElementById('btn-next');
-      const nextBtnText = document.getElementById('btn-next-text');
-      nextBtn.disabled = state.answers[idx] === null;
-      nextBtnText.textContent = idx === QUIZ_QUESTIONS.length - 1 ? 'ОТРИМАТИ КВИТАНЦІЮ' : 'ПІРНУТИ ГЛИБШЕ';
-    }
-
-    function finishQuizAndCalculate() {
-      let sum = 0;
-      QUIZ_QUESTIONS.forEach((q, idx) => {
-        const chosen = state.answers[idx];
-        if (chosen !== null) {
-          sum += q.options[chosen].points;
+          showResult();
         }
       });
 
-      state.totalScore = sum;
+      function showResult() {
+        var res = RESULTS[0];
+        for (var i = 0; i < RESULTS.length; i++) {
+          if (score >= RESULTS[i].min && score <= RESULTS[i].max) {
+            res = RESULTS[i];
+            break;
+          }
+        }
 
-      if (sum <= 13) {
-        state.calculatedLevel = 1;
-      } else if (sum <= 19) {
-        state.calculatedLevel = 2;
-      } else if (sum <= 26) {
-        state.calculatedLevel = 3;
-      } else {
-        state.calculatedLevel = 4;
-      }
+        document.getElementById("r-badge").textContent = res.badge;
+        document.getElementById("r-title").textContent = res.title;
+        document.getElementById("r-lead").textContent = res.lead;
 
-      showScreen('screen-calculating');
-      const calcBar = document.getElementById('calc-bar');
-      calcBar.style.width = '15%';
+        var bodyBox = document.getElementById("r-body");
+        bodyBox.innerHTML = "";
+        for (var p = 0; p < res.body.length; p++) {
+          var para = document.createElement("p");
+          para.textContent = res.body[p];
+          bodyBox.appendChild(para);
+        }
 
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          calcBar.style.width = '100%';
-        }, 40);
-      });
+        document.getElementById("p-pow").textContent = res.pow;
+        document.getElementById("p-weak").textContent = res.weak;
+        document.getElementById("p-time").textContent = res.time;
+        document.getElementById("p-wit").textContent = res.wit;
 
-      setTimeout(() => {
-        renderResultScreen();
-        showScreen('screen-result');
-      }, 800);
-    }
+        var d = new Date().toISOString().split("T")[0];
+        var sid = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById("rec-meta").textContent = "ДАТА: " + d + " · ID: #YPL-" + sid;
+        document.getElementById("rec-1").textContent = res.r1;
+        document.getElementById("rec-2").textContent = res.r2;
+        document.getElementById("rec-3").textContent = res.r3;
 
-    function renderResultScreen() {
-      const data = RESULT_LEVELS[state.calculatedLevel];
-
-      document.getElementById('res-level-badge').textContent = data.badge;
-      document.getElementById('res-title').textContent = data.title;
-      document.getElementById('res-lead').textContent = data.lead;
-
-      document.getElementById('res-paragraphs').innerHTML = data.paragraphs
-        .map((p) => `<p>${p}</p>`)
-        .join('');
-
-      document.getElementById('res-table-body').innerHTML = data.table
-        .map(
-          (row) => `
-          <tr>
-            <td class="p-3 sm:p-3.5 font-bold text-lime uppercase align-top w-2/5 bg-deep">
-              ${row.label}
-            </td>
-            <td class="p-3 sm:p-3.5 text-offwhite align-top bg-surface">
-              ${row.value}
-            </td>
-          </tr>`
-        )
-        .join('');
-
-      const dateStr = new Date().toISOString().split('T')[0];
-      const serial = Math.floor(1000 + Math.random() * 9000);
-      document.getElementById('receipt-meta').textContent = `ДАТА: ${dateStr} · ID: #YPL-${serial}`;
-      document.getElementById('receipt-completed').textContent = data.receipt.completed;
-      document.getElementById('receipt-time-lost').textContent = data.receipt.timeLostFull;
-      document.getElementById('receipt-status').textContent = data.receipt.status;
-
-      document.getElementById('tester-pattern-heading').textContent = `ТВІЙ ПАТЕРН ДЛЯ ТЕСТУ: ${data.patternCode}`;
-      document.getElementById('tester-watermark-text').textContent = `YPL · PREVIEW · ${data.patternCode}`;
-
-      const visualContainer = document.getElementById('tester-pattern-visual');
-      const imgPair = CONFIG.PREVIEW_IMAGES[state.calculatedLevel];
-      if (imgPair) {
-        const imgEl = document.createElement('img');
-        imgEl.src = imgPair.webp;
-        imgEl.alt = `Попередній перегляд патерна ${data.patternCode}`;
-        imgEl.className = 'w-full h-full object-contain block';
-        imgEl.draggable = false;
-        imgEl.onerror = function () {
-          if (!this.dataset.triedJpg) {
-            this.dataset.triedJpg = '1';
-            this.src = imgPair.jpg;
-          } else {
-            visualContainer.innerHTML = data.getPreviewSvg();
+        document.getElementById("pat-head").textContent = "ТВІЙ ПАТЕРН ДЛЯ ТЕСТУ: " + res.pat;
+        var pImg = document.getElementById("pat-img");
+        pImg.src = res.webp;
+        pImg.onerror = function () {
+          if (!this.dataset.fb) {
+            this.dataset.fb = "1";
+            this.src = res.jpg;
           }
         };
-        visualContainer.innerHTML = '';
-        visualContainer.appendChild(imgEl);
-      } else {
-        visualContainer.innerHTML = data.getPreviewSvg();
+
+        var wm = document.getElementById("pat-wm");
+        wm.innerHTML = "";
+        var unit = "YPL · PREVIEW · " + res.pat + " · ";
+        for (var w = 0; w < 7; w++) {
+          var row = document.createElement("div");
+          row.textContent = unit + unit + unit;
+          wm.appendChild(row);
+        }
+
+        document.getElementById("sync-msg").textContent =
+          "Зафіксовано: " + userName + " — Патерн " + res.pat + ". Дякуємо за участь!";
+
+        sQuiz.classList.add("hidden");
+        sRes.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        var fd = new URLSearchParams();
+        fd.append("entry.1793568081", userName);
+        fd.append("entry.1660912714", res.lvlForm);
+        fd.append("entry.76560368", res.ttlForm);
+        fd.append("entry.712635991", "Патерн " + res.pat);
+        fd.append("entry.967962361", String(score));
+
+        fetch(FORM_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: fd.toString()
+        }).catch(function () {});
       }
 
-      document.getElementById('tester-submission-status').textContent =
-        `Зафіксовано: ${state.testerFullName} — Патерн ${data.patternCode}. Дякуємо за участь!`;
+      // Відкриття поля пароля при натисканні кнопки переходу в кінці квізу
+      var btnOpenPass = document.getElementById("btn-open-pass");
+      var passGate = document.getElementById("pass-gate");
+      var qPassInp = document.getElementById("quiz-pass-inp");
+      var qPassErr = document.getElementById("quiz-pass-err");
 
-      if (!state.hasSyncedCurrentResult) {
-        state.hasSyncedCurrentResult = true;
-        sendResultToGoogleSheet(data);
-      }
-    }
+      btnOpenPass.addEventListener("click", function () {
+        passGate.classList.remove("hidden");
+        qPassInp.focus();
+      });
 
-    async function sendResultToGoogleSheet(levelData) {
-      const syncNote = document.getElementById('webhook-sync-note');
-      const payload = {
-        fullName: state.testerFullName,
-        score: state.totalScore,
-        level: `РІВЕНЬ ${levelData.levelNum}`,
-        characterTitle: levelData.characterShort,
-        patternNumber: `Патерн ${levelData.patternCode}`,
-      };
+      document.getElementById("quiz-pass-btn").addEventListener("click", function () {
+        var entered = qPassInp.value.trim();
+        if (entered === ACCESS_CODE) {
+          qPassErr.classList.add("hidden");
+          try { sessionStorage.setItem("ypl_auth", ACCESS_CODE); } catch (e) {}
+          window.location.href = PATTERNS_URL + "#code=" + encodeURIComponent(ACCESS_CODE);
+        } else {
+          qPassErr.classList.remove("hidden");
+          qPassInp.focus();
+        }
+      });
 
-      try {
-        syncNote.textContent = 'Передаємо запис у таблицю друку...';
-        const formData = new URLSearchParams();
-        formData.append(CONFIG.FORM_FIELDS.name, payload.fullName);
-        formData.append(CONFIG.FORM_FIELDS.level, payload.level);
-        formData.append(CONFIG.FORM_FIELDS.title, payload.characterTitle);
-        formData.append(CONFIG.FORM_FIELDS.pattern, payload.patternNumber);
-        formData.append(CONFIG.FORM_FIELDS.score, String(payload.score));
-
-        await fetch(CONFIG.GOOGLE_FORM_ACTION_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-          },
-          body: formData.toString(),
-        });
-        syncNote.textContent = 'Дані автоматично зафіксовано в таблиці друку.';
-      } catch (err) {
-        syncNote.textContent = 'Запис збережено локально.';
-      }
-    }
+      qPassInp.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") document.getElementById("quiz-pass-btn").click();
+      });
+    })();
   </script>
 </body>
 </html>
