@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Тестування патернів · Vol. 1</title>
+  <title>Оцінювання патернів · YPL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Unbounded:wght@900&display=swap" rel="stylesheet">
@@ -64,6 +64,20 @@
     .card.picked {
       border-color: #C6FF00;
       box-shadow: 4px 4px 0 #C6FF00;
+    }
+    /* Екран пароля */
+    .lock-card {
+      max-width: 460px;
+      margin: 40px auto;
+      padding: 26px;
+    }
+    .lock-title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      text-transform: uppercase;
+      margin: 12px 0;
+      line-height: 1.2;
     }
     .intro { padding: 22px; margin-bottom: 24px; }
     h1 {
@@ -153,19 +167,6 @@
       object-fit: contain;
       display: block;
       pointer-events: none;
-    }
-    .img-err {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      text-align: center;
-      font-size: 11px;
-      color: #C6FF00;
-      line-height: 1.5;
-      word-break: break-all;
     }
     .wm {
       position: absolute;
@@ -283,13 +284,27 @@
 
   <header>
     <div class="wrap">
-      <div class="brand">ЗАКРИТИЙ ТЕСТ · VOL. 1</div>
+      <div class="brand">YPL · ЗАКРИТИЙ ТЕСТ</div>
       <div class="badge">27 ПАТЕРНІВ</div>
     </div>
   </header>
 
   <main class="wrap">
-    <div id="main-view">
+    <!-- ЕКРАН ВХОДУ ЗА ПАРОЛЕМ -->
+    <section id="lock-view" class="card lock-card">
+      <div><span class="badge">ДОСТУП ЗА КОДОМ</span></div>
+      <div class="lock-title">ВВЕДИ ПАРОЛЬ ДЛЯ ОЦІНЮВАННЯ ПАТЕРНІВ</div>
+      <p class="desc" style="margin-bottom:14px;">Цей розділ відкритий лише за персональним кодом доступу.</p>
+      <label for="pass-inp">Код доступу <span>*</span></label>
+      <input type="password" id="pass-inp" placeholder="Введи код...">
+      <div id="pass-err" class="err hidden">Невірний код доступу.</div>
+      <button type="button" id="pass-btn" class="sub-btn" style="width:100%;margin-top:14px;">
+        ВІДКРИТИ ПАТЕРНИ &rarr;
+      </button>
+    </section>
+
+    <!-- ОСНОВНИЙ ЕКРАН ОЦІНЮВАННЯ -->
+    <div id="main-view" class="hidden">
       <section class="card intro">
         <h1>ОЦІНИ 27 ПАТЕРНІВ ТА ОБЕРИ МІНІМУМ ОДИН НА ТЕСТ</h1>
         <p class="desc">
@@ -315,7 +330,7 @@
     </section>
   </main>
 
-  <div id="bar" class="bar">
+  <div id="bar" class="bar hidden">
     <div class="wrap">
       <div class="stats">
         Оцінено: <b id="r-cnt">0</b> / <b>27</b> &nbsp;|&nbsp;
@@ -329,12 +344,47 @@
 
   <script>
     (function () {
+      // ПАРОЛЬ ДЛЯ ДОСТУПУ (зміни тут, щоб закрити доступ старій групі)
+      var ACCESS_CODE = "YPL2026";
+
       var IDS = [
         "01", "02", "03", "04", "06", "07", "09", "10", "16",
         "19", "20", "21", "23", "25", "26", "27", "30", "34",
         "35", "36", "40", "42", "49", "55", "56", "59", "60"
       ];
       var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSczoVbiwreX3MLrOUqUtXpeVstjQ2qKGu1-qtUU0tsdC8sudw/formResponse";
+
+      var lockView = document.getElementById("lock-view");
+      var mainView = document.getElementById("main-view");
+      var bar = document.getElementById("bar");
+      var passInp = document.getElementById("pass-inp");
+      var passErr = document.getElementById("pass-err");
+
+      function unlock() {
+        lockView.classList.add("hidden");
+        mainView.classList.remove("hidden");
+        bar.classList.remove("hidden");
+        try { sessionStorage.setItem("ypl_auth", ACCESS_CODE); } catch (e) {}
+      }
+
+      try {
+        if (sessionStorage.getItem("ypl_auth") === ACCESS_CODE) unlock();
+      } catch (e) {}
+
+      document.getElementById("pass-btn").addEventListener("click", function () {
+        if (passInp.value.trim() === ACCESS_CODE) {
+          passErr.classList.add("hidden");
+          unlock();
+        } else {
+          passErr.classList.remove("hidden");
+          passInp.focus();
+        }
+      });
+
+      passInp.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") document.getElementById("pass-btn").click();
+      });
+
       var rated = {};
       var picked = {};
       var grid = document.getElementById("grid");
@@ -342,8 +392,6 @@
 
       for (var i = 0; i < IDS.length; i++) {
         var id = IDS[i];
-        var fileName = "pattern-" + id + ".webp";
-
         var card = document.createElement("article");
         card.className = "card p-card";
         card.id = "c-" + id;
@@ -357,24 +405,14 @@
         box.className = "img-box";
 
         var img = document.createElement("img");
-        img.src = fileName;
+        img.src = "pattern-" + id + ".webp";
         img.alt = "Патерн №" + id;
         img.loading = "lazy";
         img.draggable = false;
 
-        (function (wrapBox, fName) {
-          img.onerror = function () {
-            this.style.display = "none";
-            var msg = document.createElement("div");
-            msg.className = "img-err";
-            msg.textContent = "Не знайдено: " + fName + " у " + window.location.pathname;
-            wrapBox.appendChild(msg);
-          };
-        })(box, fileName);
-
         var wm = document.createElement("div");
         wm.className = "wm";
-        var unit = "PREVIEW · №" + id + " · CLOSED TEST · №" + id + " · ";
+        var unit = "YPL · PREVIEW · №" + id + " · ";
         for (var w = 0; w < 7; w++) {
           var row = document.createElement("div");
           row.textContent = unit + unit + unit;
@@ -428,9 +466,7 @@
           rated[id] = sc;
           document.getElementById("v-" + id).textContent = sc + " / 10";
           var all = rb.parentNode.querySelectorAll(".r-btn");
-          for (var j = 0; j < all.length; j++) {
-            all[j].classList.remove("active");
-          }
+          for (var j = 0; j < all.length; j++) all[j].classList.remove("active");
           rb.classList.add("active");
           document.getElementById("r-cnt").textContent = Object.keys(rated).length;
           return;
@@ -493,8 +529,8 @@
           body: fd.toString()
         }).catch(function () {});
 
-        document.getElementById("main-view").classList.add("hidden");
-        document.getElementById("bar").classList.add("hidden");
+        mainView.classList.add("hidden");
+        bar.classList.add("hidden");
         document.getElementById("done").classList.remove("hidden");
         document.getElementById("sum").textContent =
           "Учасниця: " + name +
