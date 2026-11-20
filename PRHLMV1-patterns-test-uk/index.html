@@ -139,4 +139,13 @@
         fd.append("entry.338563084",rArr.join(" | "));
         fd.append("entry.650374529",sArr.join(", "));
         fetch(FORM_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body:fd.toString()}).catch(function(){});
-        document.getElementById("main
+        document.getElementById("main-view").classList.add("hidden");
+        document.getElementById("bar").classList.add("hidden");
+        document.getElementById("done").classList.remove("hidden");
+        document.getElementById("sum").textContent="Учасниця: "+name+"\nОбрані на тест: "+sArr.join(", ")+"\nОцінено патернів: "+Object.keys(rated).length+" із 27";
+        window.scrollTo({top:0,behavior:"smooth"});
+      });
+    })();
+  </script>
+</body>
+</html>
