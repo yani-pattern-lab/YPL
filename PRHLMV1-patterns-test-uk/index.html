@@ -16,14 +16,14 @@
       theme: {
         extend: {
           colors: {
-            bgmain: '#202020',
-            surface: '#292929',
-            deep: '#181818',
+            bgmain: '#191919',
+            surface: '#242424',
+            deep: '#121212',
             offwhite: '#F5F4F0',
             muted: '#A8A8A8',
             lime: '#C6FF00',
             darkink: '#111111',
-            borderdim: '#444444',
+            borderdim: '#3E3E3E',
           },
           fontFamily: {
             display: ['"Unbounded"', 'sans-serif'],
@@ -41,7 +41,7 @@
     }
 
     html, body {
-      background-color: #202020;
+      background-color: #191919;
       color: #F5F4F0;
       font-family: 'IBM Plex Mono', monospace;
       overflow-x: hidden;
@@ -49,9 +49,9 @@
     }
 
     .brutal-card {
-      background-color: #292929;
+      background-color: #242424;
       border: 2px solid #F5F4F0;
-      box-shadow: 4px 4px 0px #0D0D0D;
+      box-shadow: 4px 4px 0px #0A0A0A;
     }
 
     .brutal-card.picked {
@@ -63,19 +63,19 @@
       background-color: #C6FF00;
       color: #111111;
       border: 2px solid #F5F4F0;
-      box-shadow: 4px 4px 0px #0D0D0D;
+      box-shadow: 4px 4px 0px #0A0A0A;
       cursor: pointer;
       transition: transform 0.08s ease, box-shadow 0.08s ease;
     }
 
     .brutal-btn-lime:active {
       transform: translate(3px, 3px);
-      box-shadow: 1px 1px 0px #0D0D0D;
+      box-shadow: 1px 1px 0px #0A0A0A;
     }
 
     .rate-btn {
-      background-color: #181818;
-      border: 1px solid #444444;
+      background-color: #121212;
+      border: 1px solid #3E3E3E;
       color: #F5F4F0;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
@@ -86,7 +86,7 @@
 
     .rate-btn:hover {
       border-color: #F5F4F0;
-      background-color: #303030;
+      background-color: #2E2E2E;
     }
 
     .rate-btn.active {
@@ -96,7 +96,7 @@
     }
 
     .pick-btn {
-      background-color: #181818;
+      background-color: #121212;
       border: 2px solid #F5F4F0;
       color: #F5F4F0;
       font-family: 'IBM Plex Mono', monospace;
@@ -109,7 +109,7 @@
     }
 
     .pick-btn:hover {
-      background-color: #303030;
+      background-color: #2E2E2E;
     }
 
     .brutal-card.picked .pick-btn {
@@ -163,4 +163,353 @@
   <main class="w-full max-w-5xl mx-auto px-4 py-6 sm:py-8 flex-grow">
     <div id="main-view" class="space-y-6">
 
-      <section class="br
+      <section class="brutal-card p-5 sm:p-6 space-y-4">
+        <h1 class="font-display font-black text-2xl sm:text-3xl leading-[1.1] tracking-tight uppercase text-offwhite">
+          ОЦІНИ 27 ПАТЕРНІВ ТА ОБЕРИ МІНІМУМ ОДИН НА ТЕСТ
+        </h1>
+
+        <p class="font-mono text-xs sm:text-sm leading-relaxed text-muted max-w-3xl">
+          Натисни на картинку, щоб роздивитися ближче. Постав кожному патерну оцінку від 0 до 10 і натисни «Обрати на тест» під тими, які хочеш отримати роздрукованими.
+        </p>
+
+        <div class="max-w-md pt-1 space-y-2">
+          <label for="tester-name" class="block font-mono text-xs sm:text-sm font-bold text-offwhite">
+            Твоє прізвище та ім’я <span class="text-lime">*</span>
+          </label>
+          <input
+            type="text"
+            id="tester-name"
+            autocomplete="name"
+            placeholder="Наприклад: Олена Коваленко"
+            class="w-full border-2 border-offwhite bg-deep px-3.5 py-3 font-mono text-sm text-offwhite placeholder:text-muted/50 focus:outline-none focus:border-lime"
+          />
+          <div id="validation-error" class="hidden bg-lime text-darkink font-mono text-xs font-bold px-3 py-2 border border-offwhite"></div>
+        </div>
+      </section>
+
+      <section id="patterns-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></section>
+    </div>
+
+    <section id="done-screen" class="hidden max-w-xl mx-auto my-8 brutal-card p-6 sm:p-8 space-y-5">
+      <div class="inline-block bg-lime text-darkink border-2 border-offwhite px-3 py-1 font-mono text-xs font-bold uppercase">
+        ДАНІ ЗАФІКСОВАНО
+      </div>
+      <h2 class="font-display font-black text-2xl sm:text-3xl uppercase text-offwhite">
+        ДЯКУЄМО! ТВІЙ ВИБІР ЗБЕРЕЖЕНО ✓
+      </h2>
+      <p class="font-mono text-xs sm:text-sm text-muted leading-relaxed">
+        Ми отримали твої оцінки та список патернів, які потрібно підготувати для тестування.
+      </p>
+      <div id="done-summary" class="bg-deep border-2 border-offwhite p-4 font-mono text-xs sm:text-sm text-offwhite whitespace-pre-line leading-relaxed"></div>
+    </section>
+  </main>
+
+  <div id="sticky-bar" class="fixed left-0 right-0 bottom-0 bg-deep/95 border-t-2 border-offwhite px-4 py-3.5 z-40">
+    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="font-mono text-xs sm:text-sm text-offwhite">
+        Оцінено: <span id="rated-count" class="font-bold text-lime">0</span> / <span id="total-count">27</span>
+        <span class="mx-2 text-borderdim">|</span>
+        Обрано на тест: <span id="picked-count" class="font-bold text-lime">0</span> <span class="text-muted">(мін. 1)</span>
+      </div>
+      <button type="button" id="submit-btn" class="brutal-btn-lime font-display font-black text-xs sm:text-sm uppercase px-5 py-3">
+        НАДІСЛАТИ ОЦІНКИ ТА ВИБІР &rarr;
+      </button>
+    </div>
+  </div>
+
+  <div id="zoom-modal" class="hidden fixed inset-0 bg-black/90 z-50 items-center justify-center p-4">
+    <div class="brutal-card max-w-md w-full p-4 space-y-3">
+      <div class="flex items-center justify-between border-b-2 border-borderdim pb-2">
+        <span id="modal-title" class="font-display font-black text-sm uppercase text-lime">ПАТЕРН</span>
+        <span class="font-mono text-[10px] text-muted uppercase">ЗРАЗОК ДЛЯ ТЕСТУ</span>
+      </div>
+      <div class="protected-img relative aspect-[3/4] w-full bg-deep border-2 border-offwhite overflow-hidden">
+        <img id="modal-img" src="" alt="Збільшений патерн" class="w-full h-full object-contain block" draggable="false" />
+        <div class="watermark-grid" id="modal-watermark"></div>
+      </div>
+      <button type="button" id="close-modal" class="bg-deep border-2 border-offwhite text-offwhite hover:bg-lime hover:text-darkink w-full font-mono text-xs font-bold uppercase py-3 cursor-pointer">
+        ЗАКРИТИ ПЕРЕГЛЯД
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var errorBox = document.getElementById("validation-error");
+
+      function showBanner(msg) {
+        if (!errorBox) return;
+        errorBox.textContent = msg;
+        errorBox.classList.remove("hidden");
+      }
+
+      try {
+        var PDF_NUMBERS = [
+          "01", "02", "03", "04", "06", "07", "09", "10", "16",
+          "19", "20", "21", "23", "25", "26", "27", "30", "34",
+          "35", "36", "40", "42", "49", "55", "56", "59", "60"
+        ];
+
+        var GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSczoVbiwreX3MLrOUqUtXpeVstjQ2qKGu1-qtUU0tsdC8sudw/formResponse";
+        var FORM_FIELDS = {
+          name: "entry.1226914517",
+          ratings: "entry.338563084",
+          selected: "entry.650374529"
+        };
+
+        var patterns = PDF_NUMBERS.map(function (num) {
+          var id = String(num);
+          return {
+            id: id,
+            label: "Патерн №" + id,
+            image: "pattern-" + id + ".webp"
+          };
+        });
+
+        var totalEl = document.getElementById("total-count");
+        if (totalEl) totalEl.textContent = String(patterns.length);
+
+        var ratingsState = {};
+        var pickedState = {};
+        var grid = document.getElementById("patterns-grid");
+        var ratedCountEl = document.getElementById("rated-count");
+        var pickedCountEl = document.getElementById("picked-count");
+
+        function fillWatermark(container, id) {
+          container.innerHTML = "";
+          var line = "PREVIEW · №" + id + " · CLOSED TEST · №" + id + " · ";
+          var fullLine = line + line + line;
+          for (var i = 0; i < 7; i++) {
+            var row = document.createElement("div");
+            row.textContent = fullLine;
+            container.appendChild(row);
+          }
+        }
+
+        patterns.forEach(function (p) {
+          var card = document.createElement("article");
+          card.className = "brutal-card p-4 flex flex-col justify-between space-y-3.5";
+          card.id = "card-" + p.id;
+
+          var topBlock = document.createElement("div");
+          topBlock.className = "space-y-3";
+
+          var headerRow = document.createElement("div");
+          headerRow.className = "flex items-center justify-between border-b border-borderdim pb-2";
+
+          var titleSpan = document.createElement("span");
+          titleSpan.className = "font-display font-black text-sm uppercase text-offwhite";
+          titleSpan.textContent = p.label;
+
+          var zoomHint = document.createElement("span");
+          zoomHint.className = "font-mono text-[11px] text-lime uppercase";
+          zoomHint.textContent = "[+ ЗБІЛЬШИТИ]";
+
+          headerRow.appendChild(titleSpan);
+          headerRow.appendChild(zoomHint);
+
+          var imgWrap = document.createElement("div");
+          imgWrap.className = "img-wrap protected-img relative aspect-[3/4] w-full bg-deep border-2 border-borderdim hover:border-offwhite overflow-hidden cursor-zoom-in";
+          imgWrap.setAttribute("data-id", p.id);
+
+          var img = document.createElement("img");
+          img.src = p.image;
+          img.alt = p.label;
+          img.loading = "lazy";
+          img.className = "w-full h-full object-contain block";
+          img.draggable = false;
+
+          var wm = document.createElement("div");
+          wm.className = "watermark-grid";
+          fillWatermark(wm, p.id);
+
+          imgWrap.appendChild(img);
+          imgWrap.appendChild(wm);
+
+          topBlock.appendChild(headerRow);
+          topBlock.appendChild(imgWrap);
+
+          var bottomBlock = document.createElement("div");
+          bottomBlock.className = "space-y-3 pt-1";
+
+          var scoreHeader = document.createElement("div");
+          scoreHeader.className = "flex items-center justify-between font-mono text-xs";
+
+          var scoreLabel = document.createElement("span");
+          scoreLabel.className = "text-muted";
+          scoreLabel.textContent = "Оцінка (0–10):";
+
+          var scoreVal = document.createElement("span");
+          scoreVal.id = "val-" + p.id;
+          scoreVal.className = "font-bold text-offwhite";
+          scoreVal.textContent = "—";
+
+          scoreHeader.appendChild(scoreLabel);
+          scoreHeader.appendChild(scoreVal);
+
+          var scaleGrid = document.createElement("div");
+          scaleGrid.className = "grid grid-cols-11 gap-1";
+
+          for (var score = 0; score <= 10; score++) {
+            var rBtn = document.createElement("button");
+            rBtn.type = "button";
+            rBtn.className = "rate-btn";
+            rBtn.setAttribute("data-id", p.id);
+            rBtn.setAttribute("data-score", String(score));
+            rBtn.textContent = String(score);
+            scaleGrid.appendChild(rBtn);
+          }
+
+          var pickBtn = document.createElement("button");
+          pickBtn.type = "button";
+          pickBtn.className = "pick-btn";
+          pickBtn.setAttribute("data-id", p.id);
+          pickBtn.textContent = "+ Обрати на тест";
+
+          bottomBlock.appendChild(scoreHeader);
+          bottomBlock.appendChild(scaleGrid);
+          bottomBlock.appendChild(pickBtn);
+
+          card.appendChild(topBlock);
+          card.appendChild(bottomBlock);
+          grid.appendChild(card);
+        });
+
+        grid.addEventListener("click", function (e) {
+          var target = e.target;
+
+          var rateBtn = target.closest ? target.closest(".rate-btn") : null;
+          if (rateBtn) {
+            var rId = rateBtn.getAttribute("data-id");
+            var score = Number(rateBtn.getAttribute("data-score"));
+            ratingsState[rId] = score;
+
+            var valEl = document.getElementById("val-" + rId);
+            if (valEl) valEl.textContent = score + " / 10";
+
+            var siblings = rateBtn.parentElement.querySelectorAll(".rate-btn");
+            for (var i = 0; i < siblings.length; i++) {
+              siblings[i].classList.remove("active");
+            }
+            rateBtn.classList.add("active");
+
+            if (ratedCountEl) ratedCountEl.textContent = String(Object.keys(ratingsState).length);
+            return;
+          }
+
+          var pickBtn = target.closest ? target.closest(".pick-btn") : null;
+          if (pickBtn) {
+            var pId = pickBtn.getAttribute("data-id");
+            var cardEl = document.getElementById("card-" + pId);
+
+            if (pickedState[pId]) {
+              delete pickedState[pId];
+              if (cardEl) cardEl.classList.remove("picked");
+              pickBtn.textContent = "+ Обрати на тест";
+            } else {
+              pickedState[pId] = true;
+              if (cardEl) cardEl.classList.add("picked");
+              pickBtn.textContent = "✓ Обрано на тест";
+            }
+
+            var pickedCount = Object.keys(pickedState).length;
+            if (pickedCountEl) pickedCountEl.textContent = String(pickedCount);
+            if (pickedCount >= 1 && errorBox) errorBox.classList.add("hidden");
+            return;
+          }
+
+          var imgWrap = target.closest ? target.closest(".img-wrap") : null;
+          if (imgWrap) {
+            var zId = imgWrap.getAttribute("data-id");
+            var found = null;
+            for (var j = 0; j < patterns.length; j++) {
+              if (patterns[j].id === zId) {
+                found = patterns[j];
+                break;
+              }
+            }
+            if (!found) return;
+
+            document.getElementById("modal-title").textContent = found.label.toUpperCase();
+            document.getElementById("modal-img").src = found.image;
+            fillWatermark(document.getElementById("modal-watermark"), found.id);
+
+            var modal = document.getElementById("zoom-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+          }
+        });
+
+        var zoomModal = document.getElementById("zoom-modal");
+        document.getElementById("close-modal").addEventListener("click", function () {
+          zoomModal.classList.add("hidden");
+          zoomModal.classList.remove("flex");
+        });
+        zoomModal.addEventListener("click", function (e) {
+          if (e.target === zoomModal) {
+            zoomModal.classList.add("hidden");
+            zoomModal.classList.remove("flex");
+          }
+        });
+
+        document.getElementById("submit-btn").addEventListener("click", function () {
+          var nameInput = document.getElementById("tester-name");
+          var nameVal = nameInput.value.trim();
+
+          if (!nameVal) {
+            showBanner("Вкажи, будь ласка, своє прізвище та ім’я у верхньому полі.");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            nameInput.focus();
+            return;
+          }
+
+          var pickedIds = Object.keys(pickedState);
+          if (pickedIds.length < 1) {
+            showBanner("Обери хоча б один патерн на тест (натисни кнопку «+ Обрати на тест» під патерном).");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+
+          errorBox.classList.add("hidden");
+
+          var ratingsFormatted = patterns.map(function (p) {
+            var val = ratingsState[p.id] !== undefined ? ratingsState[p.id] : "-";
+            return "№" + p.id + ": " + val;
+          }).join(" | ");
+
+          var selectedFormatted = patterns.filter(function (p) {
+            return Boolean(pickedState[p.id]);
+          }).map(function (p) {
+            return "№" + p.id;
+          }).join(", ");
+
+          var formData = new URLSearchParams();
+          formData.append(FORM_FIELDS.name, nameVal);
+          formData.append(FORM_FIELDS.ratings, ratingsFormatted);
+          formData.append(FORM_FIELDS.selected, selectedFormatted);
+
+          fetch(GOOGLE_FORM_ACTION_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            body: formData.toString()
+          }).catch(function () {});
+
+          document.getElementById("main-view").style.display = "none";
+          document.getElementById("sticky-bar").style.display = "none";
+          var doneScreen = document.getElementById("done-screen");
+          doneScreen.classList.remove("hidden");
+          document.getElementById("done-summary").textContent =
+            "Учасниця: " + nameVal + "\nОбрані на тест: " + selectedFormatted + "\nОцінено патернів: " + Object.keys(ratingsState).length + " із " + patterns.length;
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+      } catch (err) {
+        showBanner("Помилка скрипту: " + (err && err.message ? err.message : String(err)));
+      }
+    })();
+  </script>
+</body>
+</html>
